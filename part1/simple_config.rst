@@ -1,13 +1,14 @@
 
 :authors: Jason Power
 
+.. _simple-config-chapter:
 
 ---------------------------------------
 Creating a simple configuration script
 ---------------------------------------
 
-This section of the tutorial will walk you through how to set up a simple simulation script for gem5 and to run gem5 for the first time.
-It's assumed that you've completed the (first section)[building.html] of the tutorial and have successfully built gem5 with an executable ``build/X86_MESI_Two_Level/gem5.opt``.
+This chapter of the tutorial will walk you through how to set up a simple simulation script for gem5 and to run gem5 for the first time.
+It's assumed that you've completed the first chapter of the tutorial and have successfully built gem5 with an executable ``build/X86_MESI_Two_Level/gem5.opt``.
 
 Our configuration script is going to model a very simple system.
 We'll have just one simple CPU core.
@@ -168,7 +169,7 @@ Our system should look like :ref:`simple-config-fig`.
 .. _simple-config-fig:
 
 .. figure:: ../_static/figures/simple_config.png
-   :width: 50 %
+   :width: 40 %
    :alt: Visual representation of the simple system to simulate
 
    A simple system configuration without caches.
@@ -221,12 +222,10 @@ And once simulation finishes, we can inspect the state of the system.
 Running gem5
 ~~~~~~~~~~~~~~
 
-Now that we've created a simple simulation script (the full version of which can be found here__)
+Now that we've created a simple simulation script (the full version of which can be found :download:`here <../_static/scripts/simple.py>`)
 we're ready to run gem5.
 gem5 can take many parameters, but requires just one positional argument, the simulation script.
 So, we can simply run gem5 from the root gem5 directory as:
-
-.. __: ../_static/scripts/simple.py
 
 .. code-block:: sh
 
