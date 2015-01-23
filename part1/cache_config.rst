@@ -2,14 +2,14 @@
 
 :authors: Jason Power
 
-.. _advanced-config-chapter:
+.. _cache-config-chapter:
 
 ------------------------------------------
-Creating an advanced configuration script
+Adding cache to the configuration script
 ------------------------------------------
 
 Using the :ref:`previous configuration script as a starting point <simple-config-chapter>`, this chapter will walk through a more complex configuration.
-We will add a cache heirarchy to the system and make the CPU model configurable as shown in :ref:`the figure below <advanced-config-fig>`.
+We will add a cache heirarchy to the system as shown in :ref:`the figure below <advanced-config-fig>`.
 Additionally, this chapter will cover understanding the gem5 statistics output and adding command line parameters to your scripts.
 
 .. _advanced-config-fig:
@@ -235,6 +235,119 @@ Next, we can create out L2 cache and connect it to the L2 bus and the memory bus
 Everything else in the file stays the same!
 Now we have a complete configuration with a two-level cache heirarchy.
 If you run the current file, ``hello`` should now finish in 54604000 ticks.
-The full script can be found :download:`here <../_static/scripts/simple-caches.py>`.
+The full script can be found :download:`here <../_static/scripts/two-level.py>`.
+
+Adding parameters to your script
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When performing experiements with gem5, you don't want to edit your configuration script every time you want to test the system with different parameters.
+To get around this, you can add command-line parameters to your gem5 configuration script.
+Again, because the configuration script is just Python, you can use the Python libraries that support argument parsing.
+Although :py:mod:`optparse` is officially deprecated, the configuration scripts that ship with gem5 use it instead of py:mod:`argparse` since gem5's minimum Python version is 2.5.
+To get started using :py:mod:`optparse`, you can consult the online Python documentation.
+
+To add options to our two-level cache configuration, after importing our caches, let's add some options.
+
+.. code-block:: python
+
+    from optparse import OptionParser
+
+    parser = OptionParser()
+    parser.add_option('--l1i_size', help="L1 instruction cache size")
+    parser.add_option('--l1d_size', help="L1 data cache size")
+    parser.add_option('--l2_size', help="Unified L2 cache size")
+
+    (options, args) = parser.parse_args()
+
+Now, you can run ``build/X86/gem5.opt configs/tutorial/two-level-opts.py --help`` which will display the options you just added.
+
+Next, we need to pass these options onto the caches that we create in the configuration script.
+To do this, we'll simple change pass the options into the caches as a parameter to their constructor and add an appropriate constructor, next.
+
+.. code-block:: python
+
+    system.cpu.icache = L1ICache(options)
+    system.cpu.dcache = L1DCache(options)
+    ...
+    system.l2cache = L2Cache(options)
+
+In caches.py, we need to add constructors (``__init__`` functions in Python) to each of our classes.
+Starting with our base L1 cache, we'll just add an empty constructor since we don't have any parameters which apply to the base L1 cache.
+However, we can't forget to call the super class's constructor in this case.
+If the call to the super class constructor is skipped, gem5's SimObject attribute finding function will fail and the result will be "``RuntimeError: maximum recursion depth exceeded``" when you try to instantiate the cache object.
+So, in ``L1Cache`` we need to add the following after the static class members.
+
+.. code-block:: python
+
+    def __init__(self, options=None):
+        super(L1Cache, self).__init__()
+        pass
+
+Next, in the ``L1ICache``, we need to use the option that we created (``l1i_size``) to set the size.
+In the following code, there is guards for if ``options`` is not passed to the ``L1ICache`` constructor and if no option was specified on the command line.
+In these cases, we'll just use the default we've already specified for the size.
+
+.. code-block:: python
+
+    def __init__(self, options=None):
+        super(L1ICache, self).__init__(options)
+        if not options or not options.l1i_size:
+            return
+        self.size = options.l1i_size
+
+We can use the same code for the ``L1DCache``:
+
+.. code-block:: python
+
+    def __init__(self, options=None):
+        super(L1DCache, self).__init__(options)
+        if not options or not options.l1d_size:
+            return
+        self.size = options.l1d_size
+
+And the unified ``L2Cache``:
+
+.. code-block:: python
+
+    def __init__(self, options=None):
+        super(L2Cache, self).__init__(options)
+        if not options or not options.l2_size:
+            return
+        self.size = options.l2_size
+
+With these changes, you can now pass the cache sizes into your script from the command line like below.
+
+.. code-block:: sh
+
+    build/X86/gem5.opt configs/tutorial/two-level-opts.py --l2_size='1MB' --l1d_size='128kB'
+
+::
+
+    gem5 Simulator System.  http://gem5.org
+    gem5 is copyrighted software; use the --copyright option for details.
+
+    gem5 compiled Jan 22 2015 14:48:37
+    gem5 started Jan 23 2015 11:55:11
+    gem5 executing on mustardseed.cs.wisc.edu
+    command line: build/X86/gem5.opt configs/tutorial/two-level-opts.py --l2_size=1MB --l1d_size=128kB
+    Global frequency set at 1000000000000 ticks per second
+    warn: DRAM device capacity (8192 Mbytes) does not match the address range assigned (512 Mbytes)
+    0: system.remote_gdb.listener: listening for remote gdb #0 on port 7000
+    Begining simulation!
+    info: Entering event queue @ 0.  Starting simulation...
+    Hello world!
+    Exiting @ tick 54604000 because target called exit()
+
+The updated configuration script can be downloaded :download:`here <../_static/scripts/two-level-opts.py>` and the updated cache file can be downloaded :download:`here <../_static/scripts/caches_opts.py>`.
+
+
+
+
+
+
+
+
+
+
 
 

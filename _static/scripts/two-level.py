@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright (c) 2015 Mark D. Hill and David A. Wood
 # All rights reserved.
 #

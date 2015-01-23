@@ -13,23 +13,24 @@ Some thoughts on this document
 An outline:
 
 #. Part I: Getting started
-  #. Building gem5
-  #. A simple gem5 configuration script
-  #. A more complex gem5 configuration script
-  #. Using the example configuration scripts
-  #. Full system simulation
+    #. Building gem5
+    #. A simple gem5 configuration script
+    #. A more complex gem5 configuration script
+    #. Using the example configuration scripts
+    #. Full system simulation
 #. Part II: Developing with gem5
-  #. Creating a new SimObject
-  #. Debugging support in gem5
-  #. Creating a new MemObject with master/slave ports
-  #. Contributing back to gem5
+    #. Creating a new SimObject
+    #. Debugging support in gem5
+    #. Creating a new MemObject with master/slave ports
+    #. Contributing back to gem5
 #. Part III: Using Ruby cache coherence model
-  #. Overview of Ruby
-  #. Ruby's cache coherence protocols
-  #. Ruby's network topologies
-  #. Writing a new protocol
-  #. Debugging a protocol
-  #. Extending the SLICC language
+    #. Overview of Ruby
+    #. Ruby's cache coherence protocols
+    #. Ruby's network topologies
+    #. Writing a new protocol
+    #. Debugging a protocol
+    #. Extending the SLICC language
+
 
 Todo list
 ~~~~~~~~~
