@@ -34,7 +34,7 @@ An aside on SimObjects
 
 gem5's modular design is built around the **SimObject** type.
 Most of the components in the simulated system are SimObjects: CPUs, caches, memory controllers, busses, etc.
-gem5 exports all of these objects from their ``C++`` impementation to python.
+gem5 exports all of these objects from their ``C++`` implementation to python.
 Thus, from the python configuration script you can create any SimObject, set its parameters, and specify the interactions between SimObjects.
 
 
@@ -59,9 +59,9 @@ The first thing we'll do in this file is import the m5 library and all SimObject
   from m5.objects import *
 
 Next, we'll create the first SimObject, the system that we are going to simulate.
-The ``System`` object will be the parent of all the other objects in our simluated system.
+The ``System`` object will be the parent of all the other objects in our simulated system.
 The ``System`` object contains a lot of functional (not timing-level) information, like the physical memory ranges, the root clock domain, the root voltage domain, the kernel (in full-system simulation), etc.
-To create the system SimObject, we simply instatiate it like any other python class:
+To create the system SimObject, we simply instantiate it like any other python class:
 
 .. code-block:: python
 
@@ -83,10 +83,10 @@ Since we don't care about system power right now, we'll just use the default opt
 Once we have a system, let's set up how the memory will be simulated.
 We are going to use *timing* mode for the memory simulation.
 You'll likely almost always use timing mode for the memory simulation, except in special cases like fast-forwarding and restoring from a checkpoint.
-We'll aslo set up a single memory range of size 512 MB, a very small system.
-Note that in the python configuration scripts, whenever a size is required you can specify that size in common venacular and units like ``'512MB'``.
+We'll also set up a single memory range of size 512 MB, a very small system.
+Note that in the python configuration scripts, whenever a size is required you can specify that size in common vernacular and units like ``'512MB'``.
 Similarly, with time you can use time units (e.g., ``'5ns'``).
-These will automatically be converted to a common represpentation, respectively.
+These will automatically be converted to a common representation, respectively.
 
 .. code-block:: python
 
@@ -192,10 +192,10 @@ Then we set the CPU to use the process as it's workload, and finally create the 
   system.cpu.workload = process
   system.cpu.createThreads()
 
-The final thing we need to do is instatiate the system and begin execution.
+The final thing we need to do is instantiate the system and begin execution.
 First, we create the ``Root`` object.
-Then we instatiate the simulation.
-The instatiation process goes through all of the SimObjects we've created in python and creates the ``C++`` equivalents.
+Then we instantiate the simulation.
+The instantiation process goes through all of the SimObjects we've created in python and creates the ``C++`` equivalents.
 
 As a note, you don't have to instantiate the python class then specify the parameters explicitly.
 You can also pass the parameters as named arguments, like the ``Root`` object below.
@@ -209,7 +209,7 @@ Finally, we can begin simulation!
 
 .. code-block:: python
 
-  print "Begining simulation!"
+  print "Beginning simulation!"
   exit_event = m5.simulate()
 
 And once simulation finishes, we can inspect the state of the system.

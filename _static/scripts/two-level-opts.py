@@ -38,7 +38,18 @@ import m5
 from m5.objects import *
 
 # import the caches which we made
-from caches import *
+from caches_opts import *
+
+# import the options parser
+from optparse import OptionParser
+
+# add the options we want to be able to control from the command line
+parser = OptionParser()
+parser.add_option('--l1i_size', help="L1 instruction cache size")
+parser.add_option('--l1d_size', help="L1 data cache size")
+parser.add_option('--l2_size', help="Unified L2 cache size")
+
+(options, args) = parser.parse_args()
 
 # create the system we are going to simulate
 system = System()
@@ -56,8 +67,8 @@ system.mem_ranges = [AddrRange('512MB')] # Create an address range
 system.cpu = TimingSimpleCPU()
 
 # Create an L1 instruction and data cache
-system.cpu.icache = L1ICache()
-system.cpu.dcache = L1DCache()
+system.cpu.icache = L1ICache(options)
+system.cpu.dcache = L1DCache(options)
 
 # Connect the instruction and data caches to the CPU
 system.cpu.icache.connectCPU(system.cpu)
@@ -71,7 +82,7 @@ system.cpu.icache.connectBus(system.l2bus)
 system.cpu.dcache.connectBus(system.l2bus)
 
 # Create an L2 cache and connect it to the l2bus
-system.l2cache = L2Cache()
+system.l2cache = L2Cache(options)
 system.l2cache.connectCPUSideBus(system.l2bus)
 
 # Create a memory bus

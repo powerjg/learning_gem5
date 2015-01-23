@@ -9,7 +9,7 @@ Adding cache to the configuration script
 ------------------------------------------
 
 Using the :ref:`previous configuration script as a starting point <simple-config-chapter>`, this chapter will walk through a more complex configuration.
-We will add a cache heirarchy to the system as shown in :ref:`the figure below <advanced-config-fig>`.
+We will add a cache hierarchy to the system as shown in :ref:`the figure below <advanced-config-fig>`.
 Additionally, this chapter will cover understanding the gem5 statistics output and adding command line parameters to your scripts.
 
 .. _advanced-config-fig:
@@ -18,7 +18,7 @@ Additionally, this chapter will cover understanding the gem5 statistics output a
    :width: 40 %
    :alt: Visual representation of the simple system to simulate
 
-   A system configuration with a two-level cache heirarchy.
+   A system configuration with a two-level cache hierarchy.
 
 
 Creating cache objects
@@ -33,7 +33,7 @@ BaseCache
 
 The BaseCache SimObject declaration can be found in :file:`src/mem/cache/BaseCache.py`.
 This Python file defines the parameters which you can set of the SimObject.
-Under the hood, when the SimObject is instantiated these parameters are passed to the C++ imlpemenation of the object.
+Under the hood, when the SimObject is instantiated these parameters are passed to the C++ implementation of the object.
 
 .. code-block:: python
 
@@ -233,14 +233,14 @@ Next, we can create out L2 cache and connect it to the L2 bus and the memory bus
     system.l2cache.connectMemSideBus(system.membus)
 
 Everything else in the file stays the same!
-Now we have a complete configuration with a two-level cache heirarchy.
+Now we have a complete configuration with a two-level cache hierarchy.
 If you run the current file, ``hello`` should now finish in 54604000 ticks.
 The full script can be found :download:`here <../_static/scripts/two-level.py>`.
 
 Adding parameters to your script
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When performing experiements with gem5, you don't want to edit your configuration script every time you want to test the system with different parameters.
+When performing experiments with gem5, you don't want to edit your configuration script every time you want to test the system with different parameters.
 To get around this, you can add command-line parameters to your gem5 configuration script.
 Again, because the configuration script is just Python, you can use the Python libraries that support argument parsing.
 Although :py:mod:`optparse` is officially deprecated, the configuration scripts that ship with gem5 use it instead of py:mod:`argparse` since gem5's minimum Python version is 2.5.
