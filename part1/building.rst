@@ -1,10 +1,13 @@
 
 :authors: Jason Power
 
+.. _building-chapter:
 
 --------------
 Building gem5
 --------------
+
+.. _building-requirements-section:
 
 Requirements for gem5
 ~~~~~~~~~~~~~~~~~~~~~
@@ -78,6 +81,12 @@ See `gem5 requirements`_ for more details.
 
         sudo apt-get install swig
 
+    On CSL machines, you can use swig found in ``/s``:
+
+    .. code-block:: sh
+
+        export PATH=/s/swig-2.0.6/bin/:$PATH
+
     You may have to install SWIG manually.
     In that case, you can download the source from http://www.swig.org/download.html.
     Version 2.0.4 is known to work with gem5.
@@ -101,11 +110,23 @@ Getting the code
 Change directories to where you want to download the gem5 source.
 Then, to clone the repository, use the ``hg clone`` command.
 
-.. code block:: sh
+.. code-block:: sh
 
-  hg clone http://repo.gem5.org/gem5
+  hg clone http://repo.gem5.org/gem5-stable
 
 You can now change directories to ``gem5`` which contains all of the gem5 code.
+
+.. sidebar:: gem5 repositories
+  
+    There are two main gem5 repositories found on repo.gem5.org, *gem5*, and *gem5-stable*.
+    gem5 is the main development repository, which is updated very frequently (a few times per week).
+    This repository has all of the latest bugfixes and features.
+    However, there are often bugs introduced and changes to APIs.
+    gem5-stable, is released once every few months and pulls in most of the changes to gem5 in that time.
+    It's more stable than the gem5 repository, but there still may be bugs.
+
+    If you find a bug in gem5-stable, or something isn't working correctly, be sure to try gem5 before submitting a bug report.
+    The problem may already be fixed.
 
 Your first gem5 build
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -124,7 +145,7 @@ There are a number of default compilations options in the ``build_opts`` directo
 These files specify the parameters passed to SCons when initially building gem5.
 We'll use the X86 defaults and specify that we want to compile all of the CPU models.
 
-.. code block:: sh
+.. code-block:: sh
 
     scons CPU_MODELS="AtomicSimpleCPU,MinorCPU,O3CPU,TimingSimpleCPU" build/X86/gem5.opt -j9
 
@@ -190,3 +211,25 @@ The compilation can take a very long time, often 15 minutes or more, especially 
 
 Common errors
 ~~~~~~~~~~~~~~
+
+Wrong gcc version
+==================
+
+::
+  
+    Error: gcc version 4.6 or newer required.
+           Installed version: 4.4.7
+
+Update your environment variables to point to the right gcc version, or install a more up to date version of gcc.
+See :ref:`building-requirements-section`.
+
+Wrong SWIG version
+===================
+
+::
+
+    Error: SWIG version 2.0.4 or newer required.
+           Installed version: 1.3.40
+
+Update your environment variables to point to the right SWIG version, or install a more up to date version of SWIG.
+See :ref:`building-requirements-section`.
