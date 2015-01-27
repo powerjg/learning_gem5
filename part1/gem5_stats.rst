@@ -8,11 +8,12 @@ Understanding gem5 statistics and output
 
 In addition to any information which your simulation script prints out,
 after running gem5, there are three files generated in a directory called ``m5out``:
-``config.ini``
+
+**config.ini**
     Contains a list of every SimObject created for the simulation and the values for its parameters.
-``config.json``
+**config.json**
     The same as config.ini, but in json format.
-``stats.txt``
+**stats.txt**
     A text representation of all of the gem5 statistics registered for the simulation.
 
 Where these files are created can be controlled by
@@ -22,13 +23,13 @@ Where these files are created can be controlled by
     The directory to be created which hold the gem5 output files, including ``config.ini``, ``config.json``, ``stats.txt``, and possibly other.
     The files in this directory are overwritten if they already exist.
 
-`config.ini`
+config.ini
 ~~~~~~~~~~~~
 
 This file is the definitive version of what was simulated.
 All of the parameters for each SimObject that is simulated, whether they were set in the configuration scripts or the defaults were used, are shown in this file.
 
-Below is pulled from the config.ini generated when the ``simple.py`` configuration file from :ref:`_simple-config-chapter` is run.
+Below is pulled from the config.ini generated when the ``simple.py`` configuration file from :ref:`simple-config-chapter` is run.
 
 ::
 
@@ -127,10 +128,11 @@ Most of the statistics are self explainitory from their descriptions.
 A couple of important statistics are ``sim_seconds`` which is the total simulated time for the simulation, ``sim_insts`` which is the number of instructions committed by the CPU, and ``host_inst_rate`` which tells you the performance of gem5.
 
 Next, the SimObjects' statistics are printed.
-For instance:
+For instance, the memory controller statistics.
+This has information like the bytes read by each component and the average bandwidth used by those components.
 
-    ::
-        
+::
+    
     system.mem_ctrl.bytes_read::cpu.inst            58264                       # Number of bytes read from this memory
     system.mem_ctrl.bytes_read::cpu.data             7167                       # Number of bytes read from this memory
     system.mem_ctrl.bytes_read::total               65431                       # Number of bytes read from this memory
@@ -153,5 +155,37 @@ For instance:
     system.mem_ctrl.bw_total::cpu.inst          168627973                       # Total bandwidth to/from this memory (bytes/s)
     system.mem_ctrl.bw_total::cpu.data           41465278                       # Total bandwidth to/from this memory (bytes/s)
     system.mem_ctrl.bw_total::total             210093251                       # Total bandwidth to/from this memory (bytes/s)
+
+Later in the file is the CPU statistics, which contains information on the number of syscalls, the number of branches, total committed instructions, etc.
+
+::
+    
+    system.cpu.apic_clk_domain.clock                16000                       # Clock period in ticks
+    system.cpu.workload.num_syscalls                   11                       # Number of system calls
+    system.cpu.numCycles                           345518                       # number of cpu cycles simulated
+    system.cpu.numWorkItemsStarted                      0                       # number of work items this cpu started
+    system.cpu.numWorkItemsCompleted                    0                       # number of work items this cpu completed
+    system.cpu.committedInsts                        5712                       # Number of instructions committed
+    system.cpu.committedOps                         10314                       # Number of ops (including micro ops) committed
+    system.cpu.num_int_alu_accesses                 10205                       # Number of integer alu accesses
+    system.cpu.num_fp_alu_accesses                      0                       # Number of float alu accesses
+    system.cpu.num_func_calls                         221                       # number of times a function call or return occured
+    system.cpu.num_conditional_control_insts          986                       # number of instructions that are conditional controls
+    system.cpu.num_int_insts                        10205                       # number of integer instructions
+    system.cpu.num_fp_insts                             0                       # number of float instructions
+    system.cpu.num_int_register_reads               19296                       # number of times the integer registers were read
+    system.cpu.num_int_register_writes               7977                       # number of times the integer registers were written
+    system.cpu.num_fp_register_reads                    0                       # number of times the floating registers were read
+    system.cpu.num_fp_register_writes                   0                       # number of times the floating registers were written
+    system.cpu.num_cc_register_reads                 7020                       # number of times the CC registers were read
+    system.cpu.num_cc_register_writes                3825                       # number of times the CC registers were written
+    system.cpu.num_mem_refs                          2025                       # number of memory refs
+    system.cpu.num_load_insts                        1084                       # Number of load instructions
+    system.cpu.num_store_insts                        941                       # Number of store instructions
+    system.cpu.num_idle_cycles                   0.001000                       # Number of idle cycles
+    system.cpu.num_busy_cycles               345517.999000                       # Number of busy cycles
+    system.cpu.not_idle_fraction                 1.000000                       # Percentage of non-idle cycles
+    system.cpu.idle_fraction                     0.000000                       # Percentage of idle cycles
+    system.cpu.Branches                              1306                       # Number of branches fetched
 
 
