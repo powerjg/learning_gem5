@@ -233,3 +233,21 @@ Wrong SWIG version
 
 Update your environment variables to point to the right SWIG version, or install a more up to date version of SWIG.
 See :ref:`building-requirements-section`.
+
+Python in a non-default location
+================================
+
+If you use a non-default version of Python, (e.g., version 2.7 when 2.5 is your default), there may be problems when using SCons to build gem5.
+RHEL6 version of SCons uses a hardcoded location for Python, which causes the issue.
+gem5 often builds successfully in this case, but may not be able to run.
+Below is one possible error you may see when you run gem5.
+
+::
+
+    Traceback (most recent call last):
+      File "........../gem5-stable/src/python/importer.py", line 93, in <module>
+        sys.meta_path.append(importer)
+    TypeError: 'dict' object is not callable
+
+To fix this, you can force SCons to use your environment's Python version by running ``python `which scons` build/X86/gem5.opt`` instead of ``scons build/X86/gem5.opt``.
+More information on this can be found on the gem5 wiki about non-default Python locations: `Using a non-default Python installation <http://www.gem5.org/Using_a_non-default_Python_installation>`_.
