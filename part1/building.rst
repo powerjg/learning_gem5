@@ -32,7 +32,7 @@ See `gem5 requirements`_ for more details.
     You may need to use environment variables to point to a non-default version of gcc.
     For CSL machines, you can add the following to your `.bashrc.local`, assuming you're using bash as your shell.
 
-    .. code-block: sh
+    .. code-block:: sh
 
         export PATH=/s/gcc-4.7.3/bin:$PATH
         export LD_LIBRARY_PATH=/s/gcc-4.7.3/lib64:$LD_LIBRARY_PATH
