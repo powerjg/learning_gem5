@@ -251,3 +251,24 @@ Below is one possible error you may see when you run gem5.
 
 To fix this, you can force SCons to use your environment's Python version by running ``python `which scons` build/X86/gem5.opt`` instead of ``scons build/X86/gem5.opt``.
 More information on this can be found on the gem5 wiki about non-default Python locations: `Using a non-default Python installation <http://www.gem5.org/Using_a_non-default_Python_installation>`_.
+
+M4 macro processor not installed
+================================
+
+If the M4 macro processor isn't installed you'll see an error similar to this:
+
+::
+
+    ...
+    Checking for member exclude_host in struct perf_event_attr...yes
+    Error: Can't find version of M4 macro processor.  Please install M4 and try again.
+
+Just installing the M4 macro package may not solve this issue.
+You may nee to also install all of the ``autoconf`` tools.
+On Ubuntu, you can use the following command.
+
+.. code-block:: sh
+    
+    sudo apt-get install automake
+
+
