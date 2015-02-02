@@ -10,3 +10,4 @@ Part I: Getting started with gem5
     simple_config
     cache_config
     gem5_stats
+    example_configs

@@ -13,15 +13,15 @@ Some thoughts on this document
 An outline:
 
 #. Part I: Getting started
-    #. Building gem5
-    #. A simple gem5 configuration script
-    #. A more complex gem5 configuration script
-    #. Using the example configuration scripts
-    #. Full system simulation
-#. Part II: Developing with gem5
+    Done-ish
+#. Part II: Advanced gem5 usage
+    #. Full-system simulation
+    #. Checkpoint creation and restoring
+#. Part III: Developing with gem5
     #. Creating a new SimObject
     #. Debugging support in gem5
     #. Creating a new MemObject with master/slave ports
+    #. ISA language
     #. Contributing back to gem5
 #. Part III: Using Ruby cache coherence model
     #. Overview of Ruby
