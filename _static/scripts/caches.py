@@ -27,12 +27,22 @@
 #
 # Authors: Jason Power
 
+""" Simple caches with default values
+
+This file contains L1 I/D and L2 caches to be used in the simple
+gem5 configuration script.
+
+"""
+
 from m5.objects import BaseCache
 
 # Some specific options for caches
 # For all options see src/mem/cache/BaseCache.py
 
 class L1Cache(BaseCache):
+    """Simple L1 Cache with default values"""
+
+    # Default parameters for both L1 I and D caches
     assoc = 2
     hit_latency = 2
     response_latency = 2
@@ -40,26 +50,30 @@ class L1Cache(BaseCache):
     tgts_per_mshr = 20
     is_top_level = True
 
-    def connectCPU(self, cpu):
-        # need to define this in a base class!
-        raise NotImplementedError
+    def connectCPU(self, cpu_port):
+        """"Connect this cache's port to a CPU port"""
+        self.cpu_side = cpu_port
 
     def connectBus(self, bus):
+        """"Connect this cache to a memory-side bus"""
         self.mem_side = bus.slave
 
 class L1ICache(L1Cache):
+    """Simple L1 instruction cache with default values"""
+
+    # Set the default size
     size = '16kB'
 
-    def connectCPU(self, cpu):
-        self.cpu_side = cpu.icache_port
-
 class L1DCache(L1Cache):
+    """Simple L1 data cache with default values"""
+
+    # Set the default size
     size = '64kB'
 
-    def connectCPU(self, cpu):
-        self.cpu_side = cpu.dcache_port
-
 class L2Cache(BaseCache):
+    """Simple L2 Cache with default values"""
+
+    # Default parameters
     size = '256kB'
     assoc = 8
     hit_latency = 20
@@ -68,7 +82,9 @@ class L2Cache(BaseCache):
     tgts_per_mshr = 12
 
     def connectCPUSideBus(self, bus):
+        """"Connect this cache to a cpu-side bus"""
         self.cpu_side = bus.master
 
     def connectMemSideBus(self, bus):
+        """"Connect this cache to a memory-side bus"""
         self.mem_side = bus.slave

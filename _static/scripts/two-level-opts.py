@@ -71,8 +71,8 @@ system.cpu.icache = L1ICache(options)
 system.cpu.dcache = L1DCache(options)
 
 # Connect the instruction and data caches to the CPU
-system.cpu.icache.connectCPU(system.cpu)
-system.cpu.dcache.connectCPU(system.cpu)
+system.cpu.icache.connectCPU(system.cpu.icache_port)
+system.cpu.dcache.connectCPU(system.cpu.dcache_port)
 
 # Create a memory bus, a coherent crossbar, in this case
 system.l2bus = CoherentXBar()
