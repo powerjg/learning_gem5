@@ -1,0 +1,207 @@
+# HG changeset patch
+# Parent 4ef5ff72f457bbe8c16d2377e2e6ba1409144463
+Mem: Add a not most recently used (NMRU) replacement policy
+
+diff --git a/src/mem/cache/base.cc b/src/mem/cache/base.cc
+--- a/src/mem/cache/base.cc
++++ b/src/mem/cache/base.cc
+@@ -45,14 +45,16 @@
+  * Definition of BaseCache functions.
+  */
+ 
++#include "mem/cache/base.hh"
++
+ #include "debug/Cache.hh"
+ #include "debug/Drain.hh"
++#include "mem/cache/cache.hh"
++#include "mem/cache/mshr.hh"
+ #include "mem/cache/tags/fa_lru.hh"
+ #include "mem/cache/tags/lru.hh"
++#include "mem/cache/tags/nmru.hh"
+ #include "mem/cache/tags/random_repl.hh"
+-#include "mem/cache/base.hh"
+-#include "mem/cache/cache.hh"
+-#include "mem/cache/mshr.hh"
+ #include "sim/full_system.hh"
+ 
+ using namespace std;
+@@ -797,6 +799,8 @@
+         return new Cache<LRU>(this);
+     } else if (dynamic_cast<RandomRepl*>(tags)) {
+         return new Cache<RandomRepl>(this);
++    } else if (dynamic_cast<NMRU*>(tags)) {
++        return new Cache<NMRU>(this);
+     } else {
+         fatal("No suitable tags selected\n");
+     }
+diff --git a/src/mem/cache/cache.cc b/src/mem/cache/cache.cc
+--- a/src/mem/cache/cache.cc
++++ b/src/mem/cache/cache.cc
+@@ -38,6 +38,7 @@
+ 
+ #include "mem/cache/tags/fa_lru.hh"
+ #include "mem/cache/tags/lru.hh"
++#include "mem/cache/tags/nmru.hh"
+ #include "mem/cache/tags/random_repl.hh"
+ #include "mem/cache/cache_impl.hh"
+ 
+@@ -46,6 +47,7 @@
+ 
+ template class Cache<FALRU>;
+ template class Cache<LRU>;
++template class Cache<NMRU>;
+ template class Cache<RandomRepl>;
+ 
+ #endif //DOXYGEN_SHOULD_SKIP_THIS
+diff --git a/src/mem/cache/tags/NMRU.py b/src/mem/cache/tags/NMRU.py
+new file mode 100644
+--- /dev/null
++++ b/src/mem/cache/tags/NMRU.py
+@@ -0,0 +1,7 @@
++
++
++from Tags import BaseSetAssoc
++
++class NMRU(BaseSetAssoc):
++    type = 'NMRU'
++    cxx_header = "mem/cache/tags/nmru.hh"
+\ No newline at end of file
+diff --git a/src/mem/cache/tags/SConscript b/src/mem/cache/tags/SConscript
+--- a/src/mem/cache/tags/SConscript
++++ b/src/mem/cache/tags/SConscript
+@@ -31,9 +31,11 @@
+ Import('*')
+ 
+ SimObject('Tags.py')
++SimObject('NMRU.py')
+ 
+ Source('base.cc')
+ Source('base_set_assoc.cc')
+ Source('lru.cc')
++Source('nmru.cc')
+ Source('random_repl.cc')
+ Source('fa_lru.cc')
+diff --git a/src/mem/cache/tags/nmru.cc b/src/mem/cache/tags/nmru.cc
+new file mode 100644
+--- /dev/null
++++ b/src/mem/cache/tags/nmru.cc
+@@ -0,0 +1,79 @@
++
++
++/**
++ * @file
++ * Definitions of a NMRU tag store.
++ */
++
++#include "mem/cache/tags/nmru.hh"
++
++#include "base/random.hh"
++#include "debug/CacheRepl.hh"
++#include "mem/cache/base.hh"
++
++NMRU::NMRU(const Params *p)
++    : BaseSetAssoc(p)
++{
++}
++
++BaseSetAssoc::BlkType*
++NMRU::accessBlock(Addr addr, bool is_secure, Cycles &lat, int master_id)
++{
++    // Accesses are based on parent class, no need to do anything special
++    BlkType *blk = BaseSetAssoc::accessBlock(addr, is_secure, lat, master_id);
++
++    if (blk != NULL) {
++        // move this block to head of the MRU list
++        sets[blk->set].moveToHead(blk);
++        DPRINTF(CacheRepl, "set %x: moving blk %x (%s) to MRU\n",
++                blk->set, regenerateBlkAddr(blk->tag, blk->set),
++                is_secure ? "s" : "ns");
++    }
++
++    return blk;
++}
++
++BaseSetAssoc::BlkType*
++NMRU::findVictim(Addr addr) const
++{
++    BlkType *blk = BaseSetAssoc::findVictim(addr);
++
++    // if all blocks are valid, pick a replacement that is not MRU at random
++    if (blk->isValid()) {
++        // find a random index within the bounds of the set
++        int idx = random_mt.random<int>(1, assoc - 1);
++        assert(idx < assoc);
++        assert(idx >= 0);
++        blk = sets[extractSet(addr)].blks[idx];
++
++        DPRINTF(CacheRepl, "set %x: selecting blk %x for replacement\n",
++                blk->set, regenerateBlkAddr(blk->tag, blk->set));
++    }
++
++    return blk;
++}
++
++void
++NMRU::insertBlock(PacketPtr pkt, BlkType *blk)
++{
++    BaseSetAssoc::insertBlock(pkt, blk);
++
++    int set = extractSet(pkt->getAddr());
++    sets[set].moveToHead(blk);
++}
++
++void
++NMRU::invalidate(BlkType *blk)
++{
++    BaseSetAssoc::invalidate(blk);
++
++    // should be evicted before valid blocks
++    int set = blk->set;
++    sets[set].moveToTail(blk);
++}
++
++NMRU*
++NMRUParams::create()
++{
++    return new NMRU(this);
++}
+diff --git a/src/mem/cache/tags/nmru.hh b/src/mem/cache/tags/nmru.hh
+new file mode 100644
+--- /dev/null
++++ b/src/mem/cache/tags/nmru.hh
+@@ -0,0 +1,35 @@
++
++
++#ifndef __MEM_CACHE_TAGS_NMRU_HH__
++#define __MEM_CACHE_TAGS_NMRU_HH__
++
++#include "mem/cache/tags/base_set_assoc.hh"
++#include "params/NMRU.hh"
++
++class NMRU : public BaseSetAssoc
++{
++  public:
++    /** Convenience typedef. */
++    typedef NMRUParams Params;
++
++    /**
++     * Construct and initialize this tag store.
++     */
++    NMRU(const Params *p);
++
++    /**
++     * Destructor
++     */
++    ~NMRU() {}
++
++    /**
++     * Required functions for this subclass to implement
++     */
++    BlkType* accessBlock(Addr addr, bool is_secure, Cycles &lat,
++                         int context_src);
++    BlkType* findVictim(Addr addr) const;
++    void insertBlock(PacketPtr pkt, BlkType *blk);
++    void invalidate(BlkType *blk);
++};
++
++#endif // __MEM_CACHE_TAGS_NMRU_HH__
