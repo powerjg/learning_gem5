@@ -68,7 +68,7 @@ system.cpu.icache.connectCPU(system.cpu.icache_port)
 system.cpu.dcache.connectCPU(system.cpu.dcache_port)
 
 # Create a memory bus, a coherent crossbar, in this case
-system.l2bus = CoherentXBar()
+system.l2bus = L2XBar()
 
 # Hook the CPU ports up to the l2bus
 system.cpu.icache.connectBus(system.l2bus)
@@ -79,7 +79,7 @@ system.l2cache = L2Cache(opts)
 system.l2cache.connectCPUSideBus(system.l2bus)
 
 # Create a memory bus
-system.membus = CoherentXBar()
+system.membus = SystemXBar()
 
 # Connect the L2 cache to the membus
 system.l2cache.connectMemSideBus(system.membus)

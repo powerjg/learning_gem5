@@ -42,6 +42,11 @@ parser = OptionParser()
 
 def add_option(*args, **kwargs):
 	"""Call "add_option" to the global options parser"""
+
+	#TODO: Want to check for duplicate names
+
+	# TODO: Want to make sure that parse_args() should not have been called yet
+
 	parser.add_option(*args, **kwargs)
 
 def parse_args():
