@@ -17,6 +17,8 @@ An outline:
 #. Part II: Advanced gem5 usage
     #. Full-system simulation
     #. Checkpoint creation and restoring
+    #. Running tests
+    #. Using m5ops
 #. Part III: Developing with gem5
     #. Creating a new SimObject
     #. Debugging support in gem5

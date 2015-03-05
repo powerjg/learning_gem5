@@ -13,6 +13,7 @@ Contents:
 
    intro
    part1/index
+   part2/index
 
    thoughts
 
