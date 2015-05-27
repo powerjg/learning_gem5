@@ -258,3 +258,6 @@ If you're using the simple config scripts created in previous chapters, you can 
 	    # Set the default size
 	    size = '32kB'
 	    tags = NMRU()
+
+The changeset to add all of the NMRU code can be found :download:`here <../_static/patches/nmru-tags>`.
+You can apply this patch by using ``hg qimport``.
