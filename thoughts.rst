@@ -14,17 +14,18 @@ An outline:
 
 #. Part I: Getting started
     Done-ish
-#. Advanced gem5 usage
-    #. Full-system simulation
-    #. Checkpoint creation and restoring
-    #. Running tests
-    #. Using m5ops
 #. Developing with gem5
     #. Creating a new SimObject
     #. Debugging support in gem5
     #. Creating a new MemObject with master/slave ports
-    #. ISA language
     #. Contributing back to gem5
+    #. Running tests
+#. Advanced gem5 usage
+    #. Full-system simulation
+    #. Checkpoint creation and restoring
+    #. ISA language
+    #. Using m5ops
+    #. Using traces
 #. Using Ruby cache coherence model
     #. Overview of Ruby
     #. Ruby's cache coherence protocols
