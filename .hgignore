@@ -1,2 +1,4 @@
 syntax:glob
 _build
+*~
+*.pyc
