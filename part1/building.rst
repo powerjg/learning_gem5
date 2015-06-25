@@ -7,6 +7,12 @@
 Building gem5
 --------------
 
+This chapter covers the details of how to set up a gem5 developmment environment and build gem5.
+
+.. todo::
+
+    Add a pointer to the gem5 docker image
+
 .. _building-requirements-section:
 
 Requirements for gem5
@@ -16,7 +22,7 @@ See `gem5 requirements`_ for more details.
 
 .. _gem5 requirements: http://gem5.org/Compiling_M5#Required_Software
 
-1. hg (Mercurial_):
+#. hg (Mercurial_):
     The gem5 project uses Mercurial_ for version control.
     Mercurial_ is a distributed version control system (like git).
     It uses simple commands that should be familiar to svn users as well.
@@ -28,7 +34,7 @@ See `gem5 requirements`_ for more details.
 
         sudo apt-get install mercurial
 
-2. gcc 4.6+
+#. gcc 4.6+
     You may need to use environment variables to point to a non-default version of gcc.
     For CSL machines, you can add the following to your `.bashrc.local`, assuming you're using bash as your shell.
 
@@ -43,7 +49,7 @@ See `gem5 requirements`_ for more details.
 
         sudo apt-get install build-essential
 
-3. SCons_
+#. SCons_
     gem5 uses SCons as its build environment.
     SCons is like make on steroids and uses Python scripts for all aspects of the build process.
     This allows for a very flexible (if slow) build system.
@@ -54,7 +60,7 @@ See `gem5 requirements`_ for more details.
 
         sudo apt-get install scons
 
-4. Python 2.5+
+#. Python 2.5+
     gem5 relies on the Python development libraries.
     On CSL machines, you may experience errors with the default Python version (2.5).
     To use version 2.7 you can add the following to your `.bashrc.local`:
@@ -71,7 +77,7 @@ See `gem5 requirements`_ for more details.
 
         sudo apt-get install python-dev
 
-5. SWIG_ 2.0.4+
+#. SWIG_ 2.0.4+
     SWIG_ is a set of scripts and libraries that wraps `C++` objects and exports them to scripting languages, like Python.
     gem5 uses SWIG to export `C++` SimObjects to the Python configuration files.
 
@@ -98,11 +104,22 @@ See `gem5 requirements`_ for more details.
         ./configure --prefix=<PATH INSTALL SWIG. e.g., ~/local>
         make && make install
 
+#. protobuf_ 2.1+
+    "Protocol buffers are a language-neutral, platform-neutral extensible mechanism for serializing structured data."
+    In gem5, the protobuf_ library is used for trace generation and playback.
+    protobuf_ is not a required package, unless you plan on using it for trace generation and playback.
+
+    .. code-block:: sh
+
+        sudo apt-get install libprotobuf-dev python-protobuf protobuf-compiler libgoogle-perftools-dev
+
 .. _Mercurial: http://mercurial.selenic.com/
 
 .. _SCons: http://www.scons.org/
 
 .. _SWIG: http://www.swig.org/
+
+.. _protobuf: https://developers.google.com/protocol-buffers/
 
 Getting the code
 ~~~~~~~~~~~~~~~~
@@ -117,7 +134,7 @@ Then, to clone the repository, use the ``hg clone`` command.
 You can now change directories to ``gem5`` which contains all of the gem5 code.
 
 .. sidebar:: gem5 repositories
-  
+
     There are two main gem5 repositories found on repo.gem5.org, *gem5*, and *gem5-stable*.
     gem5 is the main development repository, which is updated very frequently (a few times per week).
     This repository has all of the latest bugfixes and features.
@@ -183,15 +200,15 @@ The output should look something like below:
   Checking for C header file linux/kvm.h... (cached) yes
   Checking size of struct kvm_xsave ... (cached) yes
   Checking for member exclude_host in struct perf_event_attr...(cached) yes
-  Building in /afs/cs.wisc.edu/p/multifacet/users/powerjg/gem5-tutorial/gem5/build/X86_MESI_Two_Level
-  Variables file /afs/cs.wisc.edu/p/multifacet/users/powerjg/gem5-tutorial/gem5/build/variables/X86_MESI_Two_Level not found,
-    using defaults in /afs/cs.wisc.edu/p/multifacet/users/powerjg/gem5-tutorial/gem5/build_opts/X86_MESI_Two_Level
+  Building in /afs/cs.wisc.edu/p/multifacet/users/powerjg/gem5-tutorial/gem5/build/X86
+  Variables file /afs/cs.wisc.edu/p/multifacet/users/powerjg/gem5-tutorial/gem5/build/variables/X86 not found,
+    using defaults in /afs/cs.wisc.edu/p/multifacet/users/powerjg/gem5-tutorial/gem5/build_opts/X86
   scons: done reading SConscript files.
   scons: Building targets ...
-   [ISA DESC] X86_MESI_Two_Level/arch/x86/isa/main.isa -> generated/inc.d
-   [NEW DEPS] X86_MESI_Two_Level/arch/x86/generated/inc.d -> x86-mesi-two-level-deps
-   [ENVIRONS] x86-mesi-two-level-deps -> x86-mesi-two-level-environs
-   [     CXX] X86_MESI_Two_Level/sim/main.cc -> .o
+   [ISA DESC] X86/arch/x86/isa/main.isa -> generated/inc.d
+   [NEW DEPS] X86/arch/x86/generated/inc.d -> x86-deps
+   [ENVIRONS] x86-deps -> x86-environs
+   [     CXX] X86/sim/main.cc -> .o
    ....
    .... <lots of output>
    ....
@@ -202,12 +219,13 @@ The output should look something like below:
    [   SHCXX] drampower/src/libdrampower/LibDRAMPower.cc -> .os
    [      AR]  -> drampower/libdrampower.a
    [  RANLIB]  -> drampower/libdrampower.a
-   [     CXX] X86_MESI_Two_Level/base/date.cc -> .o
-   [    LINK]  -> X86_MESI_Two_Level/gem5.opt
+   [     CXX] X86/base/date.cc -> .o
+   [    LINK]  -> X86/gem5.opt
   scons: done building targets.
 
 When compilation is finished you should have a working gem5 executable at ``build/X86/gem5.opt``.
 The compilation can take a very long time, often 15 minutes or more, especially if you are compiling on a remote file system like AFS or NFS.
+
 
 Common errors
 ~~~~~~~~~~~~~~
@@ -216,7 +234,7 @@ Wrong gcc version
 ==================
 
 ::
-  
+
     Error: gcc version 4.6 or newer required.
            Installed version: 4.4.7
 
@@ -268,7 +286,5 @@ You may nee to also install all of the ``autoconf`` tools.
 On Ubuntu, you can use the following command.
 
 .. code-block:: sh
-    
+
     sudo apt-get install automake
-
-
