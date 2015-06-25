@@ -14,25 +14,28 @@ An outline:
 
 #. Part I: Getting started
     Done-ish
-#. Part II: Advanced gem5 usage
+#. Advanced gem5 usage
     #. Full-system simulation
     #. Checkpoint creation and restoring
     #. Running tests
     #. Using m5ops
-#. Part III: Developing with gem5
+#. Developing with gem5
     #. Creating a new SimObject
     #. Debugging support in gem5
     #. Creating a new MemObject with master/slave ports
     #. ISA language
     #. Contributing back to gem5
-#. Part III: Using Ruby cache coherence model
+#. Using Ruby cache coherence model
     #. Overview of Ruby
     #. Ruby's cache coherence protocols
     #. Ruby's network topologies
     #. Writing a new protocol
     #. Debugging a protocol
     #. Extending the SLICC language
-
+#. External projects and gem5
+    #. Power models
+    #. GPU models
+    #. External simulation infrastructure
 
 Todo list
 ~~~~~~~~~
