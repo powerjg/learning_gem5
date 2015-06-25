@@ -8,7 +8,7 @@ Creating a simple configuration script
 ---------------------------------------
 
 This chapter of the tutorial will walk you through how to set up a simple simulation script for gem5 and to run gem5 for the first time.
-It's assumed that you've completed the first chapter of the tutorial and have successfully built gem5 with an executable ``build/X86_MESI_Two_Level/gem5.opt``.
+It's assumed that you've completed the first chapter of the tutorial and have successfully built gem5 with an executable ``build/X86/gem5.opt``.
 
 Our configuration script is going to model a very simple system.
 We'll have just one simple CPU core.
@@ -241,7 +241,7 @@ The output should be:
   gem5 compiled Jan 14 2015 16:11:34
   gem5 started Jan 15 2015 11:27:01
   gem5 executing on mustardseed.cs.wisc.edu
-  command line: build/X86_MESI_Two_Level/gem5.opt configs/tutorial/simple.py
+  command line: build/X86/gem5.opt configs/tutorial/simple.py
   Global frequency set at 1000000000000 ticks per second
   warn: DRAM device capacity (8192 Mbytes) does not match the address range assigned (512 Mbytes)
   0: system.remote_gdb.listener: listening for remote gdb #0 on port 7000
@@ -256,5 +256,3 @@ For instance, if you double the system clock, the simulation should finish faste
 Or, if you change the DDR controller to DDR4, the performance should be better.
 
 Additionally, you can change the CPU model to ``MinorCPU`` to model an in-order CPU, or ``DerivO3CPU`` to model an out-of-order CPU.
-
-
