@@ -106,7 +106,7 @@ Next, we're going to create the system-wide memory bus:
 
 .. code-block:: python
 
-  system.membus = CoherentXBar()
+  system.membus = SystemXBar()
 
 Now that we have a memory bus, let's connect the cache ports on the CPU to it.
 In this case, since the system we want to simulate doesn't have any caches, we will connect the I-cache and D-cache ports directly to the membus.

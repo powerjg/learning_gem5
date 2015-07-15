@@ -27,10 +27,13 @@
 #
 # Authors: Jason Power
 
-# This file creates a simple system with a single CPU and a 2-level cache
-# and executes 'hello', a simple Hello World application.
-#
-# This config file assumes that the x86 ISA was built
+""" This file creates a simple system with a single CPU and a 2-level cache
+and executes 'hello', a simple Hello World application.
+
+This config file assumes that the x86 ISA was built.
+See gem5/configs/learning_gem5/part1/two_level.py for a general script.
+
+"""
 
 # import the m5 (gem5) library created when gem5 is built
 import m5
@@ -75,7 +78,7 @@ system.cpu.icache.connectCPU(system.cpu.icache_port)
 system.cpu.dcache.connectCPU(system.cpu.dcache_port)
 
 # Create a memory bus, a coherent crossbar, in this case
-system.l2bus = CoherentXBar()
+system.l2bus = L2XBar()
 
 # Hook the CPU ports up to the l2bus
 system.cpu.icache.connectBus(system.l2bus)
@@ -86,7 +89,7 @@ system.l2cache = L2Cache(options)
 system.l2cache.connectCPUSideBus(system.l2bus)
 
 # Create a memory bus
-system.membus = CoherentXBar()
+system.membus = SystemXBar()
 
 # Connect the L2 cache to the membus
 system.l2cache.connectMemSideBus(system.membus)

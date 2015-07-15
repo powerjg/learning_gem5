@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2015 Mark D. Hill and David A. Wood
+# Copyright (c) 2015 Jason Power
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -27,10 +27,13 @@
 #
 # Authors: Jason Power
 
-# This file creates a barebones system and executes 'hello', a simple Hello
-#   World application.
-#
-# This config file assumes that the x86 ISA was built
+""" This file creates a barebones system and executes 'hello', a simple Hello
+World application.
+
+This config file assumes that the x86 ISA was built.
+See gem5/configs/learning_gem5/part1/simple.py for a general script.
+
+"""
 
 # import the m5 (gem5) library created when gem5 is built
 import m5
@@ -53,7 +56,7 @@ system.mem_ranges = [AddrRange('512MB')] # Create an address range
 system.cpu = TimingSimpleCPU()
 
 # Create a memory bus, a coherent crossbar, in this case
-system.membus = CoherentXBar()
+system.membus = SystemXBar()
 
 # Hook the CPU ports up to the membus
 system.cpu.icache_port = system.membus.slave

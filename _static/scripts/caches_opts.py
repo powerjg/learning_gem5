@@ -49,7 +49,6 @@ class L1Cache(BaseCache):
     response_latency = 2
     mshrs = 4
     tgts_per_mshr = 20
-    is_top_level = True
 
     def __init__(self, options=None):
         super(L1Cache, self).__init__()

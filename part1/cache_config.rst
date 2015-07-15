@@ -218,7 +218,7 @@ The, we can use our helper function to connect the L1 caches to the L2 bus.
 
 .. code-block:: python
 
-    system.l2bus = CoherentXBar()
+    system.l2bus = L2XBar()
 
     system.cpu.icache.connectBus(system.l2bus)
     system.cpu.dcache.connectBus(system.l2bus)
