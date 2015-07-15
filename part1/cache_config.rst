@@ -176,7 +176,7 @@ Finally, let's add functions to the ``L2Cache`` to connect to the memory-side an
     def connectMemSideBus(self, bus):
         self.mem_side = bus.slave
 
-The complete file can be downloaded :download:`here <../_static/scripts/caches.py>`.
+The complete file can be downloaded :download:`here <../_static/scripts/part1/caches.py>`.
 
 
 
@@ -235,7 +235,7 @@ Next, we can create out L2 cache and connect it to the L2 bus and the memory bus
 Everything else in the file stays the same!
 Now we have a complete configuration with a two-level cache hierarchy.
 If you run the current file, ``hello`` should now finish in 54604000 ticks.
-The full script can be found :download:`here <../_static/scripts/two-level.py>`.
+The full script can be found :download:`here <../_static/scripts/part1/two_level.py>`.
 
 Adding parameters to your script
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -338,7 +338,7 @@ With these changes, you can now pass the cache sizes into your script from the c
     Hello world!
     Exiting @ tick 54604000 because target called exit()
 
-The updated configuration script can be downloaded :download:`here <../_static/scripts/two-level-opts.py>` and the updated cache file can be downloaded :download:`here <../_static/scripts/caches_opts.py>`.
+The updated configuration script can be downloaded :download:`here <../_static/scripts/part1/two_level_opts.py>` and the updated cache file can be downloaded :download:`here <../_static/scripts/part1/caches_opts.py>`.
 
 
 

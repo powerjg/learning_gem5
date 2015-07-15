@@ -222,7 +222,7 @@ And once simulation finishes, we can inspect the state of the system.
 Running gem5
 ~~~~~~~~~~~~~~
 
-Now that we've created a simple simulation script (the full version of which can be found :download:`here <../_static/scripts/simple.py>`)
+Now that we've created a simple simulation script (the full version of which can be found :download:`here <../_static/scripts/part1/simple.py>`)
 we're ready to run gem5.
 gem5 can take many parameters, but requires just one positional argument, the simulation script.
 So, we can simply run gem5 from the root gem5 directory as:
