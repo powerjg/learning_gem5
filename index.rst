@@ -16,6 +16,7 @@ Contents:
    part2/index
 
    thoughts
+   acknowledgements
 
 
 
