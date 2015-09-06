@@ -142,7 +142,9 @@ Next, we need to connect up a few other ports to make sure that our system will 
 We need to create an IO controller on the CPU and connect it to the memory bus.
 Also, we need to connect a special port in the system up to the membus.
 This port is a functional-only port to allow the system to read/write memory.
-These connections are specific to the ISA that we are using, x86 in this case.
+
+Connecting the PIO and interrupt ports to the memory bus is an x86-specific requirement.
+Other ISAs (e.g., ARM) do not require these 3 extra lines.
 
 .. code-block:: python
 

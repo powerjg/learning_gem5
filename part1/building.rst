@@ -11,7 +11,8 @@ This chapter covers the details of how to set up a gem5 developmment environment
 
 .. todo::
 
-    Add a pointer to the gem5 docker image
+    Add a pointer to the gem5 docker image.
+    In fact, we may want to have a docker image for each section.
 
 .. _building-requirements-section:
 

@@ -28,6 +28,10 @@ We are going to use the classic caches, instead of :ref:`ruby`, since we are mod
 We will extend the BaseCache SimObject and configure it for our system.
 First, we must understand the parameters that are used to configure BaseCache objects.
 
+.. todo::
+
+   We should add links to SimObjects like BaseCache that point to the doxygen on gem5's site.
+
 BaseCache
 **********************
 
@@ -42,36 +46,44 @@ Under the hood, when the SimObject is instantiated these parameters are passed t
     from MemObject import MemObject
     from Prefetcher import BasePrefetcher
     from Tags import *
-
+    
     class BaseCache(MemObject):
         type = 'BaseCache'
         cxx_header = "mem/cache/base.hh"
-        assoc = Param.Int("associativity")
-        hit_latency = Param.Cycles("The hit latency for this cache")
-        response_latency = Param.Cycles(
-                "Additional cache latency for the return path to core on a miss");
+    
+        size = Param.MemorySize("Capacity")
+        assoc = Param.Unsigned("Associativity")
+    
+        hit_latency = Param.Cycles("Hit latency")
+        response_latency = Param.Cycles("Latency for the return path on a miss");
+    
         max_miss_count = Param.Counter(0,
-            "number of misses to handle before calling exit")
-        mshrs = Param.Int("number of MSHRs (max outstanding requests)")
-        demand_mshr_reserve = Param.Int(1, "mshrs to reserve for demand access")
-        size = Param.MemorySize("capacity in bytes")
+            "Number of misses to handle before calling exit")
+    
+        mshrs = Param.Unsigned("Number of MSHRs (max outstanding requests)")
+        demand_mshr_reserve = Param.Unsigned(1, "MSHRs reserved for demand access")
+        tgts_per_mshr = Param.Unsigned("Max number of accesses per MSHR")
+        write_buffers = Param.Unsigned(8, "Number of write buffers")
+    
         forward_snoops = Param.Bool(True,
-            "forward snoops from mem side to cpu side")
+            "Forward snoops from mem side to cpu side")
         is_top_level = Param.Bool(False, "Is this cache at the top level (e.g. L1)")
-        tgts_per_mshr = Param.Int("max number of accesses per MSHR")
-        two_queue = Param.Bool(False,
-            "whether the lifo should have two queue replacement")
-        write_buffers = Param.Int(8, "number of write buffers")
-        prefetch_on_access = Param.Bool(False,
-            "notify the hardware prefetcher on every access (not just misses)")
+    
         prefetcher = Param.BasePrefetcher(NULL,"Prefetcher attached to cache")
-        cpu_side = SlavePort("Port on side closer to CPU")
-        mem_side = MasterPort("Port on side closer to MEM")
-        addr_ranges = VectorParam.AddrRange([AllMemory], "The address range for the CPU-side port")
-        system = Param.System(Parent.any, "System we belong to")
+        prefetch_on_access = Param.Bool(False,
+             "Notify the hardware prefetcher on every access (not just misses)")
+    
+        tags = Param.BaseTags(LRU(), "Tag store (replacement policy)")
         sequential_access = Param.Bool(False,
             "Whether to access tags and data sequentially")
-        tags = Param.BaseTags(LRU(), "Tag Store for LRU caches")
+    
+        cpu_side = SlavePort("Upstream port closer to the CPU and/or device")
+        mem_side = MasterPort("Downstream port closer to memory")
+    
+        addr_ranges = VectorParam.AddrRange([AllMemory],
+             "Address range for the CPU-side port (to allow striping)")
+    
+        system = Param.System(Parent.any, "System we belong to")
 
 Within the ``BaseCache`` class, there are a number of *parameters*.
 For instance, ``assoc`` is an integer parameter.
@@ -234,7 +246,7 @@ Next, we can create out L2 cache and connect it to the L2 bus and the memory bus
 
 Everything else in the file stays the same!
 Now we have a complete configuration with a two-level cache hierarchy.
-If you run the current file, ``hello`` should now finish in 54604000 ticks.
+If you run the current file, ``hello`` should now finish in 56742000 ticks.
 The full script can be found :download:`here <../_static/scripts/part1/two_level.py>`.
 
 Adding parameters to your script
@@ -325,18 +337,19 @@ With these changes, you can now pass the cache sizes into your script from the c
 
     gem5 Simulator System.  http://gem5.org
     gem5 is copyrighted software; use the --copyright option for details.
-
-    gem5 compiled Jan 22 2015 14:48:37
-    gem5 started Jan 23 2015 11:55:11
-    gem5 executing on mustardseed.cs.wisc.edu
-    command line: build/X86/gem5.opt configs/tutorial/two-level-opts.py --l2_size=1MB --l1d_size=128kB
+    
+    gem5 compiled Sep  6 2015 14:17:02
+    gem5 started Sep  6 2015 15:06:51
+    gem5 executing on galapagos-09.cs.wisc.edu
+    command line: build/X86/gem5.opt ../tutorial/_static/scripts/part1/two_level_opts.py --l2_size=1MB --l1d_size=128kB
+    
     Global frequency set at 1000000000000 ticks per second
     warn: DRAM device capacity (8192 Mbytes) does not match the address range assigned (512 Mbytes)
     0: system.remote_gdb.listener: listening for remote gdb #0 on port 7000
-    Begining simulation!
+    Beginning simulation!
     info: Entering event queue @ 0.  Starting simulation...
     Hello world!
-    Exiting @ tick 54604000 because target called exit()
+    Exiting @ tick 56742000 because target called exit()
 
 The updated configuration script can be downloaded :download:`here <../_static/scripts/part1/two_level_opts.py>` and the updated cache file can be downloaded :download:`here <../_static/scripts/part1/caches_opts.py>`.
 

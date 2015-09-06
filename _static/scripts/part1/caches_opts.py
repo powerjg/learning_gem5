@@ -54,12 +54,13 @@ class L1Cache(BaseCache):
         super(L1Cache, self).__init__()
         pass
 
-    def connectCPU(self, cpu_port):
-        """"Connect this cache's port to a CPU port"""
-        self.cpu_side = cpu_port
+    def connectCPU(self, cpu):
+        """Connect this cache's port to a CPU-side port
+           This must be defined in a subclass"""
+        raise NotImplementedError
 
     def connectBus(self, bus):
-        """"Connect this cache to a memory-side bus"""
+        """Connect this cache to a memory-side bus"""
         self.mem_side = bus.slave
 
 class L1ICache(L1Cache):
@@ -74,6 +75,10 @@ class L1ICache(L1Cache):
             return
         self.size = options.l1i_size
 
+    def connectCPU(self, cpu):
+        """Connect this cache's port to a CPU icache port"""
+        self.cpu_side = cpu.icache_port
+
 class L1DCache(L1Cache):
     """Simple L1 data cache with default values"""
 
@@ -85,6 +90,10 @@ class L1DCache(L1Cache):
         if not options or not options.l1d_size:
             return
         self.size = options.l1d_size
+
+    def connectCPU(self, cpu):
+        """Connect this cache's port to a CPU dcache port"""
+        self.cpu_side = cpu.dcache_port
 
 class L2Cache(BaseCache):
     """Simple L2 Cache with default values"""
