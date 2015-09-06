@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2015 Mark D. Hill and David A. Wood
+# Copyright (c) 2015 Jason Power
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
