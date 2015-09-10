@@ -48,6 +48,7 @@ class L1Cache(BaseCache):
     response_latency = 2
     mshrs = 4
     tgts_per_mshr = 20
+    is_top_level = True
 
     def connectCPU(self, cpu):
         """Connect this cache's port to a CPU-side port

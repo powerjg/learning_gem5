@@ -201,7 +201,7 @@ First, let's copy the script to a new name.
 
 .. code-block:: sh
 
-    cp simple.py two-level.py
+    cp simple.py two_level.py
 
 First, we need to import the names from the ``caches.py`` file into the namespace.
 We can add the following to the top of the file, as you would with any Python source.
@@ -271,7 +271,7 @@ To add options to our two-level cache configuration, after importing our caches,
 
     (options, args) = parser.parse_args()
 
-Now, you can run ``build/X86/gem5.opt configs/tutorial/two-level-opts.py --help`` which will display the options you just added.
+Now, you can run ``build/X86/gem5.opt configs/tutorial/two_level_opts.py --help`` which will display the options you just added.
 
 Next, we need to pass these options onto the caches that we create in the configuration script.
 To do this, we'll simple change pass the options into the caches as a parameter to their constructor and add an appropriate constructor, next.
@@ -331,7 +331,7 @@ With these changes, you can now pass the cache sizes into your script from the c
 
 .. code-block:: sh
 
-    build/X86/gem5.opt configs/tutorial/two-level-opts.py --l2_size='1MB' --l1d_size='128kB'
+    build/X86/gem5.opt configs/tutorial/two_level_opts.py --l2_size='1MB' --l1d_size='128kB'
 
 ::
 
