@@ -224,6 +224,13 @@ And connect the caches to the CPU ports with the helper function we created.
     system.cpu.icache.connectCPU(system.cpu)
     system.cpu.dcache.connectCPU(system.cpu)
 
+Also, You need to *remove* the previous lines which connected the cache ports directly to the memory bus.
+
+.. code-block:: python
+    
+    -system.cpu.icache_port = system.membus.slave
+    -system.cpu.dcache_port = system.membus.slave
+
 We can't directly connect the L1 caches to the L2 cache since the L2 cache only expects a single port to connect to it.
 Therefore, we need to create an L2 bus to connect our L1 caches to the L2 cache.
 The, we can use our helper function to connect the L1 caches to the L2 bus.
