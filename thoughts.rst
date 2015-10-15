@@ -5,6 +5,9 @@
 Some thoughts on this document
 ------------------------------
 
+* Changes that need to happen before next stable release
+   * Remove is_top_level
+
 * We want this document to be living.
    * We should have the source checked in somewhere (probably in a repo next to gem5).
    * We should force people to make updates when they break things.
