@@ -149,9 +149,9 @@ Other ISAs (e.g., ARM) do not require these 3 extra lines.
 .. code-block:: python
 
   system.cpu.createInterruptController()
-  system.cpu.interrupts.pio = system.membus.master
-  system.cpu.interrupts.int_master = system.membus.slave
-  system.cpu.interrupts.int_slave = system.membus.master
+  system.cpu.interrupts[0].pio = system.membus.master
+  system.cpu.interrupts[0].int_master = system.membus.slave
+  system.cpu.interrupts[0].int_slave = system.membus.master
 
   system.system_port = system.membus.slave
 

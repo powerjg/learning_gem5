@@ -64,9 +64,9 @@ system.cpu.dcache_port = system.membus.slave
 
 # create the interrupt controller for the CPU and connect to the membus
 system.cpu.createInterruptController()
-system.cpu.interrupts.pio = system.membus.master
-system.cpu.interrupts.int_master = system.membus.slave
-system.cpu.interrupts.int_slave = system.membus.master
+system.cpu.interrupts[0].pio = system.membus.master
+system.cpu.interrupts[0].int_master = system.membus.slave
+system.cpu.interrupts[0].int_slave = system.membus.master
 
 # Create a DDR3 memory controller and connect it to the membus
 system.mem_ctrl = DDR3_1600_x64()

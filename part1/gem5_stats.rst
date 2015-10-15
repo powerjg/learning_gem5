@@ -79,8 +79,8 @@ Below is pulled from the config.ini generated when the ``simple.py`` configurati
     system=system
     use_default_range=false
     width=8
-    master=system.cpu.interrupts.pio system.cpu.interrupts.int_slave system.mem_ctrl.port
-    slave=system.cpu.icache_port system.cpu.dcache_port system.cpu.interrupts.int_master system.system_port
+    master=system.cpu.interrupts[0].pio system.cpu.interrupts[0].int_slave system.mem_ctrl.port
+    slave=system.cpu.icache_port system.cpu.dcache_port system.cpu.interrupts[0].int_master system.system_port
 
 Here we see that at the beginning of the description of each SimObject is first it's name as created in the configuration file surrounded by square brackets (e.g., ``[system.membus]``).
 
