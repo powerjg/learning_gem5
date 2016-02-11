@@ -1,4 +1,4 @@
-:authors: Jason Power
+:authors: Jason Lowe-Power
 
 
 ------------------------------
@@ -22,9 +22,18 @@ An outline:
     #. Debugging support in gem5
     #. Creating a new MemObject with master/slave ports
     #. Contributing back to gem5
+        #. Style guidelines
+        #. Mercurial queues
+        #. Reviewboard
     #. Running tests
+#. Full system simulation
+    #. Introduction
+    #. Simple FS config file
+    #. Building a kernel for gem5
+    #. Building a disk image for gem5
+    #. ARM simulation
+    #. More on X86 simulation
 #. Advanced gem5 usage
-    #. Full-system simulation
     #. Checkpoint creation and restoring
     #. ISA language
     #. Using m5ops
@@ -40,6 +49,10 @@ An outline:
     #. Power models
     #. GPU models
     #. External simulation infrastructure
+
+.. todo::
+
+    Add information about address ranges and interleaved address ranges.
 
 Todo list
 ~~~~~~~~~
