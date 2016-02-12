@@ -502,6 +502,8 @@ This is the same as the simple scripts in :ref:`simple-config-chapter`.
 
 Now we can run our simulation!
 
+You can download ``run.py`` from :download:`here <../_static/scripts/part3/run.py>`
+
 .. _running-full-system
 
 Running a full system simulation
