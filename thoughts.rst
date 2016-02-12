@@ -38,6 +38,12 @@ An outline:
     #. ISA language
     #. Using m5ops
     #. Using traces
+#. An overview of common SimObjects
+    #. CPUs
+        #. CPU models
+        #. Dynamically switching CPUs
+    #. Classic memory system
+    #. System
 #. Using Ruby cache coherence model
     #. Overview of Ruby
     #. Ruby's cache coherence protocols

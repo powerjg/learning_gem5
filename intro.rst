@@ -22,3 +22,8 @@ One important lesson I have learned (the hard way) is when using complex tools l
 .. todo::
 
   	Finish the previous paragraph about how it is a good idea to understand what your tools are actually doing.
+
+.. todo::
+
+	should add a list of terms.
+	Things like "simulated system" vs "host system", etc.
