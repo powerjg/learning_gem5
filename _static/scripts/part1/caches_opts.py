@@ -35,12 +35,12 @@ constructors to initialize some of their parameters.
 
 """
 
-from m5.objects import BaseCache
+from m5.objects import Cache
 
 # Some specific options for caches
-# For all options see src/mem/cache/BaseCache.py
+# For all options see src/mem/cache/Cache.py
 
-class L1Cache(BaseCache):
+class L1Cache(Cache):
     """Simple L1 Cache with default values"""
 
     # Default parameters for both L1 I and D caches
@@ -95,7 +95,7 @@ class L1DCache(L1Cache):
         """Connect this cache's port to a CPU dcache port"""
         self.cpu_side = cpu.dcache_port
 
-class L2Cache(BaseCache):
+class L2Cache(Cache):
     """Simple L2 Cache with default values"""
 
     # Default parameters

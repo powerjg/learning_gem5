@@ -25,19 +25,20 @@ Creating cache objects
 ~~~~~~~~~~~~~~~~~~~~~~
 
 We are going to use the classic caches, instead of :ref:`ruby`, since we are modeling a single CPU system and we don't care about modeling cache coherence.
-We will extend the BaseCache SimObject and configure it for our system.
-First, we must understand the parameters that are used to configure BaseCache objects.
+We will extend the Cache SimObject and configure it for our system.
+First, we must understand the parameters that are used to configure Cache objects.
 
 .. todo::
 
-   We should add links to SimObjects like BaseCache that point to the doxygen on gem5's site.
+   We should add links to SimObjects like Cache that point to the doxygen on gem5's site.
 
-BaseCache
+Cache
 **********************
 
-The BaseCache SimObject declaration can be found in :file:`src/mem/cache/BaseCache.py`.
+The Cache SimObject declaration can be found in :file:`src/mem/cache/Cache.py`.
 This Python file defines the parameters which you can set of the SimObject.
 Under the hood, when the SimObject is instantiated these parameters are passed to the C++ implementation of the object.
+The ``Cache`` SimObject inherits from the ``BaseCache`` object shown below.
 
 .. code-block:: python
 
@@ -46,44 +47,73 @@ Under the hood, when the SimObject is instantiated these parameters are passed t
     from MemObject import MemObject
     from Prefetcher import BasePrefetcher
     from Tags import *
-    
+
     class BaseCache(MemObject):
         type = 'BaseCache'
+        abstract = True
         cxx_header = "mem/cache/base.hh"
-    
+
         size = Param.MemorySize("Capacity")
         assoc = Param.Unsigned("Associativity")
-    
+
         hit_latency = Param.Cycles("Hit latency")
         response_latency = Param.Cycles("Latency for the return path on a miss");
-    
+
         max_miss_count = Param.Counter(0,
             "Number of misses to handle before calling exit")
-    
+
         mshrs = Param.Unsigned("Number of MSHRs (max outstanding requests)")
         demand_mshr_reserve = Param.Unsigned(1, "MSHRs reserved for demand access")
         tgts_per_mshr = Param.Unsigned("Max number of accesses per MSHR")
         write_buffers = Param.Unsigned(8, "Number of write buffers")
-    
+
         forward_snoops = Param.Bool(True,
             "Forward snoops from mem side to cpu side")
-        is_top_level = Param.Bool(False, "Is this cache at the top level (e.g. L1)")
-    
+        is_read_only = Param.Bool(False, "Is this cache read only (e.g. inst)")
+
         prefetcher = Param.BasePrefetcher(NULL,"Prefetcher attached to cache")
         prefetch_on_access = Param.Bool(False,
              "Notify the hardware prefetcher on every access (not just misses)")
-    
+
         tags = Param.BaseTags(LRU(), "Tag store (replacement policy)")
         sequential_access = Param.Bool(False,
             "Whether to access tags and data sequentially")
-    
+
         cpu_side = SlavePort("Upstream port closer to the CPU and/or device")
         mem_side = MasterPort("Downstream port closer to memory")
-    
+
         addr_ranges = VectorParam.AddrRange([AllMemory],
              "Address range for the CPU-side port (to allow striping)")
-    
+
         system = Param.System(Parent.any, "System we belong to")
+
+    # Enum for cache clusivity, currently mostly inclusive or mostly
+    # exclusive.
+    class Clusivity(Enum): vals = ['mostly_incl', 'mostly_excl']
+
+    class Cache(BaseCache):
+        type = 'Cache'
+        cxx_header = 'mem/cache/cache.hh'
+
+        # Control whether this cache should be mostly inclusive or mostly
+        # exclusive with respect to upstream caches. The behaviour on a
+        # fill is determined accordingly. For a mostly inclusive cache,
+        # blocks are allocated on all fill operations. Thus, L1 caches
+        # should be set as mostly inclusive even if they have no upstream
+        # caches. In the case of a mostly exclusive cache, fills are not
+        # allocating unless they came directly from a non-caching source,
+        # e.g. a table walker. Additionally, on a hit from an upstream
+        # cache a line is dropped for a mostly exclusive cache.
+        clusivity = Param.Clusivity('mostly_incl',
+                                    "Clusivity with upstream cache")
+
+        # Determine if this cache sends out writebacks for clean lines, or
+        # simply clean evicts. In cases where a downstream cache is mostly
+        # exclusive with respect to this cache (acting as a victim cache),
+        # the clean writebacks are essential for performance. In general
+        # this should be set to True for anything but the last-level
+        # cache.
+        writeback_clean = Param.Bool(False, "Writeback clean lines")
 
 Within the ``BaseCache`` class, there are a number of *parameters*.
 For instance, ``assoc`` is an integer parameter.
@@ -100,7 +130,7 @@ The first step is to import the SimObject(s) we are going to extend in this file
 
 .. code-block:: python
 
-    from m5.objects import BaseCache
+    from m5.objects import Cache
 
 Next, we can treat the BaseCache object just like any other Python class and extend it.
 We can name the new cache anything we want.
@@ -108,13 +138,12 @@ Let's start by making an L1 cache.
 
 .. code-block:: python
 
-    class L1Cache(BaseCache):
+    class L1Cache(Cache):
         assoc = 2
         hit_latency = 2
         response_latency = 2
         mshrs = 4
         tgts_per_mshr = 20
-        is_top_level = True
 
 Here, we are setting some of the parameters of the BaseCache that do not have default values.
 To see all of the possible configuration options, and to find which are required and which are optional, you have to look at the source code of the SimObject.
@@ -135,7 +164,7 @@ Let's also create an L2 cache with some reasonable parameters.
 
 .. code-block:: python
 
-    class L2Cache(BaseCache):
+    class L2Cache(Cache):
         size = '256kB'
         assoc = 8
         hit_latency = 20
@@ -146,7 +175,7 @@ Let's also create an L2 cache with some reasonable parameters.
 
 Now that we have specified all of the necessary parameters required for ``BaseCache``, all we have to do is instantiate our sub-classes and connect the caches to the interconnect.
 However, connecting lots of objects up to complex interconnects can make configuration files quickly grow and become unreadable.
-Therefore, let's first add some helper functions to our sub-classes of ``BaseCache``.
+Therefore, let's first add some helper functions to our sub-classes of ``Cache``.
 Remember, these are just Python classes, so we can do anything with them that you can do with a Python class.
 
 To the L1 cache let's add two functions, ``connectCPU`` to connect a CPU to the cache and ``connectBus`` to connect the cache to a bus.
