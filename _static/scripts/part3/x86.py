@@ -52,6 +52,7 @@ def init_fs(system, membus, cpus=1):
                         mshrs = 20,
                         size = '1kB',
                         tgts_per_mshr = 12,
+                        forward_snoops = False,
                         addr_ranges = system.mem_ranges)
     system.iocache.cpu_side = system.iobus.master
     system.iocache.mem_side = system.membus.slave

@@ -217,6 +217,8 @@ However, there is one important change when setting up the caches in full system
 In full system, since we are actually modeling the real hardware, x86 and ARM architectures have hardware page table walkers that access memory.
 Therefore, we need to connect these devices to a memory port.
 It is also possible to add caches to these devices as well, but we omit that in this configuration file.
+The code for the ``L1ICache`` and ``L1DCache`` can be downloaded :download:`here <../_static/scripts/part1/caches.py>` or in ``configs/learning_gem5/part1/caches.py``.
+You can simply import that file to use those caches.
 
 .. code-block:: python
 
@@ -331,6 +333,7 @@ For the details, see the Intel x86 architecture manual and the gem5 source code.
                             mshrs = 20,
                             size = '1kB',
                             tgts_per_mshr = 12,
+                            forward_snoops = False,
                             addr_ranges = system.mem_ranges)
         system.iocache.cpu_side = system.iobus.master
         system.iocache.mem_side = system.membus.slave
