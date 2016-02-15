@@ -131,7 +131,7 @@ The list is then joined, so it is a single string with spaces between the parame
 
 .. code-block:: python
 
-        self.kernel = '/p/multifacet/users/powerjg/gem5-tutorial/binaries/x86_64-vmlinux-2.6.22.9'
+        self.kernel = 'binaries/x86_64-vmlinux-2.6.22.9'
 
         boot_options = ['earlyprintk=ttyS0', 'console=ttyS0', 'lpj=7999923',
                         'root=/dev/hda1']
@@ -146,7 +146,7 @@ Below, each of these functions is described.
 
 .. code-block:: python
 
-        self.setDiskImage('/p/multifacet/users/powerjg/gem5-tutorial/disks/linux-x86.img')
+        self.setDiskImage('disks/linux-x86.img')
 
         self.createCPU()
 
@@ -534,7 +534,7 @@ When running gem5, your output should look something like below.
 
     Global frequency set at 1000000000000 ticks per second
     warn: DRAM device capacity (8192 Mbytes) does not match the address range assigned (4096 Mbytes)
-    info: kernel located at: /p/multifacet/users/powerjg/gem5-tutorial/binaries/x86_64-vmlinux-2.6.22.9
+    info: kernel located at: binaries/x86_64-vmlinux-2.6.22.9
     Listening for com_1 connection on port 3457
           0: rtc: Real-time clock set to Sun Jan  1 00:00:00 2012
     0: system.remote_gdb.listener: listening for remote gdb #0 on port 7000

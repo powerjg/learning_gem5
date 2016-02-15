@@ -41,7 +41,7 @@ class MySystem(LinuxX86System):
 
         # Change this path to point to the kernel you want to use
         # Kernel from http://www.m5sim.org/dist/current/x86/x86-system.tar.bz2
-        self.kernel = '/p/multifacet/users/powerjg/gem5-tutorial/binaries/x86_64-vmlinux-2.6.22.9'
+        self.kernel = 'binaries/x86_64-vmlinux-2.6.22.9'
 
         # Options specified on the kernel command line
         boot_options = ['earlyprintk=ttyS0', 'console=ttyS0', 'lpj=7999923',
@@ -52,7 +52,7 @@ class MySystem(LinuxX86System):
         # The first disk is the root disk. The second could be used for swap
         # or anything else.
         # Disks from http://www.m5sim.org/dist/current/x86/x86-system.tar.bz2
-        self.setDiskImage('/p/multifacet/users/powerjg/gem5-tutorial/disks/linux-x86.img')
+        self.setDiskImage('disks/linux-x86.img')
 
         # Create the CPU for our system.
         self.createCPU()
