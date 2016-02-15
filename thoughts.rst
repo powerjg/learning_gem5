@@ -5,9 +5,6 @@
 Some thoughts on this document
 ------------------------------
 
-* Changes that need to happen before next stable release
-   * Remove is_top_level
-
 * We want this document to be living.
    * We should have the source checked in somewhere (probably in a repo next to gem5).
    * We should force people to make updates when they break things.
@@ -43,6 +40,7 @@ An outline:
         #. CPU models
         #. Dynamically switching CPUs
     #. Classic memory system
+        #. Random note: All controllers that issue coherent requests are required to have a cache attached to them. For instance, you have to have a cache on the IOBus or else there are weird errors.
     #. System
 #. Using Ruby cache coherence model
     #. Overview of Ruby

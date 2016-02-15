@@ -21,7 +21,7 @@ class MySystem(LinuxX86System):
         # For x86, there is an I/O gap from 3GB to 4GB.
         # We can have at most 3GB of memory unless we do something special
         # to account for this I/O gap. For simplicity, this is omitted.
-        mem_size = '3GB'
+        mem_size = '512MB'
         self.mem_ranges = [AddrRange(mem_size),
                            AddrRange(0xC0000000, size=0x100000), # For I/0
                            ]
@@ -58,12 +58,7 @@ class MySystem(LinuxX86System):
         self.createCPU()
 
         # Create the cache heirarchy for the system.
-        # self.createCacheHierarchy()
-
-        self.cpu.icache_port = self.membus.slave
-        self.cpu.dcache_port = self.membus.slave
-        self.cpu.itb.walker.port = self.membus.slave
-        self.cpu.dtb.walker.port = self.membus.slave
+        self.createCacheHierarchy()
 
         # Create the memory controller for the sytem
         self.createMemoryControllers()
@@ -108,8 +103,8 @@ class MySystem(LinuxX86System):
         self.cpu.dcache.connectBus(self.membus)
 
         # Connect the CPU TLBs directly to the mem.
-        self.cpu.itb.walker.port = self.mmubus.slave
-        self.cpu.dtb.walker.port = self.mmubus.slave
+        self.cpu.itb.walker.port = self.membus.slave
+        self.cpu.dtb.walker.port = self.membus.slave
 
     def createMemoryControllers(self):
         """ Create the memory controller for the system """

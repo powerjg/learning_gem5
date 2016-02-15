@@ -27,10 +27,7 @@ For other ISAs, you can refer to the code in mainline gem5 in configs/common/FSC
 
 Before getting started, make sure you have the x86 version of gem5 built.
 See :ref:`building-chapter`.
-
-.. todo::
-
-    Finish this paragraph about building gem5.
+In this chapter, we assume you have built gem5 with the x86 ISA enabled.
 
 Creating the system object
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -326,10 +323,17 @@ For the details, see the Intel x86 architecture manual and the gem5 source code.
         # connect the io bus
         system.pc.attachIO(system.iobus)
 
-        system.iobridge = Bridge(delay='50ns',
-                                    ranges = system.mem_ranges)
-        system.iobridge.slave = system.iobus.master
-        system.iobridge.master = membus.slave
+        # Add a tiny cache to the IO bus.
+        # This cache is required for the classic memory model to mantain coherence
+        system.iocache = Cache(assoc=8,
+                            hit_latency = 50,
+                            response_latency = 50,
+                            mshrs = 20,
+                            size = '1kB',
+                            tgts_per_mshr = 12,
+                            addr_ranges = system.mem_ranges)
+        system.iocache.cpu_side = system.iobus.master
+        system.iocache.mem_side = system.membus.slave
 
         system.intrctrl = IntrControl()
 
@@ -567,7 +571,7 @@ You may have a slightly different port number, if port 3456 is taken for some re
     Listening for com_1 connection on port 3456
 
 After connecting, you can begin the slow process of watching Linux boot!
-Using the atomic CPU and a relatively recent host computer, it should take less than 5 minutes to boot to a command prompt.
+Using the atomic CPU and a relatively recent host computer, it should take around 5 minutes to boot to a command prompt.
 At this point, you can run any application that is installed on the disk image that you used to boot Linux.
 
 Using a runscript
