@@ -277,6 +277,7 @@ Architecture-specific settings
 One thing we skipped over in the previous section was the function ``x86.init_fs``.
 This function encapsulates most of the architecture-specific setup that is required for an x86 system.
 You can download the file :download:`here <../_static/scripts/part3/x86.py>` and the code is listed below.
+You can download a slightly modified version that supports multiple processors :download:`here <../_static/scripts/part3/x86_mp.py>`.
 Next we will go through some of the highlights of this code.
 For the details, see the Intel x86 architecture manual and the gem5 source code.
 
@@ -443,7 +444,8 @@ There are a number of important BIOS tables, but we will only talk about a coupl
 First, you must add a ``X86IntelMPProcessor`` for each processor in the system.
 Since we are only simulating one processor in this configuration, we just create one.
 Also, when creating the ``X86IntelMPProcessor`` entries, exactly one should be set as the bootstrap processor.
-Similarly, after creating the ``X86IntelMPProcessor`` entries, you must create the APIC entries for each CPU (one in this case).
+Similarly, after creating the ``X86IntelMPProcessor`` entries, you must create the ``X86IntelMPIOAPIC`` entry.
+This entry is similar to a CPU entry, and importantly its ``id`` should be one more than the last CPU id (one in this case).
 This will also have to be change for multiple CPUs.
 
 Next, we create the PCI and ICA buses, and a number of other I/O devices.
