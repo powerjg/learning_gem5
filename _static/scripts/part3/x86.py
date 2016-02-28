@@ -2,7 +2,7 @@
 import m5
 from m5.objects import *
 
-def init_fs(system, membus, cpus=1):
+def init_fs(system, membus):
     system.pc = Pc()
 
     # Constants similar to x86_traits.hh
@@ -36,9 +36,10 @@ def init_fs(system, membus, cpus=1):
     system.apicbridge = Bridge(delay='50ns')
     system.apicbridge.slave = system.iobus.master
     system.apicbridge.master = membus.slave
+    # This should be expanded for multiple CPUs
     system.apicbridge.ranges = [AddrRange(interrupts_address_space_base,
                                            interrupts_address_space_base +
-                                           cpus * APIC_range_size
+                                           1 * APIC_range_size
                                            - 1)]
 
     # connect the io bus
@@ -67,18 +68,18 @@ def init_fs(system, membus, cpus=1):
     # Set up the Intel MP table
     base_entries = []
     ext_entries = []
-    # This is the entries for the processors.
+    # This is the entry for the processor.
     # You need to make multiple of these if you have multiple processors
     # Note: Only one entry should have the flag bootstrap = True!
-    for i in range(cpus):
-        bp = X86IntelMPProcessor(
-                local_apic_id = i,
-                local_apic_version = 0x14,
-                enable = True,
-                bootstrap = (i ==0))
-        base_entries.append(bp)
+    bp = X86IntelMPProcessor(
+            local_apic_id = 0,
+            local_apic_version = 0x14,
+            enable = True,
+            bootstrap = True)
+    base_entries.append(bp)
+    # For multiple CPUs, change id to 1 + the final CPU id above (e.g., cpus)
     io_apic = X86IntelMPIOAPIC(
-            id = cpus,
+            id = 1,
             version = 0x11,
             enable = True,
             address = 0xfec00000)
