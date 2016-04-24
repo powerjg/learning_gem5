@@ -32,6 +32,21 @@ First, we must understand the parameters that are used to configure BaseCache ob
 
    We should add links to SimObjects like BaseCache that point to the doxygen on gem5's site.
 
+.. sidebar:: Classic caches and Ruby
+
+    gem5 currently has two completely distinct subsystems to model the on-chip caches in a system, the "Classic caches" and "Ruby".
+    The historical reason for this is that gem5 is a combination of m5 from Michigan and GEMS from Wisconsin.
+    GEMS used Ruby as its cache model, whereas the classic caches came from the m5 codebase (hence "classic").
+    The difference between these two models is that Ruby is designed to model cache coherence in detail.
+    Part of Ruby is SLICC, a language for defining cache coherence protocols.
+    On the other hand, the classic caches implement a simplified and inflexible MOESI coherence protocol.
+
+    To choose which model to use, you should ask yourself what you are trying to model.
+    If you are modeling changes to the cache coherence protocol or the coherence protocol could have a first-order impact on your results, use Ruby.
+    Otherwise, if the coherence protocol isn't important to you, use the classic caches.
+
+    A longterm goal of gem5 is to unify these to cache models into a single holistic model.
+
 BaseCache
 **********************
 
