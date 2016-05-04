@@ -7,6 +7,8 @@
 Creating your first SimObject
 ------------------------------------------
 
+.. Note:: This chapter is out of date! There have been significant changes in the cache models which renders the below code wrong. 
+
 In this chapter we will walk though how to create a simple SimObject.
 As an example, we are going to create a new cache replacement policy, specifically, NMRU, not most recently used.
 After this chapter you should be able to create new SimObjects, instantiate them in configuration files, and run simulations with your new objects.
