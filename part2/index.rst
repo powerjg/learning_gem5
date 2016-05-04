@@ -7,5 +7,6 @@ Part II: Modifying and extending gem5
 .. toctree::
 
     environment
-    simobject
+    helloobject
+    simobject-old
     debugging

@@ -1,4 +1,4 @@
-authors: Jason Power
+:authors: Jason Power
 
 .. hello-simobject-chapter:
 
@@ -18,20 +18,22 @@ In this chapter, we will walk through creating a simple "HelloWorld" SimObject.
 The goal is to introduce you to how SimObjects are created and the required boilerplate code for all SimObjects.
 We will also create a simple ``Python`` configuration script which instantiates our SimObject.
 
-Step 1: Create a new patch for your changes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. sidebar:: Using Mercurial queues
 
-The first step when adding a new feature or modifying something in gem5, is to create a new patch to store your changes.
-Details on Mercurial patch queues can be found in the `Mercurial book`_.
+	It is common to use a new Mercurial queues patch for each new feature you add to gem5.
+	This is similar to how you use branches in git.
 
-.. _Mercurial book: http://hgbook.red-bean.com/read/managing-change-with-mercurial-queues.html
+	The first step when adding a new feature or modifying something in gem5, is to create a new patch to store your changes.
+	Details on Mercurial patch queues can be found in the `Mercurial book`_.
 
-.. code-block:: sh
+	.. _Mercurial book: http://hgbook.red-bean.com/read/managing-change-with-mercurial-queues.html
 
-	hg qnew hello-simobject -m "misc: Add a simple hello world SimObject"
+	.. code-block:: sh
+
+		hg qnew hello-simobject -m "misc: Add a simple hello world SimObject"
 
 
-Step 2: Create a Python class for your new SimObject
+Step 1: Create a Python class for your new SimObject
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Each SimObject has a Python class which is associated with it.
@@ -50,7 +52,7 @@ We can create a file, Hello.py, in ``src/learning_gem5``
 	    type = 'HelloObject'
 	    cxx_header = "learning_gem5/hello_object.hh"
 
-Step 3: Implement your SimObject in C++
+Step 2: Implement your SimObject in C++
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Next, we need to create ``hello_object.hh`` and ``hello_object.cc`` which will implement the hello object.
@@ -121,7 +123,7 @@ Usually this function is very simple (as below).
 	    return new HelloObject(this);
 	}
 
-Step 4: Register the SimObject and C++ file
+Step 3: Register the SimObject and C++ file
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In order for the ``C++`` file to be compiled and the ``Python`` file to be parsed we need to tell the build system about these files.
@@ -147,7 +149,7 @@ Below is the required code.
 	SimObject('Hello.py')
 	Source('hello_object.cc')
 
-Step 5: (Re)-build gem5
+Step 4: (Re)-build gem5
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 To compile and link your new files you simply need to recompile gem5.
@@ -158,7 +160,7 @@ The below example assumes you are using the x86 ISA, but nothing in our object r
 	scons build/X86/gem5.opt
 
 
-Step 6: Modify the config scripts to use your new SimObject
+Step 5: Create the config scripts to use your new SimObject
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Now that you have implemented a SimObject, and it has been compiled into gem5, you need to create or modify a ``Python`` config file to instantiate your object.
