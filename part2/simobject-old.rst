@@ -7,7 +7,7 @@
 Creating your first SimObject
 ------------------------------------------
 
-.. Note:: This chapter is out of date! There have been significant changes in the cache models which renders the below code wrong. 
+.. Note:: This chapter is out of date! There have been significant changes in the cache models which renders the below code wrong. This chapter has been mostly subsumed by :ref:`hello-simobject-chapter`.
 
 In this chapter we will walk though how to create a simple SimObject.
 As an example, we are going to create a new cache replacement policy, specifically, NMRU, not most recently used.

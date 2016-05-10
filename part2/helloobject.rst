@@ -1,6 +1,6 @@
 :authors: Jason Power
 
-.. hello-simobject-chapter:
+.. _hello-simobject-chapter:
 
 ------------------------------------------
 Creating a *very* simple SimObject
