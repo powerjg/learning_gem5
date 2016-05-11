@@ -19,24 +19,33 @@ And we'll have a single DDR3 memory channel, also connected to the memory bus.
 gem5 configuration scripts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-gem5 takes, as a parameter, a python script which sets up and executes the simulation.
+The gem5 binary takes, as a parameter, a python script which sets up and executes the simulation.
 In this script, you create a system to simulate, create all of the components of the system, and specify all of the parameters for the system components.
 Then, from the script, you can begin the simulation.
 
+This script is totally user-defined.
+You can choose to use any valid Python code in the configuration scripts.
+This book provides on example of a style that relies heavily classes and inheritance in Python.
+As a gem5 users, it's up to you how simple or complicated to make your configuration scripts.
+
 There are a number of example configuration scripts that ship with gem5 in ``configs/examples``.
-However, these scripts are all encompassing and allow users to specify almost all options on the command line.
-In this tutorial, we are going to start with the most simple script that can run gem5 and build off of that.
+These scripts are all-encompassing and allow users to specify almost all options on the command line.
+Therefore, in this tutorial, we are going to start with the most simple script that can run gem5 and build off of that.
 Hopefully, by the end of this section you'll have a good idea of how simulation scripts work.
 
 
-An aside on SimObjects
-~~~~~~~~~~~~~~~~~~~~~~~~~
+.. sidebar:: An aside on SimObjects
 
-gem5's modular design is built around the **SimObject** type.
-Most of the components in the simulated system are SimObjects: CPUs, caches, memory controllers, busses, etc.
-gem5 exports all of these objects from their ``C++`` implementation to python.
-Thus, from the python configuration script you can create any SimObject, set its parameters, and specify the interactions between SimObjects.
+    gem5's modular design is built around the **SimObject** type.
+    Most of the components in the simulated system are SimObjects: CPUs, caches, memory controllers, busses, etc.
+    gem5 exports all of these objects from their ``C++`` implementation to python.
+    Thus, from the python configuration script you can create any SimObject, set its parameters, and specify the interactions between SimObjects.
 
+    See http://www.gem5.org/SimObjects for more information.
+
+.. todo::
+
+    Should probably talk here about SE vs. FS mode.
 
 Creating a config file
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -116,27 +125,24 @@ In this case, since the system we want to simulate doesn't have any caches, we w
   system.cpu.icache_port = system.membus.slave
   system.cpu.dcache_port = system.membus.slave
 
-An aside on gem5 ports
-**********************
+.. Sidebar:: An aside on gem5 ports
 
-To connect memory system components together, gem5 uses a port abstraction.
-Each memory object can have two kinds of ports, *master ports* and *slave ports*.
-Requests are sent from a master port to a slave port, and responses are sent from a slave port to a master port.
-When connecting ports, you must connect a master port to a slave port.
+    To connect memory system components together, gem5 uses a port abstraction.
+    Each memory object can have two kinds of ports, *master ports* and *slave ports*.
+    Requests are sent from a master port to a slave port, and responses are sent from a slave port to a master port.
+    When connecting ports, you must connect a master port to a slave port.
 
-Connecting ports together is easy to do from the python configuration files.
-You can simply set the master port ``=`` to the slave port and they will be connected.
-For instance:
+    Connecting ports together is easy to do from the python configuration files.
+    You can simply set the master port ``=`` to the slave port and they will be connected.
+    For instance:
 
-.. code-block:: python
+    .. code-block:: python
 
-  memobject1.master = memobject2.slave
+      memobject1.master = memobject2.slave
 
-The master and slave can be on either side of the ``=`` and the same connection will be made.
-After making the connection, now the master and send requests to the slave port.
-There's a lot of magic going on behind the scenes to set up the connection, the details of which are unimportant for most users.
-
--------------------------
+    The master and slave can be on either side of the ``=`` and the same connection will be made.
+    After making the connection, now the master and send requests to the slave port.
+    There's a lot of magic going on behind the scenes to set up the connection, the details of which are unimportant for most users.
 
 Next, we need to connect up a few other ports to make sure that our system will function correctly.
 We need to create an IO controller on the CPU and connect it to the memory bus.
@@ -207,7 +213,7 @@ You can also pass the parameters as named arguments, like the ``Root`` object be
   root = Root(full_system = False, system = system)
   m5.instantiate()
 
-Finally, we can begin simulation!
+Finally, we can kick off the actual simulation!
 
 .. code-block:: python
 
