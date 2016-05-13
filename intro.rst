@@ -27,3 +27,6 @@ One important lesson I have learned (the hard way) is when using complex tools l
 
 	should add a list of terms.
 	Things like "simulated system" vs "host system", etc.
+
+
+You can find the source for this book on github at https://github.com/powerjg/learning_gem5.
