@@ -1,4 +1,4 @@
-:authors: Jason Power
+:authors: Jason Lowe-Power
 
 .. _hello-simobject-chapter:
 
@@ -41,7 +41,7 @@ This Python class describes the parameters of your SimObject that can be control
 For our simple SimObject, we are just going to start out with no parameters.
 Thus, we simply need to declare a new class for our SimObject and set it's name and the C++ header that will define the C++ class for the SimObject.
 
-We can create a file, Hello.py, in ``src/learning_gem5``
+We can create a file, HelloObject.py, in ``src/learning_gem5``
 
 .. code-block:: python
 
@@ -51,6 +51,8 @@ We can create a file, Hello.py, in ``src/learning_gem5``
 	class HelloObject(SimObject):
 	    type = 'HelloObject'
 	    cxx_header = "learning_gem5/hello_object.hh"
+
+You can find the complete file :download:`here <../_static/scripts/part2/HelloObject.py>`.
 
 Step 2: Implement your SimObject in C++
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -90,6 +92,8 @@ The code required for our simple header file is listed below.
 
 	#endif // __LEARNING_GEM5_HELLO_OBJECT_HH__
 
+You can find the complete file :download:`here <../_static/scripts/part2/hello_object.hh>`.
+
 Next, we need to implement *two* functions in the ``.cc`` file, not just one.
 The first function, is obviously the constructor for the ``HelloObject``.
 Here we simply pass the parameter object to the SimObject parent and print "Hello world!"
@@ -123,6 +127,8 @@ Usually this function is very simple (as below).
 	    return new HelloObject(this);
 	}
 
+You can find the complete file :download:`here <../_static/scripts/part2/hello_object.cc>`.
+
 Step 3: Register the SimObject and C++ file
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -148,6 +154,8 @@ Below is the required code.
 
 	SimObject('Hello.py')
 	Source('hello_object.cc')
+
+You can find the complete file :download:`here <../_static/scripts/part2/SConscript>`.
 
 Step 4: (Re)-build gem5
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -201,6 +209,8 @@ Finally, you need to call ``instantiate`` on the ``m5`` module and actually run 
 	exit_event = m5.simulate()
 	print 'Exiting @ tick %i because %s' % (m5.curTick(), exit_event.getCause())
 
+You can find the complete file :download:`here <../_static/scripts/part2/run_hello.py>`.
+
 The output should look something like the following
 
 ::
@@ -211,7 +221,7 @@ The output should look something like the following
 	gem5 compiled May  4 2016 11:37:41
 	gem5 started May  4 2016 11:44:28
 	gem5 executing on mustardseed.cs.wisc.edu, pid 22480
-	command line: build/X86/gem5.opt configs/learning_gem5/part2/hello.py
+	command line: build/X86/gem5.opt configs/learning_gem5/part2/run_hello.py
 
 	Global frequency set at 1000000000000 ticks per second
 	Hello World! From a SimObject!
@@ -221,3 +231,4 @@ The output should look something like the following
 
 Congrats! You have written your first SimObject.
 In the next chapters, we will extend this SimObject and explore what you can do with SimObjects.
+
