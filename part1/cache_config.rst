@@ -373,7 +373,7 @@ And the unified ``L2Cache``:
 .. code-block:: python
 
     def __init__(self, options=None):
-        super(L2Cache, self).__init__(options)
+        super(L2Cache, self).__init__()
         if not options or not options.l2_size:
             return
         self.size = options.l2_size
