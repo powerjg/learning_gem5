@@ -1,6 +1,6 @@
 
 
-:authors: Jason Power
+:authors: Jason Lowe-Power
 
 .. _cache-config-chapter:
 
@@ -271,7 +271,7 @@ And connect the caches to the CPU ports with the helper function we created.
 Also, You need to *remove* the previous lines which connected the cache ports directly to the memory bus.
 
 .. code-block:: python
-    
+
     -system.cpu.icache_port = system.membus.slave
     -system.cpu.dcache_port = system.membus.slave
 
@@ -388,12 +388,12 @@ With these changes, you can now pass the cache sizes into your script from the c
 
     gem5 Simulator System.  http://gem5.org
     gem5 is copyrighted software; use the --copyright option for details.
-    
+
     gem5 compiled Sep  6 2015 14:17:02
     gem5 started Sep  6 2015 15:06:51
     gem5 executing on galapagos-09.cs.wisc.edu
     command line: build/X86/gem5.opt ../tutorial/_static/scripts/part1/two_level_opts.py --l2_size=1MB --l1d_size=128kB
-    
+
     Global frequency set at 1000000000000 ticks per second
     warn: DRAM device capacity (8192 Mbytes) does not match the address range assigned (512 Mbytes)
     0: system.remote_gdb.listener: listening for remote gdb #0 on port 7000
@@ -403,15 +403,3 @@ With these changes, you can now pass the cache sizes into your script from the c
     Exiting @ tick 56742000 because target called exit()
 
 The updated configuration script can be downloaded :download:`here <../_static/scripts/part1/two_level_opts.py>` and the updated cache file can be downloaded :download:`here <../_static/scripts/part1/caches_opts.py>`.
-
-
-
-
-
-
-
-
-
-
-
-

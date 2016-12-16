@@ -1,4 +1,4 @@
-:authors: Jason Power
+:authors: Jason Lowe-Power
 
 =================================
 Part I: Getting started with gem5

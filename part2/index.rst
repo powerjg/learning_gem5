@@ -1,4 +1,4 @@
-:authors: Jason Power
+:authors: Jason Lowe-Power
 
 =====================================
 Part II: Modifying and extending gem5

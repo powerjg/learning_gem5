@@ -1,5 +1,5 @@
 
-:authors: Jason Power
+:authors: Jason Lowe-Power
 
 .. _debugging-chapter:
 

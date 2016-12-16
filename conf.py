@@ -52,7 +52,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'gem5 Tutorial'
-copyright = u'2015, Jason Power'
+copyright = u'2016, Jason Lowe-Power'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -224,7 +224,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
   ('index', 'gem5Tutorial.tex', u'gem5 Tutorial Documentation',
-   u'Jason Power', 'manual'),
+   u'Jason Lowe-Power', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -254,7 +254,7 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     ('index', 'gem5tutorial', u'gem5 Tutorial Documentation',
-     [u'Jason Power'], 1)
+     [u'Jason Lowe-Power'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -268,7 +268,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
   ('index', 'gem5Tutorial', u'gem5 Tutorial Documentation',
-   u'Jason Power', 'gem5Tutorial', 'One line description of project.',
+   u'Jason Lowe-Power', 'gem5Tutorial', 'One line description of project.',
    'Miscellaneous'),
 ]
 

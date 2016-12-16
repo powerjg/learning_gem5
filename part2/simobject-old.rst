@@ -1,5 +1,5 @@
 
-:authors: Jason Power
+:authors: Jason Lowe-Power
 
 .. _simple-simobject-chapter:
 
@@ -93,7 +93,7 @@ Below is the contents of ``nmru.hh``.
 
 Again, for the implementation we can use similar code to LRU and Random replacement policies.
 The basic implementation is that we track the most recently used block by moving the last accessed block to the head of the MRU queue.
-On a replacement, we select a random block that is not the most recently used block. 
+On a replacement, we select a random block that is not the most recently used block.
 Below is the implementation in ``nrmu.cc``:
 
 .. todo::
