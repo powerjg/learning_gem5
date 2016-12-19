@@ -29,5 +29,5 @@
 
 Import('*')
 
-SimObject('Hello.py')
+SimObject('HelloObject.py')
 Source('hello_object.cc')

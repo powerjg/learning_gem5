@@ -92,7 +92,7 @@ The code required for our simple header file is listed below.
 
 	#endif // __LEARNING_GEM5_HELLO_OBJECT_HH__
 
-You can find the complete file :download:`here <../_static/scripts/part2/hello_object.hh>`.
+You can find the complete file :download:`here <../_static/scripts/part2/hello-simple/hello_object.hh>`.
 
 Next, we need to implement *two* functions in the ``.cc`` file, not just one.
 The first function, is obviously the constructor for the ``HelloObject``.
@@ -127,7 +127,7 @@ Usually this function is very simple (as below).
 	    return new HelloObject(this);
 	}
 
-You can find the complete file :download:`here <../_static/scripts/part2/hello_object.cc>`.
+You can find the complete file :download:`here <../_static/scripts/part2/hello-simple/hello_object.cc>`.
 
 Step 3: Register the SimObject and C++ file
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -152,7 +152,7 @@ Below is the required code.
 
 	Import('*')
 
-	SimObject('Hello.py')
+	SimObject('HelloObject.py')
 	Source('hello_object.cc')
 
 You can find the complete file :download:`here <../_static/scripts/part2/SConscript>`.
@@ -231,4 +231,3 @@ The output should look something like the following
 
 Congrats! You have written your first SimObject.
 In the next chapters, we will extend this SimObject and explore what you can do with SimObjects.
-
