@@ -116,7 +116,7 @@ First, let's simply run the hello world program without any parameters:
 
 .. code-block:: sh
 
-    build/X86_MESI_Two_Level/gem5.opt configs/example/se.py --cmd=tests/test-progs/hello/bin/x86/linux/hello
+    build/X86/gem5.opt configs/example/se.py --cmd=tests/test-progs/hello/bin/x86/linux/hello
 
 And we get the following as output:
 
@@ -128,7 +128,7 @@ And we get the following as output:
     gem5 compiled Jan 14 2015 16:11:34
     gem5 started Feb  2 2015 15:22:24
     gem5 executing on mustardseed.cs.wisc.edu
-    command line: build/X86_MESI_Two_Level/gem5.opt configs/example/se.py --cmd=tests/test-progs/hello/bin/x86/linux/hello
+    command line: build/X86/gem5.opt configs/example/se.py --cmd=tests/test-progs/hello/bin/x86/linux/hello
     Global frequency set at 1000000000000 ticks per second
     warn: DRAM device capacity (8192 Mbytes) does not match the address range assigned (512 Mbytes)
     0: system.remote_gdb.listener: listening for remote gdb #0 on port 7000
@@ -160,7 +160,7 @@ While we're at it, we can also specify sizes for the L1 caches.
 
 .. code-block:: sh
 
-    build/X86_MESI_Two_Level/gem5.opt configs/example/se.py --cmd=tests/test-progs/hello/bin/x86/linux/hello --cpu-type=TimingSimpleCPU --l1d_size=64kB --l1i_size=16kB
+    build/X86/gem5.opt configs/example/se.py --cmd=tests/test-progs/hello/bin/x86/linux/hello --cpu-type=TimingSimpleCPU --l1d_size=64kB --l1i_size=16kB
 
 ::
 
@@ -170,7 +170,7 @@ While we're at it, we can also specify sizes for the L1 caches.
     gem5 compiled Jan 14 2015 16:11:34
     gem5 started Feb  2 2015 15:26:57
     gem5 executing on mustardseed.cs.wisc.edu
-    command line: build/X86_MESI_Two_Level/gem5.opt configs/example/se.py --cmd=tests/test-progs/hello/bin/x86/linux/hello --cpu-type=TimingSimpleCPU --l1d_size=64kB --l1i_size=16kB
+    command line: build/X86/gem5.opt configs/example/se.py --cmd=tests/test-progs/hello/bin/x86/linux/hello --cpu-type=TimingSimpleCPU --l1d_size=64kB --l1i_size=16kB
     Global frequency set at 1000000000000 ticks per second
     warn: DRAM device capacity (8192 Mbytes) does not match the address range assigned (512 Mbytes)
     0: system.remote_gdb.listener: listening for remote gdb #0 on port 7000
@@ -186,7 +186,7 @@ The correct command line should be:
 
 .. code-block:: sh
 
-    build/X86_MESI_Two_Level/gem5.opt configs/example/se.py --cmd=tests/test-progs/hello/bin/x86/linux/hello --cpu-type=TimingSimpleCPU --l1d_size=64kB --l1i_size=16kB --caches
+    build/X86/gem5.opt configs/example/se.py --cmd=tests/test-progs/hello/bin/x86/linux/hello --cpu-type=TimingSimpleCPU --l1d_size=64kB --l1i_size=16kB --caches
 
 ::
 
@@ -196,7 +196,7 @@ The correct command line should be:
     gem5 compiled Jan 14 2015 16:11:34
     gem5 started Feb  2 2015 15:29:20
     gem5 executing on mustardseed.cs.wisc.edu
-    command line: build/X86_MESI_Two_Level/gem5.opt configs/example/se.py --cmd=tests/test-progs/hello/bin/x86/linux/hello --cpu-type=TimingSimpleCPU --l1d_size=64kB --l1i_size=16kB --caches
+    command line: build/X86/gem5.opt configs/example/se.py --cmd=tests/test-progs/hello/bin/x86/linux/hello --cpu-type=TimingSimpleCPU --l1d_size=64kB --l1i_size=16kB --caches
     Global frequency set at 1000000000000 ticks per second
     warn: DRAM device capacity (8192 Mbytes) does not match the address range assigned (512 Mbytes)
     0: system.remote_gdb.listener: listening for remote gdb #0 on port 7000
@@ -244,7 +244,7 @@ All of the possible options are printed when you run:
 
 .. code-block:: sh
 
-    build/X86_MESI_Two_Level/gem5.opt configs/example/se.py --help
+    build/X86/gem5.opt configs/example/se.py --help
 
 Below is a few important options from that list.
 
