@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# Change this to your docker username to push to docker hub
+PREFIX=powerjg
+
+build () {
+    echo "Building $1..."
+    docker build -q -t $1 -f $2 .
+    rc=$?
+    if [[ $rc != 0 ]]; then
+        echo "Failed"
+        exit $rc
+    else
+        echo "Done"
+    fi
+}
+
+push () {
+    docker push $1
+    echo
+}
+
+build powerjg/learning_gem5-base _static/docker/base.dockerfile
+
+
+part1=( building simple-config cache-config two-level-opts )
+for name in "${part1[@]}"; do
+    build $PREFIX/learning_gem5-part1-$name _static/docker/part1/$name.dockerfile
+    push $PREFIX/learning_gem5-part1-$name
+done
+
+part2=( helloobject debugging events parameters )
+for name in "${part2[@]}"; do
+    build $PREFIX/learning_gem5-part2-$name _static/docker/part2/$name.dockerfile
+    push $PREFIX/learning_gem5-part2-$name
+done
