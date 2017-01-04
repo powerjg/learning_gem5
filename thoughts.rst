@@ -17,7 +17,10 @@ An outline:
 #. Developing with gem5
     #. Creating a new SimObject
     #. Debugging support in gem5
+    #. Simple event-driven model
+    #. Adding parameters to SimObjects
     #. Creating a new MemObject with master/slave ports
+    #. A more complex SimObject: Simple Uniprocessor cache
     #. Contributing back to gem5
         #. Style guidelines
         #. Mercurial queues
