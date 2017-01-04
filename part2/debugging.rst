@@ -235,6 +235,7 @@ Now, if you recompile gem5 and run it with the "Hello" debug flag, you get the f
     info: Entering event queue @ 0.  Starting simulation...
     Exiting @ tick 18446744073709551615 because simulate() limit reached
 
+You can find the updated SConcript file :download:`here <../_static/scripts/part2/debugging/SConscript>` and the updated hello object code :download:`here <../_static/scripts/part2/debugging/hello_object.cc>`.
 
 Debug output
 ~~~~~~~~~~~~

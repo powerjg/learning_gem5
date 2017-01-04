@@ -41,6 +41,12 @@ class HelloObject : public SimObject
 
     EventWrapper<HelloObject, &HelloObject::processEvent> event;
 
+    /// Latency between times we fire the event.
+    Tick latency;
+
+    /// Number of times to fire before we stop firing
+    int timesLeft;
+
   public:
     HelloObject(HelloObjectParams *p);
 
