@@ -32,16 +32,14 @@ Note that this generates *a lot* of output to the console (about 7 MB).
     DRAM device capacity (gem5 is copyrighted software; use the --copyright option for details.
 
     gem5 compiled Jan  3 2017 16:03:38
-    8192gem5 started Jan  3 2017 16:09:53
+    gem5 started Jan  3 2017 16:09:53
     gem5 executing on chinook, pid 19223
-     Mbytes) does not match the address range assigned (command line: build/X86/gem5.opt --debug-flags=DRAM configs/learning_gem5/part1/simple.py
+    command line: build/X86/gem5.opt --debug-flags=DRAM configs/learning_gem5/part1/simple.py
 
-    512Global frequency set at 1000000000000 ticks per second
-     Mbytes)
+    Global frequency set at 1000000000000 ticks per second
           0: system.mem_ctrl: Memory capacity 536870912 (536870912) bytes
           0: system.mem_ctrl: Row buffer size 8192 bytes with 128 columns per row buffer
-    0: system.remote_gdb.listener: listening for remote gdb #0 on port 7000
-    warn: ClockedObject: More than one power state change request encountered within the same simulation tick
+          0: system.remote_gdb.listener: listening for remote gdb #0 on port 7000
     Beginning simulation!
     info: Entering event queue @ 0.  Starting simulation...
           0: system.mem_ctrl: recvTimingReq: request ReadReq addr 400 size 8
@@ -101,7 +99,7 @@ This debug flags shows details of how each instruction is executed by the simula
     command line: build/X86/gem5.opt --debug-flags=Exec configs/learning_gem5/part1/simple.py
 
     Global frequency set at 1000000000000 ticks per second
-    0: system.remote_gdb.listener: listening for remote gdb #0 on port 7000
+          0: system.remote_gdb.listener: listening for remote gdb #0 on port 7000
     warn: ClockedObject: More than one power state change request encountered within the same simulation tick
     Beginning simulation!
     info: Entering event queue @ 0.  Starting simulation...
