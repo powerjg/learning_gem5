@@ -7,9 +7,7 @@ Adding parameters to SimObjects and more events
 ------------------------------------------------
 
 One of the most powerful parts of gem5's Python interface is the ability to pass parameters from Python to the C++ objects in gem5.
-In this chapter, we will explore some of the kinds of parameters for SimObjects and how to use them building off of the simple ``HelloObject`` from the `previous chapters`_.
-
-.. _previous chapters: events-chapter
+In this chapter, we will explore some of the kinds of parameters for SimObjects and how to use them building off of the simple ``HelloObject`` from the :ref:`previous chapters <events-chapter>`.
 
 Simple parameters
 ~~~~~~~~~~~~~~~~~

@@ -7,9 +7,7 @@ Creating SimObjects in the memory system
 ------------------------------------------
 
 In this chapter, we will create a simple memory object that sits between the CPU and the memory bus.
-In the `next chapter`_ we will take this simple memory object and add some logic to it to make it a very simple blocking uniprocessor cache.
-
-.. _next chapter: simplecache-chapter
+In the :ref:`next chapter <simplecache-chapter>` we will take this simple memory object and add some logic to it to make it a very simple blocking uniprocessor cache.
 
 .. _master-slave-ports-section:
 
@@ -139,15 +137,15 @@ It is important that before a memory object sends a retry, that it is ready *at 
 .. _master-slave-example-section:
 
 Simple memory object example
-############################
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In this section, we will build a simple memory object.
 Initially, it will simply pass requests through from the CPU-side (a simple CPU) to the memory-side (a simple memory bus).
 It will have a single master port, to send requests to the memory bus, and two cpu-sideb ports for the instruction and data cache ports of the CPU.
-In the `next chapter`_, we will add the logic to make this object a cache.
+In the :ref:`next chapter <simplecache-chapter>`, we will add the logic to make this object a cache.
 
 Declare the SimObject
-**********************
+######################
 
 Just like when we were creating the simple SimObject in :ref:`hello-simobject-chapter`, the first step is to create a SimObject Python file.
 We will call this simple memory object ``SimpleMemobj`` and create the SimObject Python file in ``src/learning_gem5/simple_memobj``.
@@ -182,7 +180,7 @@ Of course, you also need to create a SConscript file in the new directory as wel
 You can download the SConscript file :download:`here <../_static/scripts/part2/memoryobject/SConscript>`
 
 Define the SimpleMemobj class
-*****************************
+#############################
 
 Now, we create a header file for ``SimpleMemobj``.
 
@@ -194,14 +192,14 @@ Now, we create a header file for ``SimpleMemobj``.
 
       public:
 
-        /** constructor
+        /## constructor
          */
         SimpleMemobj(SimpleMemobjParams *params);
     };
 
 
 Define a slave port type
-************************
+########################
 
 Now, we need to define classes for our two kinds of ports: the CPU-side and the memory-side ports.
 For this, we will declarte these classes inside the ``SimpleMemobj`` class since no other object will ever use these classes.
@@ -268,7 +266,7 @@ This object also has a single member variable, its owner, so it can call functio
 
 
 Define a master port type
-**************************
+##########################
 
 Next, we need to define a master port type.
 This will be the memory-side port which will forward request from the CPU-side to the rest of the memory system.
@@ -309,7 +307,7 @@ This class only has three pure virtual functions that we must override.
     This function normally is only called during the initialization of the memory system and not while the simulation is executing.
 
 Defining the MemObject interface
-********************************
+################################
 
 Now that we have defined these two new types ``CPUSidePort`` and ``MemSidePort``, we can declare our three ports as part of ``SimpleMemobj``.
 We also need to declare the two pure virutal functions in the ``MemObject`` class, ``getMasterPort`` and ``getSlavePort``.
@@ -343,7 +341,7 @@ These two functions are used by gem5 during the initialization phase to connect 
 You can download the header file for the ``SimpleMemobj`` :download:`here <../_static/scripts/part2/memoryobject/simple_memobj.hh>`
 
 Implementing basic MemObject functions
-**************************************
+######################################
 
 For the constructor of ``SimpleMemobj``, we will simply call the ``MemObject`` constructor.
 We also need to initialize all of the ports.
@@ -418,7 +416,7 @@ If the name is ``"inst_port"``, then we return the instPort, and if the name is 
     }
 
 Implementing slave and master port functions
-********************************************
+############################################
 
 The implementation of both the slave and master port is relatively simple.
 For the most part, each of the port functions just forwards the information to the main memory object (``SimpleMemobj``).
@@ -478,7 +476,7 @@ Similarly for the ``MemSidePort``, we need to implement ``recvRangeChange`` and 
     }
 
 Implementing receiving requests
-*******************************
+###############################
 
 The implementation of ``recvTimingReq`` is slightly more complicated.
 We need to check to see if the ``SimpleMemobj`` can accept the request.
@@ -560,7 +558,7 @@ In this function, we try to resend the packet by calling the ``sendPacket`` func
 
 
 Implementing receiving responses
-********************************
+################################
 
 The response codepath is similar to the receiving codepath.
 When the ``MemSidePort`` gets a response, we forward the response through the ``SimpleMemobj`` to the appropriate ``CPUSidePort``.
@@ -657,7 +655,7 @@ Then, if the retry is needed, this function calls ``sendRetryReq``, which in tur
 You can download the implementation for the ``SimpleMemobj`` :download:`here <../_static/scripts/part2/memoryobject/simple_memobj.cc>`
 
 Create a config file
-********************
+####################
 
 This is all of the code needed to implement a simple memory object!
 In the `next chapter`_, we will take this framework and add some caching logic to make this memory object into a simple cache.

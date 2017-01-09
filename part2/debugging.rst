@@ -7,10 +7,8 @@
 Debugging gem5
 ------------------------------------------
 
-In the `previous chapter`_ we covered how to create a very simple SimObject.
+In the :ref:`previous chapters <hello-simobject-chapter>` we covered how to create a very simple SimObject.
 In this chapter, we will replace the simple print to ``stdout`` with gem5's debugging support.
-
-.. _previous chapter: hello-simobject-chapter
 
 gem5 provides support for ``printf``-style tracing/debugging of your code via *debug flags*.
 These flags allow every component to have many debug-print statements, without all of the enabled at the same time.
@@ -188,7 +186,7 @@ You can see this, and all of the available debug flags, by running gem5 with the
 Adding a new debug flag
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-In the `previous chapter`_, we used a simple ``std::cout`` to print from our SimObject.
+In the :ref:`previous chapters <hello-simobject-chapter>`, we used a simple ``std::cout`` to print from our SimObject.
 While it is possible to use the normal C/C++ I/O in gem5, it is highly discouraged.
 So, we are now going to replace this and use gem5's debugging facilities instead.
 
