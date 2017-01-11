@@ -11,7 +11,7 @@ In this chapter, we will take the framework for a memory object we created in th
 SimpleCache SimObject
 ~~~~~~~~~~~~~~~~~~~~~
 
-After creating the SConscript file, that you can download :download:`here <../_static/scripts/part2/simplecache/Sconscript>`, we can create the SimObject Python file.
+After creating the SConscript file, that you can download :download:`here <../_static/scripts/part2/simplecache/SConscript>`, we can create the SimObject Python file.
 
 .. code-block:: python
 
@@ -297,6 +297,27 @@ Functional cache logic
 Now, we need to implement two more functions: ``accessFunctional`` and ``insert``.
 These two functions make up the key components of the cache logic.
 
+First, to functionally update the cache, we first need storage for the cache contents.
+The simplest possible cache storage is a map (hashtable) that maps from addresses to data.
+Thus, we will add the following member to the ``SimpleCache``.
+
+.. code-block:: c++
+
+    std::unordered_map<Addr, uint8_t*> cacheStore;
+
+To access the cache, we first check to see if there is an entry in the map which matches the address in the packet.
+We use the ``getBlockAddr`` function of the ``Packet`` type to get the block-aligned address.
+Then, we simply search for that address in the map.
+If we do not find the address, then this function returns ``false``, the data is not in the cache, and it is a miss.
+
+Otherwise, if the packet is a write request, we need to update the data in the cache.
+To do this, we write the data from the packet to the cache.
+We use the ``writeDataToBlock`` function which writes the data in the packet to the write offset into a potentially larger block of data.
+This function takes the cache block offset and the block size (as a parameter) and writes the correct offset into the pointer passed as the first parameter.
+
+If the packet is a read request, we need to update the packet's data with the data from the cache.
+The ``setDataFromBlock`` function performs the same offset calculation as the ``writeDataToBlock`` function, but writes the packet with the data from the pointer in the first parameter.
+
 .. code-block:: c++
 
     bool
@@ -317,12 +338,29 @@ These two functions make up the key components of the cache logic.
         return false;
     }
 
+Finally, we also need to implement the ``insert`` function.
+This function is called every time the memory side port responds to a request.
+
+The first step is to check if the cache is currently full.
+If the cache has more entries (blocks) than the capacity of the cache as set by the SimObject parameter, then we need to evict something.
+The following code evicts a random entry by leveraging the hashtable implementation of the C++ ``unordered_map``.
+
+On an eviction, we need to write the data back to the backing memory in case it has been updated.
+For this, we create a new ``Request``-``Packet`` pair.
+The packet uses a new memory command: ``MemCmd::WritebackDirty``.
+Then, we send the packet across the memory side port (``memPort``) and erase the entry in the cache storage map.
+
+Then, after a block has potentially been evicted, we add the new address to the cache.
+For this we simply allocate space for the block and add an entry to the map.
+Finally, we write the data from the response packet in to the newly allocated block.
+This data is guaranteed to be the size of the cache block since we made sure to make a new packet in the cache miss logic if the packet was smaller than a cache block.
+
 .. code-block:: c++
 
     void
     SimpleCache::insert(PacketPtr pkt)
     {
-        if (cacheStore.size() > capacity) {
+        if (cacheStore.size() >= capacity) {
             // Select random thing to evict. This is a little convoluted since we
             // are using a std::unordered_map. See http://bit.ly/2hrnLP2
             int bucket, bucket_size;
@@ -347,7 +385,241 @@ These two functions make up the key components of the cache logic.
         pkt->writeDataToBlock(data, blockSize);
     }
 
+Creating a config file for the cache
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The last step in our implemenation is to create a new Python config script that uses our cache.
+We can use the outline from the :ref:`last chapter <memoryobject-chapter>` as a starting point.
+The only difference is we may want to set the parameters of this cache (e.g., set the size of the cache to ``1kB``) and instead of using the named ports (``data_port`` and ``inst_port``), we just use the ``cpu_side`` port twice.
+Since ``cpu_side`` is a ``VectorPort``, it will automatically create multiple port connections.
+
+.. code-block:: python
+
+    import m5
+    from m5.objects import *
+
+    ...
+
+    system.cache = SimpleCache(size='1kB')
+
+    system.cpu.icache_port = system.cache.cpu_side
+    system.cpu.dcache_port = system.cache.cpu_side
+
+    system.membus = SystemXBar()
+
+    system.cache.mem_side = system.membus.slave
+
+    ...
+
+The Python config file can be downloaded :download:`here <../_static/scripts/part2/simplecache/simple_cache.py>`
+
+Running this script should produce the exepected output from the hello binary.
+
+::
+
+    gem5 Simulator System.  http://gem5.org
+    gem5 is copyrighted software; use the --copyright option for details.
+
+    gem5 compiled Jan 10 2017 17:38:15
+    gem5 started Jan 10 2017 17:40:03
+    gem5 executing on chinook, pid 29031
+    command line: build/X86/gem5.opt configs/learning_gem5/part2/simple_cache.py
+
+    Global frequency set at 1000000000000 ticks per second
+    warn: DRAM device capacity (8192 Mbytes) does not match the address range assigned (512 Mbytes)
+    0: system.remote_gdb.listener: listening for remote gdb #0 on port 7000
+    warn: CoherentXBar system.membus has no snooping ports attached!
+    warn: ClockedObject: More than one power state change request encountered within the same simulation tick
+    Beginning simulation!
+    info: Entering event queue @ 0.  Starting simulation...
+    Hello world!
+    Exiting @ tick 56082000 because target called exit()
+
+Modifying the size of the cache, for instance to 128 KB, should improve the performance of the system.
+
+::
+
+    gem5 Simulator System.  http://gem5.org
+    gem5 is copyrighted software; use the --copyright option for details.
+
+    gem5 compiled Jan 10 2017 17:38:15
+    gem5 started Jan 10 2017 17:41:10
+    gem5 executing on chinook, pid 29037
+    command line: build/X86/gem5.opt configs/learning_gem5/part2/simple_cache.py
+
+    Global frequency set at 1000000000000 ticks per second
+    warn: DRAM device capacity (8192 Mbytes) does not match the address range assigned (512 Mbytes)
+    0: system.remote_gdb.listener: listening for remote gdb #0 on port 7000
+    warn: CoherentXBar system.membus has no snooping ports attached!
+    warn: ClockedObject: More than one power state change request encountered within the same simulation tick
+    Beginning simulation!
+    info: Entering event queue @ 0.  Starting simulation...
+    Hello world!
+    Exiting @ tick 32685000 because target called exit()
+
+
 Adding statistics to the cache
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This is a good idea...
+Knowing the overall execution time of the system is one important metric.
+However, you may want to include other statistics as well, such as the hit and miss rates of the cache.
+To do this, we need to add some statistics to the ``SimpleCache`` object.
+
+First, we need to declare the statistics in the ``SimpleCache`` object.
+They are part of the ``Stats`` namespace.
+In this case, we'll make four statistics.
+The number of ``hits`` and the number of ``misses`` are just simple ``Scalar`` counts.
+We will also add a ``missLatency`` which is a histogram of the time it takes to satisfy a miss.
+Finally, we'll add a special statistic called a ``Formula`` for the ``hitRatio`` that is a combination of other statistics (the number of hits and misses).
+
+.. code-block:: c++
+
+    class SimpleCache : public MemObject
+    {
+      private:
+        ...
+
+        Tick missTime; // To track the miss latency
+
+        Stats::Scalar hits;
+        Stats::Scalar misses;
+        Stats::Histogram missLatency;
+        Stats::Formula hitRatio;
+
+      public:
+        ...
+
+        void regStats() override;
+    };
+
+Next, we have to define the function to override the ``regStats`` function so the statistics are registered with gem5's statistics infrastructure.
+Here, for each statistic, we give it a name based on the "parent" SimObject name and a description.
+For the histogram statistic, we also need to initialize it with how many buckets we want in the histogram.
+Finally, for the formula, we simply need to write the formula down in code.
+
+.. code-block:: c++
+
+    void
+    SimpleCache::regStats()
+    {
+        // If you don't do this you get errors about uninitialized stats.
+        MemObject::regStats();
+
+        hits.name(name() + ".hits")
+            .desc("Number of hits")
+            ;
+
+        misses.name(name() + ".misses")
+            .desc("Number of misses")
+            ;
+
+        missLatency.name(name() + ".missLatency")
+            .desc("Ticks for misses to the cache")
+            .init(16) // number of buckets
+            ;
+
+        hitRatio.name(name() + ".hitRatio")
+            .desc("The ratio of hits to the total accesses to the cache")
+            ;
+
+        hitRatio = hits / (hits + misses);
+
+    }
+
+Finally, we need to use update the statistics in our code.
+In the ``accessTiming`` class, we can increment the ``hits`` and ``misses`` on a hit and miss respectively.
+Additionally, on a miss, we save the current time so we can measure the latency.
+
+.. code-block:: c++
+
+    void
+    SimpleCache::accessTiming(PacketPtr pkt)
+    {
+        bool hit = accessFunctional(pkt);
+        if (hit) {
+            hits++; // update stats
+            pkt->makeResponse();
+            sendResponse(pkt);
+        } else {
+            misses++; // update stats
+            missTime = curTick();
+            ...
+
+Then, when we get a response, we need to add the measured latency to our histogram.
+For this, we use the ``sample`` function.
+This adds a single point to the histogram.
+This histogram automaticaly resizes the buckets to fit the data it receives.
+
+.. code-block:: c++
+
+    bool
+    SimpleCache::handleResponse(PacketPtr pkt)
+    {
+        insert(pkt);
+
+        missLatency.sample(curTick() - missTime);
+        ...
+
+The complete code for the ``SimpleCache`` header file can be downloaded :download:`here <../_static/scripts/part2/simplecache/simple_cache.hh>`,
+and the complete code for the implementation of the ``SimpleCache`` can be downloaded  :download:`here <../_static/scripts/part2/simplecache/simple_cache.cc>`.
+
+Now, if we run the above config file, we can check on the statistics in the ``stats.txt`` file.
+For the 1 KB case, we get the following statistics.
+91% of the accesses are hits and the average miss latency is 53334 ticks (or 53 ns).
+
+::
+
+    system.cache.hits                                8431                       # Number of hits
+    system.cache.misses                               877                       # Number of misses
+    system.cache.missLatency::samples                 877                       # Ticks for misses to the cache
+    system.cache.missLatency::mean           53334.093501                       # Ticks for misses to the cache
+    system.cache.missLatency::gmean          44506.409356                       # Ticks for misses to the cache
+    system.cache.missLatency::stdev          36749.446469                       # Ticks for misses to the cache
+    system.cache.missLatency::0-32767                 305     34.78%     34.78% # Ticks for misses to the cache
+    system.cache.missLatency::32768-65535             365     41.62%     76.40% # Ticks for misses to the cache
+    system.cache.missLatency::65536-98303             164     18.70%     95.10% # Ticks for misses to the cache
+    system.cache.missLatency::98304-131071             12      1.37%     96.47% # Ticks for misses to the cache
+    system.cache.missLatency::131072-163839            17      1.94%     98.40% # Ticks for misses to the cache
+    system.cache.missLatency::163840-196607             7      0.80%     99.20% # Ticks for misses to the cache
+    system.cache.missLatency::196608-229375             0      0.00%     99.20% # Ticks for misses to the cache
+    system.cache.missLatency::229376-262143             0      0.00%     99.20% # Ticks for misses to the cache
+    system.cache.missLatency::262144-294911             2      0.23%     99.43% # Ticks for misses to the cache
+    system.cache.missLatency::294912-327679             4      0.46%     99.89% # Ticks for misses to the cache
+    system.cache.missLatency::327680-360447             1      0.11%    100.00% # Ticks for misses to the cache
+    system.cache.missLatency::360448-393215             0      0.00%    100.00% # Ticks for misses to the cache
+    system.cache.missLatency::393216-425983             0      0.00%    100.00% # Ticks for misses to the cache
+    system.cache.missLatency::425984-458751             0      0.00%    100.00% # Ticks for misses to the cache
+    system.cache.missLatency::458752-491519             0      0.00%    100.00% # Ticks for misses to the cache
+    system.cache.missLatency::491520-524287             0      0.00%    100.00% # Ticks for misses to the cache
+    system.cache.missLatency::total                   877                       # Ticks for misses to the cache
+    system.cache.hitRatio                        0.905780                       # The ratio of hits to the total access
+
+
+And when using a 128 KB cache, we get a slightly higher hit ratio. It seems like our cache is working as exepected!
+
+::
+
+    system.cache.hits                                8944                       # Number of hits
+    system.cache.misses                               364                       # Number of misses
+    system.cache.missLatency::samples                 364                       # Ticks for misses to the cache
+    system.cache.missLatency::mean           64222.527473                       # Ticks for misses to the cache
+    system.cache.missLatency::gmean          61837.584812                       # Ticks for misses to the cache
+    system.cache.missLatency::stdev          27232.443748                       # Ticks for misses to the cache
+    system.cache.missLatency::0-32767                   0      0.00%      0.00% # Ticks for misses to the cache
+    system.cache.missLatency::32768-65535             254     69.78%     69.78% # Ticks for misses to the cache
+    system.cache.missLatency::65536-98303             106     29.12%     98.90% # Ticks for misses to the cache
+    system.cache.missLatency::98304-131071              0      0.00%     98.90% # Ticks for misses to the cache
+    system.cache.missLatency::131072-163839             0      0.00%     98.90% # Ticks for misses to the cache
+    system.cache.missLatency::163840-196607             0      0.00%     98.90% # Ticks for misses to the cache
+    system.cache.missLatency::196608-229375             0      0.00%     98.90% # Ticks for misses to the cache
+    system.cache.missLatency::229376-262143             0      0.00%     98.90% # Ticks for misses to the cache
+    system.cache.missLatency::262144-294911             2      0.55%     99.45% # Ticks for misses to the cache
+    system.cache.missLatency::294912-327679             1      0.27%     99.73% # Ticks for misses to the cache
+    system.cache.missLatency::327680-360447             1      0.27%    100.00% # Ticks for misses to the cache
+    system.cache.missLatency::360448-393215             0      0.00%    100.00% # Ticks for misses to the cache
+    system.cache.missLatency::393216-425983             0      0.00%    100.00% # Ticks for misses to the cache
+    system.cache.missLatency::425984-458751             0      0.00%    100.00% # Ticks for misses to the cache
+    system.cache.missLatency::458752-491519             0      0.00%    100.00% # Ticks for misses to the cache
+    system.cache.missLatency::491520-524287             0      0.00%    100.00% # Ticks for misses to the cache
+    system.cache.missLatency::total                   364                       # Ticks for misses to the cache
+    system.cache.hitRatio                        0.960894                       # The ratio of hits to the total access
