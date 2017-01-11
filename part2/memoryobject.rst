@@ -658,7 +658,7 @@ Create a config file
 ####################
 
 This is all of the code needed to implement a simple memory object!
-In the `next chapter`_, we will take this framework and add some caching logic to make this memory object into a simple cache.
+In the :ref:`next chapter <simplecache-chapter>`, we will take this framework and add some caching logic to make this memory object into a simple cache.
 However, before that, let's look at the config file to add the SimpleMemobj to your system.
 
 This config file builds off of the simple config file in :ref:`simple-config-chapter`.
