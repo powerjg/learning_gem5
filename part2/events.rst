@@ -208,4 +208,4 @@ The output should now look like the following.
        1000: hello: Done firing!
     Exiting @ tick 18446744073709551615 because simulate() limit reached
 
-You can find the updated header file `here <../_static/scripts/part2/events/hello_object.hh>` and the implemenation file `here <../_static/scripts/part2/events/hello_object.cc>`.
+You can find the updated header file :download:`here <../_static/scripts/part2/events/hello_object.hh>` and the implemenation file :download:`here <../_static/scripts/part2/events/hello_object.cc>`.
