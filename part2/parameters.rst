@@ -25,7 +25,7 @@ For instance, the following code as a parameter ``time_to_wait`` which is a "Lat
         cxx_header = "learning_gem5/hello_object.hh"
 
         time_to_wait = Param.Latency("Time before firing the event")
-        number_of_fires = Param.Int(1, "Number fo times to fire the event before "
+        number_of_fires = Param.Int(1, "Number of times to fire the event before "
                                        "goodbye")
 
 ``Param.<TypeName>`` declares a parameter of type ``TypeName``.
@@ -137,7 +137,7 @@ First, declare the SimObject in the SConscript file:
 
     DebugFlag('Hello')
 
-The new SConscript file can be downloaded `here <../_static/scripts/part2/parameters/SConscript>`
+The new SConscript file can be downloaded :download:`here <../_static/scripts/part2/parameters/SConscript>`
 
 Next, you need to declare the new SimObject in a SimObject Python file.
 Since the ``GoodbyeObject`` is highly related to the ``HelloObject``, we will use the same file.
@@ -159,7 +159,7 @@ Once the buffer is full, the simulation will exit.
         write_bandwidth = Param.MemoryBandwidth('100MB/s', "Bandwidth to fill "
                                                 "the buffer")
 
-The updated ``HelloObject.py`` file can be downloaded `here <../_static/scripts/part2/parameters/HelloObject.py>`
+The updated ``HelloObject.py`` file can be downloaded :download:`here <../_static/scripts/part2/parameters/HelloObject.py>`
 
 Now, we need to implement the ``GoodbyeObject``.
 
@@ -280,7 +280,7 @@ Now, we need to implement the ``GoodbyeObject``.
         return new GoodbyeObject(this);
     }
 
-The header file can be downloaded `here <../_static/scripts/part2/parameters/goodbye_object.hh>` and the implemenation can be downloaded `here <../_static/scripts/part2/parameters/goodbye_object.cc>`
+The header file can be downloaded :download:`here <../_static/scripts/part2/parameters/goodbye_object.hh>` and the implemenation can be downloaded :download:`here <../_static/scripts/part2/parameters/goodbye_object.cc>`
 
 The interface to this ``GoodbyeObject`` is simple a function ``sayGoodbye`` which takes a string as a parameter.
 When this function is called, the simulator builds the message and saves it in a member variable.
@@ -313,7 +313,7 @@ You can have a default, or not, just like a normal parameter.
 
         goodbye_object = Param.GoodbyeObject("A goodbye object")
 
-The updated ``HelloObject.py`` file can be downloaded `here <../_static/scripts/part2/parameters/HelloObject.py>`
+The updated ``HelloObject.py`` file can be downloaded :download:`here <../_static/scripts/part2/parameters/HelloObject.py>`
 
 Second, we will add a reference to a ``GoodbyeObject`` to the ``HelloObject`` class.
 
@@ -377,7 +377,7 @@ Once we have processed the number of event specified by the parameter, we should
         }
     }
 
-You can find the updated header file `here <../_static/scripts/part2/parameters/hello_object.hh>` and the implemenation file `here <../_static/scripts/part2/parameters/hello_object.cc>`.
+You can find the updated header file :download:`here <../_static/scripts/part2/parameters/hello_object.hh>` and the implemenation file :download:`here <../_static/scripts/part2/parameters/hello_object.cc>`.
 
 Updating the config script
 ##########################
@@ -402,7 +402,7 @@ For instance, one possible script is the following.
     exit_event = m5.simulate()
     print 'Exiting @ tick %i because %s' % (m5.curTick(), exit_event.getCause())
 
-You can download this script `here <../_static/scripts/part2/parameters/hello_goodbye.py>`
+You can download this script :download:`here <../_static/scripts/part2/parameters/hello_goodbye.py>`
 
 Running this script generates the following output.
 
