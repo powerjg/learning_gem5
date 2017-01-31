@@ -10,6 +10,7 @@ Some thoughts on this document
    * We should force people to make updates when they break things.
    * We should have the source for the examples checked into the gem5 repo, and have tests that run them.
 * It may be a good idea to add example exercises at the end of each chapter. These could be things that are good for a classroom or just good things to try out.
+* Adding a more "realistic" example in Part I would make the book a little more interesting. Giving readers an idea of what's possible early would set the stage better.
 
 An outline:
 
