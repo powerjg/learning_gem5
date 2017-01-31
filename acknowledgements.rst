@@ -11,3 +11,7 @@ A number of people have provided feedback on this document.
 They are listed below.
 
  - Kassan Unda (Missouri S&T)
+ - Preyas Shah (Univ. of Wisconsin - Madison)
+ - Mikko Lipasti's CS 757 class Spring 2017 at UW-Madison
+ - Karu Sankaralingam's CS 752 class Fall 2016 at UW-Madison
+ - David Wood's CS 752 class Spring 2015 at UW-Madison
