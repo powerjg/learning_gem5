@@ -480,7 +480,7 @@ hello_object.hh
 * Define the CPU-side slave port
 * Talk about each of the functions below
 
-simple_memobj.hh
+hello_object.hh
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
@@ -506,7 +506,7 @@ simple_memobj.hh
 * define the memory side master port
 * Talk about each of the functions below
 
-simple_memobj.hh
+hello_object.hh
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
@@ -528,7 +528,7 @@ simple_memobj.hh
 
 * Define the MemObject interface
 
-simple_memobj.hh
+hello_object.hh
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
@@ -557,7 +557,7 @@ simple_memobj.hh
 
 * Initialize things in construcutor
 
-simple_memobj.cc
+hello_object.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
@@ -571,7 +571,7 @@ simple_memobj.cc
 
 * Implement getMasterPort
 
-simple_memobj.cc
+hello_object.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
@@ -587,7 +587,7 @@ simple_memobj.cc
 
 * Implement getSlavePort
 
-simple_memobj.cc
+hello_object.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
@@ -605,7 +605,7 @@ simple_memobj.cc
 
 * Pass through some of the functions for CPU side port
 
-simple_memobj.cc
+hello_object.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
@@ -636,7 +636,7 @@ simple_memobj.cc
 
 * Pass through some of the functions for Mem side port
 
-simple_memobj.cc
+hello_object.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
@@ -658,7 +658,7 @@ simple_memobj.cc
 * NOw the fun part. Implementing the send/receives
 * Let's start with receive
 
-simple_memobj.cc
+hello_object.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
@@ -675,7 +675,7 @@ simple_memobj.cc
 
 * Now, we need to do handle request
 
-simple_memobj.cc
+hello_object.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
@@ -693,7 +693,7 @@ simple_memobj.cc
 
 * Let's add a convienency function in the memside port
 
-simple_memobj.cc
+hello_object.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
@@ -706,7 +706,7 @@ simple_memobj.cc
         }
     }
 
-simple_memobj.hh
+hello_object.hh
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
@@ -717,7 +717,7 @@ simple_memobj.hh
 
 * Implement code to handle retries
 
-simple_memobj.cc
+hello_object.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
@@ -736,7 +736,7 @@ simple_memobj.cc
 
 * Implement the code for receiving requests
 
-simple_memobj.cc
+hello_object.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
@@ -753,7 +753,7 @@ simple_memobj.cc
 
 * Add variable to remember when we need to send the CPU a retry
 
-simple_memobj.hh
+hello_object.hh
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
@@ -761,7 +761,7 @@ simple_memobj.hh
     {
         bool needRetry;
 
-simple_memobj.cc
+hello_object.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
@@ -785,7 +785,7 @@ simple_memobj.cc
 
 * Now, we need the convience function to send packets
 
-simple_memobj.hh
+hello_object.hh
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
@@ -795,7 +795,7 @@ simple_memobj.hh
       public:
         void sendPacket(PacketPtr pkt);
 
-simple_memobj.cc
+hello_object.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
@@ -811,7 +811,7 @@ simple_memobj.cc
 
 * Implement recvRespRetry
 
-simple_memobj.cc
+hello_object.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
@@ -828,14 +828,14 @@ simple_memobj.cc
 
 * Implement trySendRetry
 
-simple_memobj.hh
+hello_object.hh
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
     class CPUSidePort : public SlavePort {
         void trySendRetry();
 
-simple_memobj.cc
+hello_object.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
@@ -850,7 +850,7 @@ simple_memobj.cc
     }
 
 
-simple_memobj.cc
+hello_object.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
@@ -901,7 +901,7 @@ HelloObject.py
 
 * Add latency/size/system to constructor
 
-simple_memobj.cc
+hello_object.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
@@ -911,7 +911,7 @@ simple_memobj.cc
 
 * Implement new "handleRequest"
 
-simple_memobj.cc
+hello_object.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
@@ -935,7 +935,7 @@ simple_memobj.cc
 
 * Implement the access event
 
-simple_memobj.hh
+hello_object.hh
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
@@ -955,13 +955,13 @@ simple_memobj.hh
 
 * Implement the accessTiming function
 
-simple_memobj.hh
+hello_object.hh
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
     void accessTiming(PacketPtr pkt);
 
-simple_memobj.cc
+hello_object.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
@@ -980,7 +980,7 @@ simple_memobj.cc
 * Note; It's a good idea to separate out functional from timing functions
 * Miss handling is complicated by the block size
 
-simple_memobj.cc
+hello_object.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
@@ -1021,7 +1021,7 @@ simple_memobj.cc
         }
     }
 
-simple_memobj.hh
+hello_object.hh
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
@@ -1029,7 +1029,7 @@ simple_memobj.hh
 
 * Update handle response to be able to accept responses from the upgraded packets
 
-simple_memobj.cc
+hello_object.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
@@ -1057,7 +1057,7 @@ simple_memobj.cc
 
 * Implementing the functional cache logic, now.
 
-simple_memobj.hh
+hello_object.hh
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
@@ -1067,7 +1067,7 @@ simple_memobj.hh
 
 * Implement the access logic
 
-simple_memobj.cc
+hello_object.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
@@ -1091,7 +1091,7 @@ simple_memobj.cc
 
 * Implement the insert logic
 
-simple_memobj.cc
+hello_object.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
