@@ -200,7 +200,17 @@ Add the following to the SConscript file in the directory with your hello object
 This declares a debug flag of "Hello".
 Now, we can use this in debug statements in our SimObject.
 
-So, let's replace the ``std::cout`` call with a debug statement like so.
+By declaring the flag in the SConscript file, a debug header is automatically generated that allows us to use the debug flag.
+The header file is in the ``debug`` directory and has the same name (and capitalization) as what we declare in the SConscript file.
+Therefore, we need to include the automatically generated header file in any files where we plan to use the debug flag.
+
+In the ``hello_object.cc`` file, we need to include the header file.
+
+.. code-block:: c++
+
+    #include "debug/Hello.hh"
+
+Now that we have included the neccessary header file, let's replace the ``std::cout`` call with a debug statement like so.
 
 .. code-block:: c++
 

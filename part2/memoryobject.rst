@@ -141,8 +141,16 @@ Simple memory object example
 
 In this section, we will build a simple memory object.
 Initially, it will simply pass requests through from the CPU-side (a simple CPU) to the memory-side (a simple memory bus).
-It will have a single master port, to send requests to the memory bus, and two cpu-sideb ports for the instruction and data cache ports of the CPU.
+See Figure :ref:`simple-memobj-figure`.
+It will have a single master port, to send requests to the memory bus, and two cpu-side ports for the instruction and data cache ports of the CPU.
 In the :ref:`next chapter <simplecache-chapter>`, we will add the logic to make this object a cache.
+
+.. _simple-memobj-figure:
+
+.. figure:: ../_static/figures/simple_memobj.png
+   :width: 40 %
+
+   System with a simple memory object which sits between a CPU and the memory bus.
 
 Declare the SimObject
 ######################
@@ -192,7 +200,7 @@ Now, we create a header file for ``SimpleMemobj``.
 
       public:
 
-        /## constructor
+        /** constructor
          */
         SimpleMemobj(SimpleMemobjParams *params);
     };
