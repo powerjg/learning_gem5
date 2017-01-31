@@ -662,6 +662,23 @@ Then, if the retry is needed, this function calls ``sendRetryReq``, which in tur
 
 You can download the implementation for the ``SimpleMemobj`` :download:`here <../_static/scripts/part2/memoryobject/simple_memobj.cc>`
 
+The following figure, :ref:`memobj-api-figure`, shows the relationships between the ``CPUSidePort``, ``MemSidePort``, and ``SimpleMemobj``.
+This figure shows how the peer ports interact with the implementation of the ``SimpleMemobj``.
+Each bold function is one that we had to implement, and the non-bold functions are the port interfaces to the peer ports.
+The colors highlight one API path through the object (e.g., receiving a request or updating the memory ranges).
+
+.. _memobj-api-figure:
+
+.. figure:: ../_static/figures/memobj_api.png
+  :width: 100 %
+  :alt: Interaction between SimpleMemobj and its ports
+
+  Interaction between SimpleMemobj and its ports
+
+For this simple memory object, packets are just forwarded from the CPU-side to the memory side.
+However, by modifying ``handleRequest`` and ``handleResponse``, we can create rich featurful objects, like a cache in the :ref:`next chapter <simplecache-chapter>`.
+
+
 Create a config file
 ####################
 
