@@ -603,6 +603,13 @@ hello_object.cc
         }
     }
 
+* This shows how all of these functions relate. I really want to show this a little at a time as I go through this. Drawing on the board would be perfect...
+
+.. figure:: ../_static/figures/memobj_api.png
+   :width: 100 %
+
+   System
+
 * Pass through some of the functions for CPU side port
 
 hello_object.cc
@@ -673,6 +680,16 @@ hello_object.cc
         }
     }
 
+* Add variable to remember when we need to send the CPU a retry
+
+hello_object.hh
+~~~~~~~~~~~~~~~~
+.. code-block:: c++
+
+    class CPUSidePort : public SlavePort
+    {
+        bool needRetry;
+
 * Now, we need to do handle request
 
 hello_object.cc
@@ -734,32 +751,17 @@ hello_object.cc
 
 ---------------------------------------------------------------
 
-* Implement the code for receiving requests
+* Implement the code for receiving responses
 
 hello_object.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
     bool
-    HelloObject::CPUSidePort::recvTimingReq(PacketPtr pkt)
+    HelloObject::MemSidePort::recvTimingResp(PacketPtr pkt)
     {
-        if (!owner->handleRequest(pkt)) {
-            needRetry = true;
-            return false;
-        } else {
-            return true;
-        }
+        return owner->handleResponse(pkt);
     }
-
-* Add variable to remember when we need to send the CPU a retry
-
-hello_object.hh
-~~~~~~~~~~~~~~~~
-.. code-block:: c++
-
-    class CPUSidePort : public SlavePort
-    {
-        bool needRetry;
 
 hello_object.cc
 ~~~~~~~~~~~~~~~~
