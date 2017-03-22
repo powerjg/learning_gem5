@@ -1,0 +1,10 @@
+language: python
+
+python:
+  - "2.7"
+
+# command to install dependencies
+install: "pip install -q --use-mirrors Sphinx==1.2.2"
+
+# command to run tests
+script: sphinx-build -b html -d _build/doctrees . _build/html
