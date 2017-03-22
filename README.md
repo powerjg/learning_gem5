@@ -1,3 +1,3 @@
 # learning_gem5
 Learning gem5 is a work-in-progress book to help gem5 users get started using gem5.
-See http://www.lowepower.com/jason/learning_gem5/ for an online version of the current development branch.
+See http://learning.gem5.org/ for an online version of the current development branch.
