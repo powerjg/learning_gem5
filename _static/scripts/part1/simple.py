@@ -77,7 +77,7 @@ system.mem_ctrl.port = system.membus.master
 system.system_port = system.membus.slave
 
 # Create a process for a simple "Hello World" application
-process = LiveProcess()
+process = Process()
 # Set the command
 # cmd is a list which begins with the executable (like argv)
 process.cmd = ['tests/test-progs/hello/bin/x86/linux/hello']

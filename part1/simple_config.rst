@@ -195,7 +195,7 @@ Then we set the CPU to use the process as it's workload, and finally create the 
 
 .. code-block:: python
 
-  process = LiveProcess()
+  process = Process()
   process.cmd = ['tests/test-progs/hello/bin/x86/linux/hello']
   system.cpu.workload = process
   system.cpu.createThreads()
