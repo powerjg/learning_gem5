@@ -141,7 +141,7 @@ class MySystem(LinuxX86System):
         # size is < 3GB this will work. If it's > 3GB or if you want to use
         # mulitple or interleaved memory controllers then this should be
         # updated accordingly
-        self.mem_cntrl = DDR3_1600_x64(range = self.mem_ranges[0],
+        self.mem_cntrl = DDR3_1600_8x8(range = self.mem_ranges[0],
                                        port = self.membus.master)
 
     def setupInterrupts(self):

@@ -252,7 +252,7 @@ For instance, you can have multiple memory controllers with interleaved addresse
 
     def createMemoryControllers(self):
         """ Create the memory controller for the system """
-        self.mem_cntrl = DDR3_1600_x64(range = self.mem_ranges[0],
+        self.mem_cntrl = DDR3_1600_8x8(range = self.mem_ranges[0],
                                        port = self.membus.master)
 
 Finally, we we create the interrupt controllers for the CPU.
@@ -528,7 +528,7 @@ This will start gem5, and begin booting Linux.
 When running gem5, your output should look something like below.
 
 ::
-    
+
     gem5 Simulator System.  http://gem5.org
     gem5 is copyrighted software; use the --copyright option for details.
 

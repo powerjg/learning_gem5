@@ -167,7 +167,7 @@ For this system, we'll use a simple DDR3 controller and it will be responsible f
 
 .. code-block:: python
 
-  system.mem_ctrl = DDR3_1600_x64()
+  system.mem_ctrl = DDR3_1600_8x8()
   system.mem_ctrl.range = system.mem_ranges[0]
   system.mem_ctrl.port = system.membus.master
 
