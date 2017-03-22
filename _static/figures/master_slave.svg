@@ -1,0 +1,1149 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="1052.3622047"
+   id="svg5078"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="master_slave.svg">
+  <defs
+     id="defs5080">
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow1Lend"
+       style="overflow:visible;">
+      <path
+         id="path3762"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;"
+         transform="scale(0.8) rotate(180) translate(12.5,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Mend"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path3768"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker4976"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4978"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker4980"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4982"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker4984"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4986"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker4988"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4990"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker4992"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4994"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow2Lend-3"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path3780-6"
+         style="fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker4998"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path5000"
+         style="fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker5002"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path5004"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker5006"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path5008"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker5010"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path5012"
+         style="fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker5014"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path5016"
+         style="fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker5006-6"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path5008-9"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker5006-7"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path5008-4"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker6081"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path6083"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lend-2"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path3762-7"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker5006-2"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path5008-2"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker6760"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path6762"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker6764"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path6766"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker6768"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path6770"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow2Lend-3-6"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path3780-6-1"
+         style="fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker6774"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path6776"
+         style="fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker5006-4"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path5008-8"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker5006-8"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path5008-5"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker7060"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path7062"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow2Lend-3-1"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path3780-6-0"
+         style="fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker7113"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path7115"
+         style="fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker5006-76"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path5008-3"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker7160"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path7162"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lend-8"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path3762-5"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker5006-85"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path5008-97"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="292.073"
+     inkscape:cy="769.54001"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1631"
+     inkscape:window-height="1026"
+     inkscape:window-x="49"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5083">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow2Lend-3)"
+       d="m 40.460853,82.124726 0,167.499744"
+       id="path2985"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master-slave-1.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow2Lend-3)"
+       d="m 260.49934,82.124716 0,167.499754"
+       id="path2985-7"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master-slave-1.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001" />
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="39.746552"
+       y="71.988945"
+       id="text4223"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master-slave-1.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001"><tspan
+         sodipodi:role="line"
+         id="tspan4225"
+         x="39.746552"
+         y="71.988945">Master</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="262.69504"
+       y="72.245293"
+       id="text4227"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master-slave-1.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001"><tspan
+         sodipodi:role="line"
+         id="tspan4229"
+         x="262.69504"
+         y="72.245293">Slave</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="86.911034"
+       y="108.73052"
+       id="text4415"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master-slave-1.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001"><tspan
+         sodipodi:role="line"
+         id="tspan4417"
+         x="86.911034"
+         y="108.73052">sendTimingReq</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="214.94029"
+       y="107.72039"
+       id="text4419"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master-slave-1.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001"><tspan
+         sodipodi:role="line"
+         x="214.94029"
+         y="107.72039"
+         id="tspan4423">recvTimingReq</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="87.772362"
+       y="179.44122"
+       id="text4427"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master-slave-1.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001"><tspan
+         sodipodi:role="line"
+         id="tspan4429"
+         x="87.772362"
+         y="179.44122">recvTimingResp</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="210.00084"
+       y="180.45135"
+       id="text4431"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master-slave-1.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001"><tspan
+         sodipodi:role="line"
+         id="tspan4433"
+         x="210.00084"
+         y="180.45135">sendTimingResp</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="150.40402"
+       y="140.55035"
+       id="text4435"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master-slave-1.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001"><tspan
+         sodipodi:role="line"
+         id="tspan4437"
+         x="150.40402"
+         y="140.55035">returns: true</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="150.40402"
+       y="214.57625"
+       id="text4435-1"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master-slave-1.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001"><tspan
+         sodipodi:role="line"
+         id="tspan4437-2"
+         x="150.40402"
+         y="214.57625">returns: true</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#marker5006)"
+       d="m 46.747375,115.75899 206.071115,0"
+       id="path5259"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master-slave-1.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:12, 12;stroke-dashoffset:0;marker-end:url(#marker5006)"
+       d="m 254.31849,126.87065 -206.071111,0"
+       id="path5259-3"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master-slave-1.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#marker5006)"
+       d="m 254.31849,188.99506 -206.071118,0"
+       id="path5259-5"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master-slave-1.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:12, 12;stroke-dashoffset:0;marker-end:url(#marker5006)"
+       d="m 46.747377,200.10672 206.071113,0"
+       id="path5259-3-2"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master-slave-1.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
+       x="311.42859"
+       y="148.07648"
+       id="text6104"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master-slave-1.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001"><tspan
+         sodipodi:role="line"
+         id="tspan6106"
+         x="311.42859"
+         y="148.07648">Slave executes</tspan><tspan
+         sodipodi:role="line"
+         x="311.42859"
+         y="163.07648"
+         id="tspan6108">request</tspan></text>
+    <path
+       sodipodi:type="arc"
+       style="fill:none;stroke:#000000;stroke-width:0.73181528;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+       id="path6110"
+       sodipodi:cx="220.79568"
+       sodipodi:cy="72.005035"
+       sodipodi:rx="27.224264"
+       sodipodi:ry="21.785715"
+       d="m 248.01995,72.005035 a 27.224264,21.785715 0 1 1 -4.31479,-11.76957"
+       sodipodi:start="0"
+       sodipodi:end="5.71246"
+       transform="matrix(1.6952831,0,0,1.1014247,-62.444082,69.058736)"
+       sodipodi:open="true"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master-slave-1.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow2Lend-3)"
+       d="m 407.88703,72.346548 0,204.625722"
+       id="path2985-0"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master_slave_2.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow2Lend-3)"
+       d="m 627.92555,72.346538 0,204.625732"
+       id="path2985-7-6"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master_slave_2.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001" />
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="407.17273"
+       y="62.210773"
+       id="text4223-1"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master_slave_2.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001"><tspan
+         sodipodi:role="line"
+         id="tspan4225-5"
+         x="407.17273"
+         y="62.210773">Master</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="630.12122"
+       y="62.467121"
+       id="text4227-9"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master_slave_2.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001"><tspan
+         sodipodi:role="line"
+         id="tspan4229-4"
+         x="630.12122"
+         y="62.467121">Slave</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="454.33722"
+       y="98.952347"
+       id="text4415-9"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master_slave_2.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001"><tspan
+         sodipodi:role="line"
+         id="tspan4417-0"
+         x="454.33722"
+         y="98.952347">sendTimingReq</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="582.36646"
+       y="97.942215"
+       id="text4419-9"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master_slave_2.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001"><tspan
+         sodipodi:role="line"
+         x="582.36646"
+         y="97.942215"
+         id="tspan4423-1">recvTimingReq</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="454.9917"
+       y="478.23447"
+       id="text4427-7"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master_slave_3.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001"><tspan
+         sodipodi:role="line"
+         id="tspan4429-7"
+         x="454.9917"
+         y="478.23447">recvTimingResp</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="578.23029"
+       y="479.2446"
+       id="text4431-1"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master_slave_3.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001"><tspan
+         sodipodi:role="line"
+         id="tspan4433-1"
+         x="578.23029"
+         y="479.2446">sendTimingResp</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="517.8302"
+       y="130.77217"
+       id="text4435-5"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master_slave_2.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001"><tspan
+         sodipodi:role="line"
+         id="tspan4437-9"
+         x="517.8302"
+         y="130.77217">returns: false</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="518.72205"
+       y="513.36951"
+       id="text4435-1-7"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master_slave_3.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001"><tspan
+         sodipodi:role="line"
+         id="tspan4437-2-7"
+         x="518.72205"
+         y="513.36951">return: true</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#marker5006)"
+       d="m 414.17355,105.98082 206.07112,0"
+       id="path5259-6"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master_slave_2.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:12, 12;stroke-dashoffset:0;marker-end:url(#marker5006)"
+       d="m 621.74466,117.09248 -206.07111,0"
+       id="path5259-3-7"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master_slave_2.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#marker5006)"
+       d="m 622.63649,487.78831 -206.07112,0"
+       id="path5259-5-3"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master_slave_3.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:12, 12;stroke-dashoffset:0;marker-end:url(#marker5006)"
+       d="m 415.06537,498.89997 206.07111,0"
+       id="path5259-3-2-6"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master_slave_3.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
+       x="677.42615"
+       y="143.29829"
+       id="text6104-5"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master_slave_2.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001"><tspan
+         sodipodi:role="line"
+         x="677.42615"
+         y="143.29829"
+         id="tspan6108-3">Slave busy</tspan></text>
+    <path
+       sodipodi:type="arc"
+       style="fill:none;stroke:#000000;stroke-width:0.73181528;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+       id="path6110-9"
+       sodipodi:cx="220.79568"
+       sodipodi:cy="72.005035"
+       sodipodi:rx="27.224264"
+       sodipodi:ry="21.785715"
+       d="m 248.01995,72.005035 a 27.224264,21.785715 0 1 1 -4.31479,-11.76957"
+       sodipodi:start="0"
+       sodipodi:end="5.71246"
+       transform="matrix(1.6952831,0,0,1.1014247,304.9821,59.280558)"
+       sodipodi:open="true"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master_slave_2.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="583.39771"
+       y="164.47371"
+       id="text4431-1-1"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master_slave_2.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001"><tspan
+         sodipodi:role="line"
+         id="tspan4433-1-2"
+         x="583.39771"
+         y="164.47371">sendReqRetry</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#marker5006)"
+       d="m 621.74467,173.01741 -206.07112,0"
+       id="path5259-5-3-9"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master_slave_2.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="454.33722"
+       y="190.53209"
+       id="text4415-6"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master_slave_2.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001"><tspan
+         sodipodi:role="line"
+         id="tspan4417-1"
+         x="454.33722"
+         y="190.53209">sendTimingReq</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="582.36646"
+       y="189.52196"
+       id="text4419-1"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master_slave_2.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001"><tspan
+         sodipodi:role="line"
+         x="582.36646"
+         y="189.52196"
+         id="tspan4423-5">recvTimingReq</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="517.8302"
+       y="222.35194"
+       id="text4435-9"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master_slave_2.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001"><tspan
+         sodipodi:role="line"
+         id="tspan4437-8"
+         x="517.8302"
+         y="222.35194">returns: true</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#marker5006)"
+       d="m 414.17355,197.56057 206.07112,0"
+       id="path5259-4"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master_slave_2.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:12, 12;stroke-dashoffset:0;marker-end:url(#marker5006)"
+       d="m 621.74467,208.67223 -206.07111,0"
+       id="path5259-3-8"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master_slave_2.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow2Lend-3)"
+       d="m 408.77885,338.06927 0,204.62572"
+       id="path2985-0-3"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master_slave_3.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow2Lend-3)"
+       d="m 628.81733,338.06926 0,204.62573"
+       id="path2985-7-6-0"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master_slave_3.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001" />
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="408.06454"
+       y="327.9335"
+       id="text4223-1-4"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master_slave_3.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001"><tspan
+         sodipodi:role="line"
+         id="tspan4225-5-4"
+         x="408.06454"
+         y="327.9335">Master</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="631.01306"
+       y="328.18985"
+       id="text4227-9-4"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master_slave_3.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001"><tspan
+         sodipodi:role="line"
+         id="tspan4229-4-4"
+         x="631.01306"
+         y="328.18985">Slave</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="454.9917"
+       y="367.65515"
+       id="text4427-7-1"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master_slave_3.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001"><tspan
+         sodipodi:role="line"
+         id="tspan4429-7-7"
+         x="454.9917"
+         y="367.65515">recvTimingResp</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="578.23029"
+       y="368.66528"
+       id="text4431-1-5"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master_slave_3.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001"><tspan
+         sodipodi:role="line"
+         id="tspan4433-1-9"
+         x="578.23029"
+         y="368.66528">sendTimingResp</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="518.72205"
+       y="402.79019"
+       id="text4435-1-7-6"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master_slave_3.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001"><tspan
+         sodipodi:role="line"
+         id="tspan4437-2-7-2"
+         x="518.72205"
+         y="402.79019">returns: false</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#marker5006)"
+       d="m 622.63649,377.20899 -206.07112,0"
+       id="path5259-5-3-1"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master_slave_3.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:12, 12;stroke-dashoffset:0;marker-end:url(#marker5006)"
+       d="m 415.06537,388.32065 206.07111,0"
+       id="path5259-3-2-6-7"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master_slave_3.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
+       x="355.99002"
+       y="424.21463"
+       id="text6104-5-7"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master_slave_3.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001"><tspan
+         sodipodi:role="line"
+         x="355.99002"
+         y="424.21463"
+         id="tspan6108-3-4">Master busy</tspan></text>
+    <path
+       sodipodi:type="arc"
+       style="fill:none;stroke:#000000;stroke-width:0.73181528;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+       id="path6110-9-1"
+       sodipodi:cx="220.79568"
+       sodipodi:cy="72.005035"
+       sodipodi:rx="27.224264"
+       sodipodi:ry="21.785715"
+       d="m 248.01995,72.005035 a 27.224264,21.785715 0 1 1 -4.31479,-11.76957"
+       sodipodi:start="0"
+       sodipodi:end="5.71246"
+       transform="matrix(1.6952831,0,0,1.1014247,-16.454049,340.19691)"
+       sodipodi:open="true"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master_slave_3.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#marker5006)"
+       d="m 415.06537,456.6479 206.07112,0"
+       id="path5259-53"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master_slave_3.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="453.67334"
+       y="448.32187"
+       id="text4431-1-1-8"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master_slave_3.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001"><tspan
+         sodipodi:role="line"
+         id="tspan4433-1-2-8"
+         x="453.67334"
+         y="448.32187">sendRespRetry</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="448.74152"
+       y="163.32185"
+       id="text4431-1-1-3"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master_slave_2.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001"><tspan
+         sodipodi:role="line"
+         id="tspan4433-1-2-6"
+         x="448.74152"
+         y="163.32185">recvReqRetry</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="582.87677"
+       y="445.93362"
+       id="text3362"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/local.chinook/gem5/gem5-tutorial/learning_gem5/_static/figures/master_slave_3.png"
+       inkscape:export-xdpi="200.32001"
+       inkscape:export-ydpi="200.32001"><tspan
+         sodipodi:role="line"
+         id="tspan3364"
+         x="582.87677"
+         y="445.93362">recvRespRetry</tspan></text>
+  </g>
+</svg>

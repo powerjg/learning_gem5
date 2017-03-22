@@ -1,4 +1,4 @@
-:authors: Jason Power
+:authors: Jason Lowe-Power
 
 =====================================
 Part II: Modifying and extending gem5
@@ -8,5 +8,8 @@ Part II: Modifying and extending gem5
 
     environment
     helloobject
-    simobject-old
     debugging
+    events
+    parameters
+    memoryobject
+    simplecache

@@ -1,4 +1,4 @@
-:authors: Jason Power
+:authors: Jason Lowe-Power
 
 .. _gem5-stats-chapter:
 
@@ -104,7 +104,7 @@ At the end of simulation, or when special statistic-dumping commands are issued,
 First, the statistics file contains general statistics about the execution:
 
 ::
-    
+
     ---------- Begin Simulation Statistics ----------
     sim_seconds                                  0.000346                       # Number of seconds simulated
     sim_ticks                                   345518000                       # Number of ticks simulated
@@ -132,7 +132,7 @@ For instance, the memory controller statistics.
 This has information like the bytes read by each component and the average bandwidth used by those components.
 
 ::
-    
+
     system.mem_ctrl.bytes_read::cpu.inst            58264                       # Number of bytes read from this memory
     system.mem_ctrl.bytes_read::cpu.data             7167                       # Number of bytes read from this memory
     system.mem_ctrl.bytes_read::total               65431                       # Number of bytes read from this memory
@@ -159,7 +159,7 @@ This has information like the bytes read by each component and the average bandw
 Later in the file is the CPU statistics, which contains information on the number of syscalls, the number of branches, total committed instructions, etc.
 
 ::
-    
+
     system.cpu.apic_clk_domain.clock                16000                       # Clock period in ticks
     system.cpu.workload.num_syscalls                   11                       # Number of system calls
     system.cpu.numCycles                           345518                       # number of cpu cycles simulated
@@ -187,5 +187,3 @@ Later in the file is the CPU statistics, which contains information on the numbe
     system.cpu.not_idle_fraction                 1.000000                       # Percentage of non-idle cycles
     system.cpu.idle_fraction                     0.000000                       # Percentage of idle cycles
     system.cpu.Branches                              1306                       # Number of branches fetched
-
-

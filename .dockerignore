@@ -1,0 +1,5 @@
+_build/
+_templates/
+.git/
+_static/figures/
+_static/docker/

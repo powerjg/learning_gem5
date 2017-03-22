@@ -18,6 +18,14 @@ In this chapter, we will walk through creating a simple "HelloWorld" SimObject.
 The goal is to introduce you to how SimObjects are created and the required boilerplate code for all SimObjects.
 We will also create a simple ``Python`` configuration script which instantiates our SimObject.
 
+In the next few chapters, we will take this simple SimObject and expand on it to include `debugging support`_, `dynamic events`_, and `parameters`_.
+
+.. _debugging support: debugging-chapter
+
+.. _dynamic events: events-chapter
+
+.. _parameters: parameters-chapter
+
 .. sidebar:: Using Mercurial queues
 
 	It is common to use a new Mercurial queues patch for each new feature you add to gem5.
@@ -52,7 +60,15 @@ We can create a file, HelloObject.py, in ``src/learning_gem5``
 	    type = 'HelloObject'
 	    cxx_header = "learning_gem5/hello_object.hh"
 
-You can find the complete file :download:`here <../_static/scripts/part2/HelloObject.py>`.
+You can find the complete file :download:`here <../_static/scripts/part2/helloobject/HelloObject.py>`.
+
+It is not required that the ``type`` be the same as the name of the class, but it is convention.
+The ``type`` is the C++ class that you are wrapping with this Python SimObject.
+Only in special circumstances should the ``type`` and the class name be different.
+
+The ``cxx_header`` is the file that contains the declaration of the class used as the ``type`` parameter.
+Again, the convention is to use the name of the SimObject with all lowercase and underscores, but this is only convention.
+You can specify any header file here.
 
 Step 2: Implement your SimObject in C++
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -70,9 +86,9 @@ The SimObject class specifies many virtual functions.
 However, none of these functions are pure virtual, so in the simplest case, there is no need to implement any functions except for the constructor.
 
 The constructor for all SimObjects assumes it will take a parameter object.
-This parameter object is automatically created by the build system and is based on the ``Python`` class for the SimObject.
+This parameter object is automatically created by the build system and is based on the ``Python`` class for the SimObject, like the one we created above.
 The name for this parameter type is generated automatically from the name of your object.
-For our "HelloObject" the parameter type's name is "HelloObject**params**".
+For our "HelloObject" the parameter type's name is "HelloObject**Params**".
 
 The code required for our simple header file is listed below.
 
@@ -92,16 +108,18 @@ The code required for our simple header file is listed below.
 
 	#endif // __LEARNING_GEM5_HELLO_OBJECT_HH__
 
-You can find the complete file :download:`here <../_static/scripts/part2/hello_object.hh>`.
+You can find the complete file :download:`here <../_static/scripts/part2/helloobject/hello_object.hh>`.
 
 Next, we need to implement *two* functions in the ``.cc`` file, not just one.
-The first function, is obviously the constructor for the ``HelloObject``.
+The first function, is the constructor for the ``HelloObject``.
 Here we simply pass the parameter object to the SimObject parent and print "Hello world!"
 
 *Normally, you would **never** use ``std::cout`` in gem5.*
 Instead, you should use debug flags.
-In the next chapter, we will modify this to use debug flags instead.
+In the `next chapter`_, we will modify this to use debug flags instead.
 However, for now, we'll simply use ``std::cout`` because it is simple.
+
+.. _next chapter: debugging-chapter
 
 .. code-block:: c++
 
@@ -127,13 +145,28 @@ Usually this function is very simple (as below).
 	    return new HelloObject(this);
 	}
 
-You can find the complete file :download:`here <../_static/scripts/part2/hello_object.cc>`.
+You can find the complete file :download:`here <../_static/scripts/part2/helloobject/hello_object.cc>`.
+
+If you forget to add the create function for your SimObject, you will get a linker error when you compile.
+It will look something like the following.
+
+::
+
+	build/X86/python/m5/internal/param_HelloObject_wrap.o: In function `_wrap_HelloObjectParams_create':
+	/local.chinook/gem5/gem5-tutorial/gem5/build/X86/python/m5/internal/param_HelloObject_wrap.cc:3096: undefined reference to `HelloObjectParams::create()'
+	collect2: error: ld returned 1 exit status
+	scons: *** [build/X86/gem5.opt] Error 1
+	scons: building terminated because of errors.
+
+This ``undefined reference to `HelloObjectParams::create()'`` means you need to implement the create function for your SimObject.
+
 
 Step 3: Register the SimObject and C++ file
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In order for the ``C++`` file to be compiled and the ``Python`` file to be parsed we need to tell the build system about these files.
-gem5 uses SCons as the build system, so you simply have to create a SConscript file.
+gem5 uses SCons as the build system, so you simply have to create a SConscript file in the directory with the code for the SimObject.
+If there is already a SConscript file for that directory, simply add the following declarations to that file.
 
 This file is simply a normal ``Python`` file, so you can write any ``Python`` code you want in this file.
 Some of the scripting can become quite complicated.
@@ -152,10 +185,10 @@ Below is the required code.
 
 	Import('*')
 
-	SimObject('Hello.py')
+	SimObject('HelloObject.py')
 	Source('hello_object.cc')
 
-You can find the complete file :download:`here <../_static/scripts/part2/SConscript>`.
+You can find the complete file :download:`here <../_static/scripts/part2/helloobject/SConscript>`.
 
 Step 4: (Re)-build gem5
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -209,7 +242,7 @@ Finally, you need to call ``instantiate`` on the ``m5`` module and actually run 
 	exit_event = m5.simulate()
 	print 'Exiting @ tick %i because %s' % (m5.curTick(), exit_event.getCause())
 
-You can find the complete file :download:`here <../_static/scripts/part2/run_hello.py>`.
+You can find the complete file :download:`here <../_static/scripts/part2/helloobject/run_hello.py>`.
 
 The output should look something like the following
 
@@ -231,4 +264,3 @@ The output should look something like the following
 
 Congrats! You have written your first SimObject.
 In the next chapters, we will extend this SimObject and explore what you can do with SimObjects.
-

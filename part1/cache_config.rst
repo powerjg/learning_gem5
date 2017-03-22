@@ -1,6 +1,6 @@
 
 
-:authors: Jason Power
+:authors: Jason Lowe-Power
 
 .. _cache-config-chapter:
 
@@ -71,7 +71,8 @@ The ``Cache`` SimObject inherits from the ``BaseCache`` object shown below.
         size = Param.MemorySize("Capacity")
         assoc = Param.Unsigned("Associativity")
 
-        hit_latency = Param.Cycles("Hit latency")
+        tag_latency = Param.Cycles("Tag lookup latency")
+        data_latency = Param.Cycles("Data access latency")
         response_latency = Param.Cycles("Latency for the return path on a miss");
 
         max_miss_count = Param.Counter(0,
@@ -82,8 +83,6 @@ The ``Cache`` SimObject inherits from the ``BaseCache`` object shown below.
         tgts_per_mshr = Param.Unsigned("Max number of accesses per MSHR")
         write_buffers = Param.Unsigned(8, "Number of write buffers")
 
-        forward_snoops = Param.Bool(True,
-            "Forward snoops from mem side to cpu side")
         is_read_only = Param.Bool(False, "Is this cache read only (e.g. inst)")
 
         prefetcher = Param.BasePrefetcher(NULL,"Prefetcher attached to cache")
@@ -134,7 +133,7 @@ Within the ``BaseCache`` class, there are a number of *parameters*.
 For instance, ``assoc`` is an integer parameter.
 Some parameters, like ``write_buffers`` have a default value, 8 in this case.
 The default parameter is the first argument to ``Param.*``, unless the first argument is a string.
-The string argument of each of the parameters is a description of what the parameter is (e.g., ``hit_latency = Param.Cycles("The hit latency for this cache")`` means that the hit_latency controls "The hit latency for this cache").
+The string argument of each of the parameters is a description of what the parameter is (e.g., ``tag_latency = Param.Cycles("Tag lookup latency")`` means that the ```tag_latency`` controls "The hit latency for this cache").
 
 Many of these parameters do not have defaults, so we are required to set these parameters before calling ``m5.instantiate()``.
 
@@ -155,7 +154,8 @@ Let's start by making an L1 cache.
 
     class L1Cache(Cache):
         assoc = 2
-        hit_latency = 2
+        tag_latency = 2
+        data_latency = 2
         response_latency = 2
         mshrs = 4
         tgts_per_mshr = 20
@@ -182,7 +182,8 @@ Let's also create an L2 cache with some reasonable parameters.
     class L2Cache(Cache):
         size = '256kB'
         assoc = 8
-        hit_latency = 20
+        tag_latency = 20
+        data_latency = 20
         response_latency = 20
         mshrs = 20
         tgts_per_mshr = 12
@@ -271,7 +272,7 @@ And connect the caches to the CPU ports with the helper function we created.
 Also, You need to *remove* the previous lines which connected the cache ports directly to the memory bus.
 
 .. code-block:: python
-    
+
     -system.cpu.icache_port = system.membus.slave
     -system.cpu.dcache_port = system.membus.slave
 
@@ -297,7 +298,7 @@ Next, we can create out L2 cache and connect it to the L2 bus and the memory bus
 
 Everything else in the file stays the same!
 Now we have a complete configuration with a two-level cache hierarchy.
-If you run the current file, ``hello`` should now finish in 56742000 ticks.
+If you run the current file, ``hello`` should now finish in 58513000 ticks.
 The full script can be found :download:`here <../_static/scripts/part1/two_level.py>`.
 
 Adding parameters to your script
@@ -388,12 +389,12 @@ With these changes, you can now pass the cache sizes into your script from the c
 
     gem5 Simulator System.  http://gem5.org
     gem5 is copyrighted software; use the --copyright option for details.
-    
+
     gem5 compiled Sep  6 2015 14:17:02
     gem5 started Sep  6 2015 15:06:51
     gem5 executing on galapagos-09.cs.wisc.edu
     command line: build/X86/gem5.opt ../tutorial/_static/scripts/part1/two_level_opts.py --l2_size=1MB --l1d_size=128kB
-    
+
     Global frequency set at 1000000000000 ticks per second
     warn: DRAM device capacity (8192 Mbytes) does not match the address range assigned (512 Mbytes)
     0: system.remote_gdb.listener: listening for remote gdb #0 on port 7000
@@ -403,15 +404,3 @@ With these changes, you can now pass the cache sizes into your script from the c
     Exiting @ tick 56742000 because target called exit()
 
 The updated configuration script can be downloaded :download:`here <../_static/scripts/part1/two_level_opts.py>` and the updated cache file can be downloaded :download:`here <../_static/scripts/part1/caches_opts.py>`.
-
-
-
-
-
-
-
-
-
-
-
-

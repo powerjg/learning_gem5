@@ -45,7 +45,8 @@ class L1Cache(Cache):
 
     # Default parameters for both L1 I and D caches
     assoc = 2
-    hit_latency = 2
+    tag_latency = 2
+    data_latency = 2
     response_latency = 2
     mshrs = 4
     tgts_per_mshr = 20
@@ -101,7 +102,8 @@ class L2Cache(Cache):
     # Default parameters
     size = '256kB'
     assoc = 8
-    hit_latency = 20
+    tag_latency = 20
+    data_latency = 20
     response_latency = 20
     mshrs = 20
     tgts_per_mshr = 12

@@ -1,5 +1,5 @@
 
-:authors: Jason Power
+:authors: Jason Lowe-Power
 
 .. _simple-config-chapter:
 
@@ -23,16 +23,15 @@ The gem5 binary takes, as a parameter, a python script which sets up and execute
 In this script, you create a system to simulate, create all of the components of the system, and specify all of the parameters for the system components.
 Then, from the script, you can begin the simulation.
 
-This script is totally user-defined.
+This script is completely user-defined.
 You can choose to use any valid Python code in the configuration scripts.
 This book provides on example of a style that relies heavily classes and inheritance in Python.
-As a gem5 users, it's up to you how simple or complicated to make your configuration scripts.
+As a gem5 user, it's up to you how simple or complicated to make your configuration scripts.
 
 There are a number of example configuration scripts that ship with gem5 in ``configs/examples``.
-These scripts are all-encompassing and allow users to specify almost all options on the command line.
-Therefore, in this tutorial, we are going to start with the most simple script that can run gem5 and build off of that.
+Most of these scripts are all-encompassing and allow users to specify almost all options on the command line.
+Instead of starting with these complex script, in this book we are going to start with the most simple script that can run gem5 and build from there.
 Hopefully, by the end of this section you'll have a good idea of how simulation scripts work.
-
 
 .. sidebar:: An aside on SimObjects
 
@@ -43,9 +42,6 @@ Hopefully, by the end of this section you'll have a good idea of how simulation 
 
     See http://www.gem5.org/SimObjects for more information.
 
-.. todo::
-
-    Should probably talk here about SE vs. FS mode.
 
 Creating a config file
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -67,10 +63,10 @@ The first thing we'll do in this file is import the m5 library and all SimObject
   import m5
   from m5.objects import *
 
-Next, we'll create the first SimObject, the system that we are going to simulate.
+Next, we'll create the first SimObject: the system that we are going to simulate.
 The ``System`` object will be the parent of all the other objects in our simulated system.
 The ``System`` object contains a lot of functional (not timing-level) information, like the physical memory ranges, the root clock domain, the root voltage domain, the kernel (in full-system simulation), etc.
-To create the system SimObject, we simply instantiate it like any other python class:
+To create the system SimObject, we simply instantiate it like a normal python class:
 
 .. code-block:: python
 
@@ -91,8 +87,8 @@ Since we don't care about system power right now, we'll just use the default opt
 
 Once we have a system, let's set up how the memory will be simulated.
 We are going to use *timing* mode for the memory simulation.
-You'll likely almost always use timing mode for the memory simulation, except in special cases like fast-forwarding and restoring from a checkpoint.
-We'll also set up a single memory range of size 512 MB, a very small system.
+You will almost always use timing mode for the memory simulation, except in special cases like fast-forwarding and restoring from a checkpoint.
+We will also set up a single memory range of size 512 MB, a very small system.
 Note that in the python configuration scripts, whenever a size is required you can specify that size in common vernacular and units like ``'512MB'``.
 Similarly, with time you can use time units (e.g., ``'5ns'``).
 These will automatically be converted to a common representation, respectively.
@@ -105,7 +101,7 @@ These will automatically be converted to a common representation, respectively.
 Now, we can create a CPU.
 We'll start with the most simple timing-based CPU in gem5, *TimingSimpleCPU*.
 This CPU model executes each instruction in a single clock cycle to execute, except memory requests, which flow through the memory system.
-To create the CPU again, you can simply just instantiate the object:
+To create the CPU you can simply just instantiate the object:
 
 .. code-block:: python
 
@@ -119,6 +115,7 @@ Next, we're going to create the system-wide memory bus:
 
 Now that we have a memory bus, let's connect the cache ports on the CPU to it.
 In this case, since the system we want to simulate doesn't have any caches, we will connect the I-cache and D-cache ports directly to the membus.
+In this example system, we have no caches.
 
 .. code-block:: python
 
@@ -141,13 +138,17 @@ In this case, since the system we want to simulate doesn't have any caches, we w
       memobject1.master = memobject2.slave
 
     The master and slave can be on either side of the ``=`` and the same connection will be made.
-    After making the connection, now the master and send requests to the slave port.
-    There's a lot of magic going on behind the scenes to set up the connection, the details of which are unimportant for most users.
+    After making the connection, the master can send requests to the slave port.
+    There is a lot of magic going on behind the scenes to set up the connection, the details of which are unimportant for most users.
+
+.. todo::
+
+    Add forward pointer to where I talk about the memory system details to the sidebar.
 
 Next, we need to connect up a few other ports to make sure that our system will function correctly.
-We need to create an IO controller on the CPU and connect it to the memory bus.
+We need to create an I/O controller on the CPU and connect it to the memory bus.
 Also, we need to connect a special port in the system up to the membus.
-This port is a functional-only port to allow the system to read/write memory.
+This port is a functional-only port to allow the system to read and write memory.
 
 Connecting the PIO and interrupt ports to the memory bus is an x86-specific requirement.
 Other ISAs (e.g., ARM) do not require these 3 extra lines.
@@ -188,6 +189,19 @@ We'll execute a simple "Hello world" program.
 There's already one that is compiled that ships with gem5, so we'll use that.
 You can specify any application built for x86 and that's been statically compiled.
 
+.. sidebar:: Full system vs syscall emulation
+
+    gem5 can run in two different modes called "syscall emulation" and "full system" or SE and FS modes.
+    In full system mode (covered later :ref:`full-system-part`), gem5 emulates the entire hardware system and runs an unmodified kernel.
+    Full system mode is similar to running a virtual machine.
+
+    Syscall emulation mode, on the other hand, does not emulate all of the devices in a system and focuses on simulating the CPU and memory system.
+    Syscall emulation is much easier to configure since you are not required to instantiate all of the hardware devices required in a real system.
+    However, syscall emulation only emulates Linux system calls, and thus only models user-mode code.
+
+    If you do not need to model the operating system for your research questions, and you want extra performance, you should use SE mode.
+    However, if you need high fidelity modeling of the system, or OS interaction like page table walks are important, then you should use FS mode.
+
 First, we have to create the process (another SimObject).
 Then we set the processes command to the command we want to run.
 This is a list similar to argv, with the executable in the first position and the arguments to the executable in the rest of the list.
@@ -205,7 +219,7 @@ First, we create the ``Root`` object.
 Then we instantiate the simulation.
 The instantiation process goes through all of the SimObjects we've created in python and creates the ``C++`` equivalents.
 
-As a note, you don't have to instantiate the python class then specify the parameters explicitly.
+As a note, you don't have to instantiate the python class then specify the parameters explicitly as member variables.
 You can also pass the parameters as named arguments, like the ``Root`` object below.
 
 .. code-block:: python
@@ -259,8 +273,10 @@ The output should be:
   Exiting @ tick 345518000 because target called exit()
 
 
-Paramters in the configuration file can be changed and the results should be different.
+Parameters in the configuration file can be changed and the results should be different.
 For instance, if you double the system clock, the simulation should finish faster.
 Or, if you change the DDR controller to DDR4, the performance should be better.
 
 Additionally, you can change the CPU model to ``MinorCPU`` to model an in-order CPU, or ``DerivO3CPU`` to model an out-of-order CPU.
+
+Next, we will add caches to our configuration file to model a more complex system.

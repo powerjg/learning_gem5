@@ -1,4 +1,4 @@
-:authors: Jason Power
+:authors: Jason Lowe-Power
 
 .. _gem5-provided-configs-chapter:
 
@@ -30,7 +30,7 @@ The directory structure is shown below:
     ...
 
     configs/common:
-    Benchmarks.py     cpu2000.py     Options.py   
+    Benchmarks.py     cpu2000.py     Options.py
     Caches.py         FSConfig.py    O3_ARM_v7a.py     SysPaths.py
     CacheConfig.py    CpuConfig.py   MemConfig.py      Simulation.py
 
@@ -115,8 +115,8 @@ To see all of the options, run the configuration script with ``--help``, or read
 First, let's simply run the hello world program without any parameters:
 
 .. code-block:: sh
-    
-    build/X86_MESI_Two_Level/gem5.opt configs/example/se.py --cmd=tests/test-progs/hello/bin/x86/linux/hello
+
+    build/X86/gem5.opt configs/example/se.py --cmd=tests/test-progs/hello/bin/x86/linux/hello
 
 And we get the following as output:
 
@@ -128,7 +128,7 @@ And we get the following as output:
     gem5 compiled Jan 14 2015 16:11:34
     gem5 started Feb  2 2015 15:22:24
     gem5 executing on mustardseed.cs.wisc.edu
-    command line: build/X86_MESI_Two_Level/gem5.opt configs/example/se.py --cmd=tests/test-progs/hello/bin/x86/linux/hello
+    command line: build/X86/gem5.opt configs/example/se.py --cmd=tests/test-progs/hello/bin/x86/linux/hello
     Global frequency set at 1000000000000 ticks per second
     warn: DRAM device capacity (8192 Mbytes) does not match the address range assigned (512 Mbytes)
     0: system.remote_gdb.listener: listening for remote gdb #0 on port 7000
@@ -159,10 +159,10 @@ To actually run gem5 in timing mode, let's specify a CPU type.
 While we're at it, we can also specify sizes for the L1 caches.
 
 .. code-block:: sh
-    
-    build/X86_MESI_Two_Level/gem5.opt configs/example/se.py --cmd=tests/test-progs/hello/bin/x86/linux/hello --cpu-type=TimingSimpleCPU --l1d_size=64kB --l1i_size=16kB
 
-:: 
+    build/X86/gem5.opt configs/example/se.py --cmd=tests/test-progs/hello/bin/x86/linux/hello --cpu-type=TimingSimpleCPU --l1d_size=64kB --l1i_size=16kB
+
+::
 
     gem5 Simulator System.  http://gem5.org
     gem5 is copyrighted software; use the --copyright option for details.
@@ -170,7 +170,7 @@ While we're at it, we can also specify sizes for the L1 caches.
     gem5 compiled Jan 14 2015 16:11:34
     gem5 started Feb  2 2015 15:26:57
     gem5 executing on mustardseed.cs.wisc.edu
-    command line: build/X86_MESI_Two_Level/gem5.opt configs/example/se.py --cmd=tests/test-progs/hello/bin/x86/linux/hello --cpu-type=TimingSimpleCPU --l1d_size=64kB --l1i_size=16kB
+    command line: build/X86/gem5.opt configs/example/se.py --cmd=tests/test-progs/hello/bin/x86/linux/hello --cpu-type=TimingSimpleCPU --l1d_size=64kB --l1i_size=16kB
     Global frequency set at 1000000000000 ticks per second
     warn: DRAM device capacity (8192 Mbytes) does not match the address range assigned (512 Mbytes)
     0: system.remote_gdb.listener: listening for remote gdb #0 on port 7000
@@ -185,8 +185,8 @@ Even though we specified the size of the caches, we didn't specify that the syst
 The correct command line should be:
 
 .. code-block:: sh
-    
-    build/X86_MESI_Two_Level/gem5.opt configs/example/se.py --cmd=tests/test-progs/hello/bin/x86/linux/hello --cpu-type=TimingSimpleCPU --l1d_size=64kB --l1i_size=16kB --caches
+
+    build/X86/gem5.opt configs/example/se.py --cmd=tests/test-progs/hello/bin/x86/linux/hello --cpu-type=TimingSimpleCPU --l1d_size=64kB --l1i_size=16kB --caches
 
 ::
 
@@ -196,7 +196,7 @@ The correct command line should be:
     gem5 compiled Jan 14 2015 16:11:34
     gem5 started Feb  2 2015 15:29:20
     gem5 executing on mustardseed.cs.wisc.edu
-    command line: build/X86_MESI_Two_Level/gem5.opt configs/example/se.py --cmd=tests/test-progs/hello/bin/x86/linux/hello --cpu-type=TimingSimpleCPU --l1d_size=64kB --l1i_size=16kB --caches
+    command line: build/X86/gem5.opt configs/example/se.py --cmd=tests/test-progs/hello/bin/x86/linux/hello --cpu-type=TimingSimpleCPU --l1d_size=64kB --l1i_size=16kB --caches
     Global frequency set at 1000000000000 ticks per second
     warn: DRAM device capacity (8192 Mbytes) does not match the address range assigned (512 Mbytes)
     0: system.remote_gdb.listener: listening for remote gdb #0 on port 7000
@@ -243,13 +243,13 @@ Some common options ``se.py`` and ``fs.py``
 All of the possible options are printed when you run:
 
 .. code-block:: sh
-    
-    build/X86_MESI_Two_Level/gem5.opt configs/example/se.py --help
+
+    build/X86/gem5.opt configs/example/se.py --help
 
 Below is a few important options from that list.
 
 .. option:: --cpu-type=CPU_TYPE
-    
+
     The type of cpu to run with.
     This is an important parameter to always set.
     The default is atomic, which doesn't perform a timing simulation.
@@ -273,11 +273,11 @@ Below is a few important options from that list.
     Perform the simulation with classic caches.
 
 .. option:: --l2cache
-    
+
     Perform the simulation with an L2 cache, if using classic caches.
 
 .. option:: --ruby
-    
+
     Use Ruby instead of the classic caches as the cache system simulation.
 
 .. option:: -m TICKS, --abs-max-tick=TICKS
@@ -291,7 +291,7 @@ Below is a few important options from that list.
     This is useful if you want to stop simulation after a certain number of instructions has been executed.
 
 .. option:: -c CMD, --cmd=CMD
-    
+
     The binary to run in syscall emulation mode.
 
 .. option:: -o OPTIONS, --options=OPTIONS
@@ -301,7 +301,7 @@ Below is a few important options from that list.
     You can pass both arguments and options (e.g., --whatever) through this variable.
 
 .. option:: --output=OUTPUT
-    
+
     Redirect stdout to a file.
     This is useful if you want to redirect the output of the simulated application to a file instead of printing to the screen.
     Note: to redirect gem5 output, you have to pass a parameter *before* the configuration script.

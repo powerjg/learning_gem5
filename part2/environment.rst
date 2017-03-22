@@ -1,6 +1,6 @@
 
 
-:authors: Jason Power
+:authors: Jason Lowe-Power
 
 .. _development-environment-chapter:
 
@@ -46,5 +46,3 @@ The `Mercurial book`_ has a great chapter_ describing the details of how to use 
 .. _Mercuial book: http://hgbook.red-bean.com/
 
 .. _chapter: http://hgbook.red-bean.com/read/managing-change-with-mercurial-queues.html
-
-

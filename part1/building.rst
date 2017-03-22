@@ -1,5 +1,5 @@
 
-:authors: Jason Power
+:authors: Jason Lowe-Power
 
 .. _building-chapter:
 
@@ -130,21 +130,22 @@ Then, to clone the repository, use the ``hg clone`` command.
 
 .. code-block:: sh
 
-  hg clone http://repo.gem5.org/gem5-stable
+  hg clone http://repo.gem5.org/gem5
 
 You can now change directories to ``gem5`` which contains all of the gem5 code.
 
-.. sidebar:: gem5 repositories
+.. Removed for now since we got rid of gem5-stable, but it may come back later.
+    .. sidebar:: gem5 repositories
 
-    There are two main gem5 repositories found on repo.gem5.org, *gem5*, and *gem5-stable*.
-    gem5 is the main development repository, which is updated very frequently (a few times per week).
-    This repository has all of the latest bugfixes and features.
-    However, there are often bugs introduced and changes to APIs.
-    gem5-stable, is released once every few months and pulls in most of the changes to gem5 in that time.
-    It's more stable than the gem5 repository, but there still may be bugs.
+        There are two main gem5 repositories found on repo.gem5.org, *gem5*, and *gem5-stable*.
+        gem5 is the main development repository, which is updated very frequently (a few times per week).
+        This repository has all of the latest bugfixes and features.
+        However, there are often bugs introduced and changes to APIs.
+        gem5-stable, is released once every few months and pulls in most of the changes to gem5 in that time.
+        It's more stable than the gem5 repository, but there still may be bugs.
 
-    If you find a bug in gem5-stable, or something isn't working correctly, be sure to try gem5 before submitting a bug report.
-    The problem may already be fixed.
+        If you find a bug in gem5-stable, or something isn't working correctly, be sure to try gem5 before submitting a bug report.
+        The problem may already be fixed.
 
 Your first gem5 build
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -162,10 +163,37 @@ There will be a separate directory for each set of options (ISA and cache cohere
 There are a number of default compilations options in the ``build_opts`` directory.
 These files specify the parameters passed to SCons when initially building gem5.
 We'll use the X86 defaults and specify that we want to compile all of the CPU models.
+You can look at the file ``build_opts/X86`` to see the default values for the Scons options.
+You can also specify these options on the command line to override any default.
 
 .. code-block:: sh
 
-    scons CPU_MODELS="AtomicSimpleCPU,MinorCPU,O3CPU,TimingSimpleCPU" build/X86/gem5.opt -j9
+    scons build/X86/gem5.opt -j9
+
+.. sidebar:: gem5 binary types
+
+    The SCons scripts in gem5 currently have 5 different binaries you can build for gem5: `debug`, `opt`, `fast`, `prof`, and `perf`.
+    These names are mostly self-explanatory, but detailed below.
+
+    debug
+        Built with no optimizations and debug symbols.
+        This binary is useful when using a debugger to debug if the variables you need to view are optimized out in the `opt` version of gem5.
+        Running with `debug` is slow compared to the other binaries.
+
+    opt
+        This binary is build with most optimizations on (e.g., -O3), but with debug symbols included.
+        This binary is much faster than `debug`, but still contains enough debug information to be able to debug most problems.
+
+    fast
+        Built with all optimizations on (including link-time optimizations on supported platforms) and with no debug symbols.
+        Additionally, any asserts are removed, but panics and fatals are still included.
+        `fast` is the highest performing binary, and is much smaller than `opt`.
+        However, `fast` is only appropriate when you feel that it is unlikely your code has major bugs.
+
+    prof and perf
+        These two binaries are build for profiling gem5.
+        `prof` includes profiling information for the GNU profiler (gprof), and `perf` includes profiling information for the Google performance tools (gperftools).
+
 
 The main argument passed to SCons is what you want to build, `build/X86/gem5.opt`.
 In this case, we are building gem5.opt (an optimized binary with debug symbols).
@@ -178,32 +206,27 @@ The output should look something like below:
 
 ::
 
-  scons: Reading SConscript files ...
-  Mercurial libraries cannot be found, ignoring style hook.  If
-  you are a gem5 developer, please fix this and run the style
-  hook. It is important.
-
-  Checking for leading underscore in global variables...(cached) no
-  Checking for C header file Python.h... (cached) yes
-  Checking for C library pthread... (cached) yes
-  Checking for C library dl... (cached) yes
-  Checking for C library util... (cached) yes
-  Checking for C library m... (cached) yes
-  Checking for C library python2.7... (cached) yes
-  Checking for accept(0,0,0) in C++ library None... (cached) yes
-  Checking for zlibVersion() in C++ library z... (cached) yes
-  Checking for GOOGLE_PROTOBUF_VERIFY_VERSION in C++ library protobuf... (cached) yes
-  Checking for clock_nanosleep(0,0,NULL,NULL) in C library None... (cached) no
-  Checking for clock_nanosleep(0,0,NULL,NULL) in C library rt... (cached) yes
-  Checking for timer_create(CLOCK_MONOTONIC, NULL, NULL) in C library None... (cached) yes
-  Checking for C library tcmalloc... (cached) yes
-  Checking for C header file fenv.h... (cached) yes
-  Checking for C header file linux/kvm.h... (cached) yes
-  Checking size of struct kvm_xsave ... (cached) yes
-  Checking for member exclude_host in struct perf_event_attr...(cached) yes
-  Building in /afs/cs.wisc.edu/p/multifacet/users/powerjg/gem5-tutorial/gem5/build/X86
-  Variables file /afs/cs.wisc.edu/p/multifacet/users/powerjg/gem5-tutorial/gem5/build/variables/X86 not found,
-    using defaults in /afs/cs.wisc.edu/p/multifacet/users/powerjg/gem5-tutorial/gem5/build_opts/X86
+  Checking for C header file Python.h... yes
+  Checking for C library pthread... yes
+  Checking for C library dl... yes
+  Checking for C library util... yes
+  Checking for C library m... yes
+  Checking for C library python2.7... yes
+  Checking for accept(0,0,0) in C++ library None... yes
+  Checking for zlibVersion() in C++ library z... yes
+  Checking for GOOGLE_PROTOBUF_VERIFY_VERSION in C++ library protobuf... yes
+  Checking for clock_nanosleep(0,0,NULL,NULL) in C library None... yes
+  Checking for timer_create(CLOCK_MONOTONIC, NULL, NULL) in C library None... no
+  Checking for timer_create(CLOCK_MONOTONIC, NULL, NULL) in C library rt... yes
+  Checking for C library tcmalloc... yes
+  Checking for backtrace_symbols_fd((void*)0, 0, 0) in C library None... yes
+  Checking for C header file fenv.h... yes
+  Checking for C header file linux/kvm.h... yes
+  Checking size of struct kvm_xsave ... yes
+  Checking for member exclude_host in struct perf_event_attr...yes
+  Building in /local.chinook/gem5/gem5-tutorial/gem5/build/X86
+  Variables file /local.chinook/gem5/gem5-tutorial/gem5/build/variables/X86 not found,
+    using defaults in /local.chinook/gem5/gem5-tutorial/gem5/build_opts/X86
   scons: done reading SConscript files.
   scons: Building targets ...
    [ISA DESC] X86/arch/x86/isa/main.isa -> generated/inc.d
@@ -213,13 +236,16 @@ The output should look something like below:
    ....
    .... <lots of output>
    ....
-   [   SHCXX] drampower/src/MemoryPowerModel.cc -> .os
-   [   SHCXX] drampower/src/MemorySpecification.cc -> .os
-   [   SHCXX] drampower/src/Parameter.cc -> .os
-   [   SHCXX] drampower/src/Parametrisable.cc -> .os
-   [   SHCXX] drampower/src/libdrampower/LibDRAMPower.cc -> .os
+   [   SHCXX] nomali/lib/mali_midgard.cc -> .os
+   [   SHCXX] nomali/lib/mali_t6xx.cc -> .os
+   [   SHCXX] nomali/lib/mali_t7xx.cc -> .os
    [      AR]  -> drampower/libdrampower.a
+   [   SHCXX] nomali/lib/addrspace.cc -> .os
+   [   SHCXX] nomali/lib/mmu.cc -> .os
    [  RANLIB]  -> drampower/libdrampower.a
+   [   SHCXX] nomali/lib/nomali_api.cc -> .os
+   [      AR]  -> nomali/libnomali.a
+   [  RANLIB]  -> nomali/libnomali.a
    [     CXX] X86/base/date.cc -> .o
    [    LINK]  -> X86/gem5.opt
   scons: done building targets.

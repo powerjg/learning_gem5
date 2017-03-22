@@ -19,7 +19,14 @@ Contents:
    thoughts
    acknowledgements
 
+Notes for presentations
+=========================
 
+.. toctree::
+    :maxdepth: 1
+
+    presentation_notes/part1.rst
+    presentation_notes/part2.rst
 
 Indices and tables
 ==================

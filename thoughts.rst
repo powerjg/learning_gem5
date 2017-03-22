@@ -9,6 +9,8 @@ Some thoughts on this document
    * We should have the source checked in somewhere (probably in a repo next to gem5).
    * We should force people to make updates when they break things.
    * We should have the source for the examples checked into the gem5 repo, and have tests that run them.
+* It may be a good idea to add example exercises at the end of each chapter. These could be things that are good for a classroom or just good things to try out.
+* Adding a more "realistic" example in Part I would make the book a little more interesting. Giving readers an idea of what's possible early would set the stage better.
 
 An outline:
 
@@ -17,7 +19,10 @@ An outline:
 #. Developing with gem5
     #. Creating a new SimObject
     #. Debugging support in gem5
+    #. Simple event-driven model
+    #. Adding parameters to SimObjects
     #. Creating a new MemObject with master/slave ports
+    #. A more complex SimObject: Simple Uniprocessor cache
     #. Contributing back to gem5
         #. Style guidelines
         #. Mercurial queues
