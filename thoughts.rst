@@ -50,6 +50,7 @@ An outline:
 #. Using Ruby cache coherence model
     #. Overview of Ruby
     #. Ruby's cache coherence protocols
+    #. Understanding the protocol trace
     #. Ruby's network topologies
     #. Writing a new protocol
     #. Debugging a protocol
