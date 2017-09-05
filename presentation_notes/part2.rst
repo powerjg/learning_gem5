@@ -26,7 +26,7 @@ Simple SimObject
 
 Step 1: Create a Python class
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-* Every SimOjbect needs a SimObject declaration file
+* Every SimObject needs a SimObject declaration file
 * Create a file src/hpca_tutorial/HelloObject.py
 
 .. code-block:: python
@@ -166,7 +166,7 @@ Debugging gem5
 
    Switch!
 
-* Using iostream is bad! Think of what would happen if every single object had lots of print statments? How about when you need to debug something and you have to add a million print statements?
+* Using iostream is bad! Think of what would happen if every single object had lots of print statements? How about when you need to debug something and you have to add a million print statements?
 * Solution: Debug flags!
 
 * Let's look at a couple of examples:
@@ -198,7 +198,7 @@ Debugging gem5
 
     DebugFlag('Hello')
 
-* Add a debug statment in src/hpca_tutorial/hello_object.cc
+* Add a debug statement in src/hpca_tutorial/hello_object.cc
 
 .. code-block:: c++
 
@@ -662,7 +662,7 @@ hello_object.cc
 
 ---------------------------------------------
 
-* NOw the fun part. Implementing the send/receives
+* NOW the fun part. Implementing the send/receives
 * Let's start with receive
 
 hello_object.cc
@@ -708,7 +708,7 @@ hello_object.cc
         return true;
     }
 
-* Let's add a convienency function in the memside port
+* Let's add a conveniency function in the memside port
 
 hello_object.cc
 ~~~~~~~~~~~~~~~~
@@ -785,7 +785,7 @@ hello_object.cc
         return true;
     }
 
-* Now, we need the convience function to send packets
+* Now, we need the convenience function to send packets
 
 hello_object.hh
 ~~~~~~~~~~~~~~~~

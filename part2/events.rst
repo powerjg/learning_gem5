@@ -20,8 +20,8 @@ Creating a simple event callback
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In gem5's event-driven model, each event has a callback function in which the event is *processed*.
-Generally, this is a class that inheirits from :cpp:class:`Event`.
-However, gem5 provides a wrapper fuction for creating simple events.
+Generally, this is a class that inherits from :cpp:class:`Event`.
+However, gem5 provides a wrapper function for creating simple events.
 
 In the header file for our ``HelloObject``, we simply need to declare a new function that we want to execute every time the event fires (``processEvent()``).
 This function must take no parameters and return nothing.
@@ -57,7 +57,7 @@ The ``EventWrapper`` takes a single parameter, which a reference to an instance 
         DPRINTF(Hello, "Created the hello object\n");
     }
 
-We also must define the implemenation of the process function.
+We also must define the implementation of the process function.
 In this case, we'll simply print something if we are debugging.
 
 .. code-block:: c++
@@ -208,4 +208,4 @@ The output should now look like the following.
        1000: hello: Done firing!
     Exiting @ tick 18446744073709551615 because simulate() limit reached
 
-You can find the updated header file :download:`here <../_static/scripts/part2/events/hello_object.hh>` and the implemenation file :download:`here <../_static/scripts/part2/events/hello_object.cc>`.
+You can find the updated header file :download:`here <../_static/scripts/part2/events/hello_object.hh>` and the implementation file :download:`here <../_static/scripts/part2/events/hello_object.cc>`.

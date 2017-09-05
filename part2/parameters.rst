@@ -44,9 +44,9 @@ gem5 also supports many complex parameter types that are not just builtin types.
 For instance, ``time_to_wait`` is a ``Latency``.
 ``Latency`` takes a value as a time value as a string and converts it into simulator **ticks**.
 For instance, with a default tick rate of 1 picosecond (10^12 ticks per second or 1 THz), ``"1ns"`` is automatically converted to 1000.
-There are other convience parameters like ``Percent``, ``Cycles``, ``MemorySize`` and many more.
+There are other convenience parameters like ``Percent``, ``Cycles``, ``MemorySize`` and many more.
 
-Once you have declared these paramaters in the SimObject file, you need to copy their values to your C++ class in its construtor.
+Once you have declared these parameters in the SimObject file, you need to copy their values to your C++ class in its constructor.
 The following code shows the changes to the ``HelloObject`` constructor.
 
 .. code-block:: c++
@@ -280,7 +280,7 @@ Now, we need to implement the ``GoodbyeObject``.
         return new GoodbyeObject(this);
     }
 
-The header file can be downloaded :download:`here <../_static/scripts/part2/parameters/goodbye_object.hh>` and the implemenation can be downloaded :download:`here <../_static/scripts/part2/parameters/goodbye_object.cc>`
+The header file can be downloaded :download:`here <../_static/scripts/part2/parameters/goodbye_object.hh>` and the implementation can be downloaded :download:`here <../_static/scripts/part2/parameters/goodbye_object.cc>`
 
 The interface to this ``GoodbyeObject`` is simple a function ``sayGoodbye`` which takes a string as a parameter.
 When this function is called, the simulator builds the message and saves it in a member variable.
@@ -308,7 +308,7 @@ You can have a default, or not, just like a normal parameter.
         cxx_header = "learning_gem5/hello_object.hh"
 
         time_to_wait = Param.Latency("Time before firing the event")
-        number_of_fires = Param.Int(1, "Number fo times to fire the event before "
+        number_of_fires = Param.Int(1, "Number of times to fire the event before "
                                        "goodbye")
 
         goodbye_object = Param.GoodbyeObject("A goodbye object")
@@ -377,7 +377,7 @@ Once we have processed the number of event specified by the parameter, we should
         }
     }
 
-You can find the updated header file :download:`here <../_static/scripts/part2/parameters/hello_object.hh>` and the implemenation file :download:`here <../_static/scripts/part2/parameters/hello_object.cc>`.
+You can find the updated header file :download:`here <../_static/scripts/part2/parameters/hello_object.hh>` and the implementation file :download:`here <../_static/scripts/part2/parameters/hello_object.cc>`.
 
 Updating the config script
 ##########################
@@ -446,4 +446,4 @@ Running this script generates the following output.
 You can modify the parameters to these two SimObjects and see how the overall execution time (Exiting @ tick **10944163**) changes.
 To run these tests, you may want to remove the debug flag so there is less output to the terminal.
 
-In the next chapters, we will create a more complex and more useful SimObject, culminating with a simple blocking uniprocessor cache implemenation.
+In the next chapters, we will create a more complex and more useful SimObject, culminating with a simple blocking uniprocessor cache implementation.

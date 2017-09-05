@@ -210,14 +210,14 @@ In the ``hello_object.cc`` file, we need to include the header file.
 
     #include "debug/Hello.hh"
 
-Now that we have included the neccessary header file, let's replace the ``std::cout`` call with a debug statement like so.
+Now that we have included the necessary header file, let's replace the ``std::cout`` call with a debug statement like so.
 
 .. code-block:: c++
 
     DPRINTF(Hello, "Created the hello object\n");
 
 ``DPRINTF`` is a C++ macro.
-The first paramter is a *debug flag* that has been declared in a SConscript file.
+The first parameter is a *debug flag* that has been declared in a SConscript file.
 We can use the flag ``Hello`` since we declared it in the ``src/learning_gem5/SConscript`` file.
 The rest of the arguments are variable and can be anything you would pass to a ``printf`` statement.
 
