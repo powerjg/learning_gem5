@@ -14,7 +14,7 @@ In the :ref:`next chapter <simplecache-chapter>` we will take this simple memory
 gem5 master and slave ports
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Before diving into the implemenation of a memory object, we should first understand gem5's master and slave port interface.
+Before diving into the implementation of a memory object, we should first understand gem5's master and slave port interface.
 As previously discussed in :ref:`simple-config-chapter`, all memory objects are connected together via ports.
 These ports provide a rigid interface between these memory objects.
 
@@ -42,7 +42,7 @@ A ``Packet`` is made up of a ``MemReq`` which is the memory request object.
 The ``MemReq`` holds information about the original request that initiated the packet such as the requestor, the address, and the type of request (read, write, etc.).
 
 Packets also have a ``MemCmd``, which is the *current* command of the packet.
-This command can change thoughout the life of the packet (e.g., requests turn into responses once the memory command is satisfied).
+This command can change throughout the life of the packet (e.g., requests turn into responses once the memory command is satisfied).
 The most common ``MemCmd`` are ``ReadReq`` (read request), ``ReadResp`` (read response), ``WriteReq`` (write request), ``WriteResp`` (write response).
 There are also writeback requests (``WritebackDirty``, ``WritebackClean``) for caches and many other command types.
 
@@ -53,7 +53,7 @@ Finally, packets are used in the classic caches as the unit to track coherency.
 Therefore, much of the packet code is specific to the classic cache coherence protocol.
 However, packets are used for all communication between memory objects in gem5, even if they are not directly involved in coherence (e.g., DRAM controllers and the CPU models).
 
-All of the port inteface functions accept a ``Packet`` pointer as a parameter.
+All of the port interface functions accept a ``Packet`` pointer as a parameter.
 Since this pointer is so common, gem5 includes a typedef for it: ``PacketPtr``.
 
 Port interface
@@ -210,7 +210,7 @@ Define a slave port type
 ########################
 
 Now, we need to define classes for our two kinds of ports: the CPU-side and the memory-side ports.
-For this, we will declarte these classes inside the ``SimpleMemobj`` class since no other object will ever use these classes.
+For this, we will declare these classes inside the ``SimpleMemobj`` class since no other object will ever use these classes.
 
 Let's start with the slave port, or the CPU-side port.
 We are going to inherit from the ``SlavePort`` class.
@@ -318,7 +318,7 @@ Defining the MemObject interface
 ################################
 
 Now that we have defined these two new types ``CPUSidePort`` and ``MemSidePort``, we can declare our three ports as part of ``SimpleMemobj``.
-We also need to declare the two pure virutal functions in the ``MemObject`` class, ``getMasterPort`` and ``getSlavePort``.
+We also need to declare the two pure virtual functions in the ``MemObject`` class, ``getMasterPort`` and ``getSlavePort``.
 These two functions are used by gem5 during the initialization phase to connect memory objects together via ports.
 
 .. code-block:: c++
@@ -510,8 +510,8 @@ Then, if the ``SimpleMemobj`` is blocked on a request, we set that we need to se
 
 To handle the request for the ``SimpleMemobj``, we first check if the ``SimpleMemobj`` is already blocked waiting for a response to another request.
 If it is blocked, then we return ``false`` to signal the calling master port that we cannot accept the request right now.
-Otherwise, we markt he port as blocked and send the packet out of the memory port.
-For this, we can define a helper function in the ``MemSidePort`` object to hide the flow control from the ``SimpleMemobj`` implemenation.
+Otherwise, we mark he port as blocked and send the packet out of the memory port.
+For this, we can define a helper function in the ``MemSidePort`` object to hide the flow control from the ``SimpleMemobj`` implementation.
 We will assume the ``memPort`` handles all of the flow control and always return ``true`` from ``handleRequest`` since we were successful in consuming the request.
 
 .. code-block:: c++
@@ -626,7 +626,7 @@ If this call fails and the peer port is currently blocked, then we store the pac
         }
     }
 
-We will send this blocked pacet later when we receive a ``recvRespRetry``.
+We will send this blocked packet later when we receive a ``recvRespRetry``.
 This function is exactly the same as the ``recvReqRetry`` above and simply tries to resend the packet, which may be blocked again.
 
 .. code-block:: c++
@@ -676,7 +676,7 @@ The colors highlight one API path through the object (e.g., receiving a request 
   Interaction between SimpleMemobj and its ports
 
 For this simple memory object, packets are just forwarded from the CPU-side to the memory side.
-However, by modifying ``handleRequest`` and ``handleResponse``, we can create rich featurful objects, like a cache in the :ref:`next chapter <simplecache-chapter>`.
+However, by modifying ``handleRequest`` and ``handleResponse``, we can create rich featureful objects, like a cache in the :ref:`next chapter <simplecache-chapter>`.
 
 
 Create a config file

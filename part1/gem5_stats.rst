@@ -122,9 +122,9 @@ The statistic dump begins with ``---------- Begin Simulation Statistics --------
 There may be multiple of these in a single file if there are multiple statistic dumps during the gem5 execution.
 This is common for long running applications, or when restoring from checkpoints.
 
-Each statistic has a name (first column), a value (second column), and a description (last column preceeded by `#`).
+Each statistic has a name (first column), a value (second column), and a description (last column preceded by `#`).
 
-Most of the statistics are self explainitory from their descriptions.
+Most of the statistics are self explanatory from their descriptions.
 A couple of important statistics are ``sim_seconds`` which is the total simulated time for the simulation, ``sim_insts`` which is the number of instructions committed by the CPU, and ``host_inst_rate`` which tells you the performance of gem5.
 
 Next, the SimObjects' statistics are printed.
@@ -169,7 +169,7 @@ Later in the file is the CPU statistics, which contains information on the numbe
     system.cpu.committedOps                         10314                       # Number of ops (including micro ops) committed
     system.cpu.num_int_alu_accesses                 10205                       # Number of integer alu accesses
     system.cpu.num_fp_alu_accesses                      0                       # Number of float alu accesses
-    system.cpu.num_func_calls                         221                       # number of times a function call or return occured
+    system.cpu.num_func_calls                         221                       # number of times a function call or return occurred
     system.cpu.num_conditional_control_insts          986                       # number of instructions that are conditional controls
     system.cpu.num_int_insts                        10205                       # number of integer instructions
     system.cpu.num_fp_insts                             0                       # number of float instructions
