@@ -122,9 +122,9 @@ The statistic dump begins with ``---------- Begin Simulation Statistics --------
 There may be multiple of these in a single file if there are multiple statistic dumps during the gem5 execution.
 This is common for long running applications, or when restoring from checkpoints.
 
-Each statistic has a name (first column), a value (second column), and a description (last column preceeded by `#`).
+Each statistic has a name (first column), a value (second column), and a description (last column preceded by `#`).
 
-Most of the statistics are self explainitory from their descriptions.
+Most of the statistics are self explanatory from their descriptions.
 A couple of important statistics are ``sim_seconds`` which is the total simulated time for the simulation, ``sim_insts`` which is the number of instructions committed by the CPU, and ``host_inst_rate`` which tells you the performance of gem5.
 
 Next, the SimObjects' statistics are printed.

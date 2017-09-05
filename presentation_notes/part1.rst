@@ -206,7 +206,7 @@ Adding caches
 
 --------------------------------------
 
-Undertanding gem5's output
+Understanding gem5's output
 --------------------------
 
 * Slide on output generated
