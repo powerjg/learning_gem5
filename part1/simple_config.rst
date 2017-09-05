@@ -36,7 +36,7 @@ Hopefully, by the end of this section you'll have a good idea of how simulation 
 .. sidebar:: An aside on SimObjects
 
     gem5's modular design is built around the **SimObject** type.
-    Most of the components in the simulated system are SimObjects: CPUs, caches, memory controllers, busses, etc.
+    Most of the components in the simulated system are SimObjects: CPUs, caches, memory controllers, buses, etc.
     gem5 exports all of these objects from their ``C++`` implementation to python.
     Thus, from the python configuration script you can create any SimObject, set its parameters, and specify the interactions between SimObjects.
 
@@ -267,7 +267,7 @@ The output should be:
   Global frequency set at 1000000000000 ticks per second
   warn: DRAM device capacity (8192 Mbytes) does not match the address range assigned (512 Mbytes)
   0: system.remote_gdb.listener: listening for remote gdb #0 on port 7000
-  Begining simulation!
+  Beginning simulation!
   info: Entering event queue @ 0.  Starting simulation...
   Hello world!
   Exiting @ tick 345518000 because target called exit()

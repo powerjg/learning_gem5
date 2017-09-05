@@ -223,7 +223,7 @@ You can simply import that file to use those caches.
 .. code-block:: python
 
     def createCacheHierarchy(self):
-        """ Create a simple cache heirarchy with the caches from part1 """
+        """ Create a simple cache hierarchy with the caches from part1 """
 
         # Create an L1 instruction and data caches and an MMU cache
         # The MMU cache caches accesses from the inst and data TLBs
@@ -327,7 +327,7 @@ For the details, see the Intel x86 architecture manual and the gem5 source code.
         system.pc.attachIO(system.iobus)
 
         # Add a tiny cache to the IO bus.
-        # This cache is required for the classic memory model to mantain coherence
+        # This cache is required for the classic memory model to maintain coherence
         system.iocache = Cache(assoc=8,
                             hit_latency = 50,
                             response_latency = 50,
@@ -646,7 +646,7 @@ It should look like the output below.
     boot  etc  lib   lib64  mnt         proc  sbin  tmp  var
 
 This simple run script also ran an application ``/sbin/m5`` on the simulated machine.
-This application allows you to comminucate from the simulated system to the simulator on the host system.
+This application allows you to communicate from the simulated system to the simulator on the host system.
 By running ``/sbin/m5 exit`` we are asking the simulator to exit.
 There are other options to the ``m5`` program as well.
 You can run ``/sbin/m5 --help`` to see all the options.

@@ -37,7 +37,7 @@ First, we have a couple of extra parameters.
 Namely, a latency for cache accesses and the size of the cache.
 :ref:`parameters-chapter` goes into more detail about these kinds of SimObject parameters.
 
-Next, we include a ``System`` parameter, which is a pointer to the main system this cache is connected tol.
+Next, we include a ``System`` parameter, which is a pointer to the main system this cache is connected to.
 This is needed so we can get the cache block size from the system object when we are initializing the cache.
 To reference the system object this cache is connected to, we use a special *proxy parameter*.
 In this case, we use ``Parent.any``.
@@ -50,7 +50,7 @@ Since we often use a ``System`` as the root SimObject, you will often see a ``sy
     Talk about other kind of proxy parameters somewhere.
 
 The third and final difference between the ``SimpleCache`` and the ``SimpleMemobj`` is that instead of having two named CPU ports (``inst_port`` and ``data_port``), the ``SimpleCache`` use another special parameter: the ``VectorPort``.
-``VectorPorts`` behave similarly to regular ports (e.g., they are resovled via ``getMasterPort`` and ``getSlavePort``), but they allow this object to connect to multiple peers.
+``VectorPorts`` behave similarly to regular ports (e.g., they are resolved via ``getMasterPort`` and ``getSlavePort``), but they allow this object to connect to multiple peers.
 Then, in the resolution functions the parameter we ignored before (``PortID idx``) is used to differentiate between the different ports.
 By using a vector port, this cache can be connected into the system more flexibly than the ``SimpleMemobj``.
 
@@ -102,7 +102,7 @@ For ``getSlavePort``, we now need to return the port based on the id requested.
         }
     }
 
-The implemenation of the ``CPUSidePort`` and the ``MemSidePort`` is almost the same as in the ``SimpleMemobj``.
+The implementation of the ``CPUSidePort`` and the ``MemSidePort`` is almost the same as in the ``SimpleMemobj``.
 The only difference is we need to add an extra parameter to ``handleRequest`` that is the id of the port which the request originated.
 Without this id, we would not be able to forward the response to the correct port.
 The ``SimpleMemobj`` knew which port to send replies based on whether the original request was an instruction or data accesses.
@@ -388,7 +388,7 @@ This data is guaranteed to be the size of the cache block since we made sure to 
 Creating a config file for the cache
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The last step in our implemenation is to create a new Python config script that uses our cache.
+The last step in our implementation is to create a new Python config script that uses our cache.
 We can use the outline from the :ref:`last chapter <memoryobject-chapter>` as a starting point.
 The only difference is we may want to set the parameters of this cache (e.g., set the size of the cache to ``1kB``) and instead of using the named ports (``data_port`` and ``inst_port``), we just use the ``cpu_side`` port twice.
 Since ``cpu_side`` is a ``VectorPort``, it will automatically create multiple port connections.
@@ -413,7 +413,7 @@ Since ``cpu_side`` is a ``VectorPort``, it will automatically create multiple po
 
 The Python config file can be downloaded :download:`here <../_static/scripts/part2/simplecache/simple_cache.py>`
 
-Running this script should produce the exepected output from the hello binary.
+Running this script should produce the expected output from the hello binary.
 
 ::
 
@@ -548,7 +548,7 @@ Additionally, on a miss, we save the current time so we can measure the latency.
 Then, when we get a response, we need to add the measured latency to our histogram.
 For this, we use the ``sample`` function.
 This adds a single point to the histogram.
-This histogram automaticaly resizes the buckets to fit the data it receives.
+This histogram automatically resizes the buckets to fit the data it receives.
 
 .. code-block:: c++
 
@@ -595,7 +595,7 @@ For the 1 KB case, we get the following statistics.
     system.cache.hitRatio                        0.905780                       # The ratio of hits to the total access
 
 
-And when using a 128 KB cache, we get a slightly higher hit ratio. It seems like our cache is working as exepected!
+And when using a 128 KB cache, we get a slightly higher hit ratio. It seems like our cache is working as expected!
 
 ::
 

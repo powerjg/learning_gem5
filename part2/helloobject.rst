@@ -225,7 +225,7 @@ Next, you have to instantiate the ``Root`` object, as required by all gem5 insta
 Now, you can instantiate the ``HelloObject`` you created.
 All you need to do is call the ``Python`` "constructor".
 Later, we will look at how to specify parameters via the ``Python`` constructor.
-In addition to creating an instatiation of your object, you need to make sure that it is a child of the root object.
+In addition to creating an instantiation of your object, you need to make sure that it is a child of the root object.
 Only SimObjects that are children of the ``Root`` object are instantiated in ``C++``.
 
 .. code-block:: python

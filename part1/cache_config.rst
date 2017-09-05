@@ -45,7 +45,7 @@ First, we must understand the parameters that are used to configure Cache object
     If you are modeling changes to the cache coherence protocol or the coherence protocol could have a first-order impact on your results, use Ruby.
     Otherwise, if the coherence protocol isn't important to you, use the classic caches.
 
-    A longterm goal of gem5 is to unify these to cache models into a single holistic model.
+    A long-term goal of gem5 is to unify these to cache models into a single holistic model.
 
 Cache
 **********************
