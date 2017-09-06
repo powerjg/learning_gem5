@@ -7,7 +7,7 @@ gem5 Full System Simulation
 ----------------------------
 
 One of the most exciting features of gem5 is the ability to simulate the full system.
-In full system mode, gem5 acts more like an emulator or hypervisor than a traditional simulator.
+In syscall emulation mode, gem5 acts more like an emulator or hypervisor than a traditional simulator.
 In full system mode, gem5 simulates all of the hardware from the CPU to the I/O devices.
 This allows gem5 to execute binaries with no modifications.
 Additionally, full system mode allows researchers to investigate the impacts of the operating system and other low-level details.

@@ -362,7 +362,7 @@ The name can be any string, but by convention, it is the same name as in the Pyt
         MemObject(params),
         instPort(params->name + ".inst_port", this),
         dataPort(params->name + ".data_port", this),
-        memPort(params->name + ".mem_side", this),
+        memPort(params->name + ".mem_side", this)
     {
     }
 
@@ -492,7 +492,7 @@ The ``SimpleMemobj`` is a very simple blocking structure; we only allow a single
 Therefore, if we get a request while another request is outstanding, the ``SimpleMemobj`` will block the second request.
 
 To simplify the implementation, the ``CPUSidePort`` stores all of the flow-control information for the port interface.
-Thus, we need to add an extra member variable to the ``CPUSidePort``, a boolean that stores whether we need to send a retry whenever the ``SimpleMemobj`` becomes free.
+Thus, we need to add an extra member variable, ``needRetry``, to the ``CPUSidePort``, a boolean that stores whether we need to send a retry whenever the ``SimpleMemobj`` becomes free.
 Then, if the ``SimpleMemobj`` is blocked on a request, we set that we need to send a retry sometime in the future.
 
 .. code-block:: c++
