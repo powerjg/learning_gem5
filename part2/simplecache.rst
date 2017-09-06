@@ -11,7 +11,8 @@ In this chapter, we will take the framework for a memory object we created in th
 SimpleCache SimObject
 ~~~~~~~~~~~~~~~~~~~~~
 
-After creating the SConscript file, that you can download :download:`here <../_static/scripts/part2/simplecache/SConscript>`, we can create the SimObject Python file.
+After creating the SConscript file, that you can download :download:`here <../_static/scripts/part2/simplecache/SConscript>`, we can create the SimObject Python file.  
+We will call this simple memory object ``SimpleCache`` and create the SimObject Python file in ``src/learning_gem5/simple_cache``.
 
 .. code-block:: python
 
@@ -42,7 +43,7 @@ This is needed so we can get the cache block size from the system object when we
 To reference the system object this cache is connected to, we use a special *proxy parameter*.
 In this case, we use ``Parent.any``.
 
-In the Python config file, when a ``SimpleCache`` is instantiated, his proxy parameter searches through all of the parents of the ``SimpleCache`` instance to find a SimObject that matches the ``System`` type.
+In the Python config file, when a ``SimpleCache`` is instantiated, this proxy parameter searches through all of the parents of the ``SimpleCache`` instance to find a SimObject that matches the ``System`` type.
 Since we often use a ``System`` as the root SimObject, you will often see a ``system`` parameter resolved with this proxy parameter.
 
 .. todo::

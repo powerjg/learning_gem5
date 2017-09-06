@@ -65,6 +65,29 @@ Here, we use the parameter's values for the default values of latency and timesL
 Additionally, we store the ``name`` from the parameter object to use it later in the member variable ``myName``.
 Each ``params`` instantiation has a name which comes from the Python config file when it is instantiated.
 
+To the HelloObject class declaration, add a member variable for the name.
+
+.. code-block:: c++
+
+    class HelloObject : public SimObject
+    {
+      private:
+        void processEvent();
+
+        EventWrapper<HelloObject, &HelloObject::processEvent> event;
+
+        std::string myName;
+        
+        Tick latency;
+
+        int timesLeft;
+
+      public:
+        HelloObject(HelloObjectParams *p);
+
+        void startup();
+    };
+
 When we run gem5 with the above, we get the following error:
 
 ::
@@ -356,7 +379,7 @@ Then, we need to update the constructor and the process event function of the ``
         latency(params->time_to_wait),
         timesLeft(params->number_of_fires)
     {
-        DPRINTF(Hello, "Created the hello object\n");
+        DPRINTF(Hello, "Created the hello object with the name %s\n", myName);
     }
 
 Once we have processed the number of event specified by the parameter, we should call the ``sayGoodbye`` function in the ``GoodbyeObject``.

@@ -102,7 +102,7 @@ We also set the system port to this bus, as we did in syscall emulation mode.
 
 After creating the membus, we can initialize the x86 system.
 For now, we will just call a function which does the magic for us.
-The details of the function are in <architecture-specific-settings>.
+The details of the function are in :ref:`architecture-specific-settings`.
 
 .. code-block:: python
 
@@ -121,7 +121,7 @@ Using a full path will work best, but you can also use a relative path from wher
 Additionally, we set a few parameters that are passed to the kernel at boot time.
 
 
-* ``earlyprintk=ttyS0``: This enable the kernel output to be directed to the serial terminal. We will discuss how to connect to the serial terminal <running-full-system>.
+* ``earlyprintk=ttyS0``: This enable the kernel output to be directed to the serial terminal. We will discuss how to connect to the serial terminal later in :ref:`running-full-system`.
 * ``console=ttyS0``: Direct all output that would be to the console to the serial terminal.
 * ``lpj=7999923``: This is a serial output setting.
 * ``root=/dev/hda1``: The partition and disk that holds the root directory (``/``).

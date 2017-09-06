@@ -30,10 +30,10 @@ If you see the following error, you may need to install the mercurial python lib
 
 The key takeaways from the style guide are:
 
-# Use 4 spaces, not tabs
-# Sort the includes
-# Use capitalized camel case for class names, camel case for member variables, and underscores for local variables.
-# Document your code
+- Use 4 spaces, not tabs
+- Sort the includes
+- Use capitalized camel case for class names, camel case for member variables, and underscores for local variables.
+- Document your code
 
 Mercurial patch queues
 ~~~~~~~~~~~~~~~~~~~~~~~

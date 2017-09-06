@@ -11,13 +11,13 @@ In the :ref:`previous chapters <hello-simobject-chapter>` we covered how to crea
 In this chapter, we will replace the simple print to ``stdout`` with gem5's debugging support.
 
 gem5 provides support for ``printf``-style tracing/debugging of your code via *debug flags*.
-These flags allow every component to have many debug-print statements, without all of the enabled at the same time.
+These flags allow every component to have many debug-print statements, without all of them enabled at the same time.
 When running gem5, you can specify which debug flags to enable from the command line.
 
 Using debug flags
 ~~~~~~~~~~~~~~~~~
 
-For instance, when running the first simple.py script from `simple-config-chapter`, if you enable the ``DRAM`` debug flag, you get the following output.
+For instance, when running the first simple.py script from :ref:`simple-config-chapter`, if you enable the ``DRAM`` debug flag, you get the following output.
 Note that this generates *a lot* of output to the console (about 7 MB).
 
 .. code-block:: sh
