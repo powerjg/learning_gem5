@@ -3,7 +3,7 @@ python:
   - "2.7"
 
 # command to install dependencies
-install: "pip install -q -r requirements.txt --use-mirrors"
+install: "pip install -q -r requirements.txt"
 
 # command to run tests
 script: sphinx-build -b html -d _build/doctrees . _build/html
