@@ -3,7 +3,7 @@
 .. _full-system-part:
 
 =================================
-Part III: Full System Simulation
+Part IV: Full System Simulation
 =================================
 
 .. toctree::

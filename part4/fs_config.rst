@@ -267,7 +267,7 @@ Again, this is the same as when we were using syscall emulation mode and is stra
         self.cpu.interrupts[0].int_master = self.membus.slave
         self.cpu.interrupts[0].int_slave = self.membus.master
 
-You can find the complete file :download:`here <../_static/scripts/part3/system.py>`.
+You can find the complete file :download:`here <../_static/scripts/part4/system.py>`.
 
 .. _architecture-specific-settings:
 
@@ -276,8 +276,8 @@ Architecture-specific settings
 
 One thing we skipped over in the previous section was the function ``x86.init_fs``.
 This function encapsulates most of the architecture-specific setup that is required for an x86 system.
-You can download the file :download:`here <../_static/scripts/part3/x86.py>` and the code is listed below.
-You can download a slightly modified version that supports multiple processors :download:`here <../_static/scripts/part3/x86_mp.py>`.
+You can download the file :download:`here <../_static/scripts/part4/x86.py>` and the code is listed below.
+You can download a slightly modified version that supports multiple processors :download:`here <../_static/scripts/part4/x86_mp.py>`.
 Next we will go through some of the highlights of this code.
 For the details, see the Intel x86 architecture manual and the gem5 source code.
 
@@ -511,7 +511,7 @@ This is the same as the simple scripts in :ref:`simple-config-chapter`.
 
 Now we can run our simulation!
 
-You can download ``run.py`` from :download:`here <../_static/scripts/part3/run.py>`
+You can download ``run.py`` from :download:`here <../_static/scripts/part4/run.py>`
 
 .. _running-full-system:
 
@@ -535,7 +535,7 @@ When running gem5, your output should look something like below.
     gem5 compiled Feb 12 2016 16:27:24
     gem5 started Feb 12 2016 17:30:43
     gem5 executing on mustardseed.cs.wisc.edu, pid 2994
-    command line: build/X86/gem5.opt configs/learning_gem5/part3/run.py
+    command line: build/X86/gem5.opt configs/learning_gem5/part4/run.py
 
     Global frequency set at 1000000000000 ticks per second
     warn: DRAM device capacity (8192 Mbytes) does not match the address range assigned (4096 Mbytes)
@@ -604,7 +604,7 @@ If you save this script as ``test.rcS`` then run gem5 as below, gem5 will run to
 
 .. code-block: sh
 
-    build/X86/gem5.opt configs/learning_gem5/part3/run.py --script=test.rcS
+    build/X86/gem5.opt configs/learning_gem5/part4/run.py --script=test.rcS
 
 You can view m5out/system.pc.com_1.terminal to see the output of the simulated system.
 It should look like the output below.

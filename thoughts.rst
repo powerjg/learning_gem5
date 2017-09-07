@@ -23,30 +23,12 @@ An outline:
     #. Adding parameters to SimObjects
     #. Creating a new MemObject with master/slave ports
     #. A more complex SimObject: Simple Uniprocessor cache
-    #. Contributing back to gem5
+    #. A simple CPU model (Code mostly done, but prose not written)
+    #. Contributing back to gem5 (not done)
         #. Style guidelines
         #. Mercurial queues
         #. Reviewboard
-    #. Running tests
-#. Full system simulation
-    #. Introduction
-    #. Simple FS config file
-    #. Building a kernel for gem5
-    #. Building a disk image for gem5
-    #. ARM simulation
-    #. More on X86 simulation
-#. Advanced gem5 usage
-    #. Checkpoint creation and restoring
-    #. ISA language
-    #. Using m5ops
-    #. Using traces
-#. An overview of common SimObjects
-    #. CPUs
-        #. CPU models
-        #. Dynamically switching CPUs
-    #. Classic memory system
-        #. Random note: All controllers that issue coherent requests are required to have a cache attached to them. For instance, you have to have a cache on the IOBus or else there are weird errors.
-    #. System
+    #. Running tests (not done)
 #. Using Ruby cache coherence model
     #. Overview of Ruby
     #. Ruby's cache coherence protocols
@@ -55,6 +37,25 @@ An outline:
     #. Writing a new protocol
     #. Debugging a protocol
     #. Extending the SLICC language
+#. Full system simulation
+    #. Introduction
+    #. Simple FS config file
+    #. Building a kernel for gem5 (on my website, but not here)
+    #. Building a disk image for gem5 (ditto)
+    #. ARM simulation (to do)
+    #. More on X86 simulation (to do)
+#. Advanced gem5 usage (to do)
+    #. Checkpoint creation and restoring
+    #. ISA language
+    #. Using m5ops
+    #. Using traces
+#. An overview of common SimObjects (to do)
+    #. CPUs
+        #. CPU models
+        #. Dynamically switching CPUs
+    #. Classic memory system
+        #. Random note: All controllers that issue coherent requests are required to have a cache attached to them. For instance, you have to have a cache on the IOBus or else there are weird errors.
+    #. System
 #. External projects and gem5
     #. Power models
     #. GPU models
