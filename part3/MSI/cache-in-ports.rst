@@ -263,7 +263,7 @@ Next, when we receive data from the directory, we expect that the number of acks
 The number of acks we're waiting for is the current acks we have received (tbe.AcksOutstanding) and the number of acks the directory has told us to be waiting for.
 We need to check it this way because it is possible that we have received acks from other caches before we get the message from the directory that we need to wait for acks.
 
-There are two possibilities for the acks, either we have already received all of the acks and now we are getting the data (data from dir acks==0 in Table 8.2), or we need to wait for more acks.
+There are two possibilities for the acks, either we have already received all of the acks and now we are getting the data (data from dir acks==0 in Table 8.3), or we need to wait for more acks.
 Thus, we check this condition and trigger two different events, one for each possibility.
 
 When triggering transitions, you need to pass four parameters.
@@ -281,7 +281,7 @@ If the `trigger` function is executed, after the transition is complete, the `in
 If there are other messages in the message buffer more transitions can be triggered.
 
 If the response is from another cache instead of the directory, then other events are triggered, as shown in the code above.
-These events come directly from Table 8.2 in Sorin et al.
+These events come directly from Table 8.3 in Sorin et al.
 
 Importantly, you should use the `in_port` logic to check all conditions.
 After an event is triggered, it should only have a *single code path*.

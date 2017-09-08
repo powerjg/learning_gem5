@@ -28,7 +28,7 @@ For instance, a simple transition in the MSI protocol is transitioning out of In
 
 First, you specify the transition as the "parameters" to the ``transition`` statement.
 In this case, if the initial state is ``I`` and the event is ``Load`` then transition to ``IS_D`` (was invalid, going to shared, waiting for data).
-This transition is straight out of table 8.2 in Sorin et al.
+This transition is straight out of Table 8.3 in Sorin et al.
 
 Then, inside the ``transition`` code block, all of the actions that will execute are listed in order.
 For this transition first we allocate cache cache block.
@@ -44,7 +44,7 @@ Next, we send a GetS request to the directory, and finally we pop the head entry
     }
 
 In this transition, we use slightly different syntax.
-According to Table 8.2 from Sorin et al., we should stall if the cache is in IS_D on loads, stores, replacements, and invalidates.
+According to Table 8.3 from Sorin et al., we should stall if the cache is in IS_D on loads, stores, replacements, and invalidates.
 We can specify a single transition statement for this by including multple events in curly brackets as above.
 Additionally, the final state isn't required.
 If the final state isn't specified, then the transition is executed and the state is not updated (i.e., the block stays in its beginning state.)

@@ -156,7 +156,7 @@ The next part of the state machine is the state declaration.
 Here, we are going to declare all of the stable and transient states for the state machine.
 We will follow the naming convention in Sorin et al.
 For instance, the transient state "IM_AD" corresponds to moving from Invalid to Modified waiting on acks and data.
-These states come directly from the left column of table 8.2  in Sorin et al.
+These states come directly from the left column of Table 8.3  in Sorin et al.
 
 .. code-block:: c++
 
@@ -208,7 +208,7 @@ Event declarations
 ##################
 
 Next, we need to declare all of the events that are triggered by incoming messages for this cache controller.
-These events come directly from the first row in Table 8.2 in Sorin et al.
+These events come directly from the first row in Table 8.3 in Sorin et al.
 
 .. code-block:: c++
 
