@@ -210,6 +210,8 @@ Finally, we also have to define functional read and write functions.
 These are used by Ruby to inspect in-flight messages on function reads and writes.
 Note: This functionality currently is very brittle and if there are messages in-flight for an address that is functionally read or written the functional access may fail.
 
+You can download the complete file ``MSI-msg.sm`` :download:`here <../../_static/scripts/part3/MSI_protocol/MSI-msg.sm>`.
+
 Now that we have defined the data in the response message, we can look at how we choose the action to trigger in the `in_port` for response to the cache.
 
 .. code-block:: c++
@@ -331,6 +333,9 @@ It is possible to implement this as two different messages and request type enum
             return testAndWrite(addr, DataBlk, pkt);
         }
     }
+
+
+You can download the complete file ``MSI-msg.sm`` :download:`here <../../_static/scripts/part3/MSI_protocol/MSI-msg.sm>`.
 
 Now, we can specify the logic for the forward network `in_port`.
 This logic is straightforward and triggers a different event for each request type.

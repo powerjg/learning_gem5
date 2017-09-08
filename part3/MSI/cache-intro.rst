@@ -45,7 +45,7 @@ Since we have named our protocol MSI, SCons will assume that there is a file nam
 We will create that file after writing all of our state machine files.
 Second, the `SConsopts` files tells the SCons to look in the current directory for files to pass to the SLICC compiler.
 
-You can download the `SConsopts` file  :download:`here <../_static/scripts/part3/MSI_protocol/SConsopts>`.
+You can download the `SConsopts` file  :download:`here <../../_static/scripts/part3/MSI_protocol/SConsopts>`.
 
 
 Writing a state machine file
