@@ -6,10 +6,6 @@
 Transition code blocks
 ------------------------------------------
 
-.. todo::
-
-    Copy over forwardEvict
-
 Finally, we've reached the final section of the state machine file!
 This section contains the details for all of the transitions between states and what actions to execute during the transition.
 
@@ -107,11 +103,13 @@ Below is the rest of the transitions needed to implement the L1 cache from the M
 
     transition(S, Replacement, SI_A) {
         sendPutS;
+        forwardEviction;
     }
 
     transition(S, Inv, I) {
         sendInvAcktoReq;
         deallocateCacheBlock;
+        forwardEviction;
         popForwardQueue;
     }
 
@@ -121,6 +119,7 @@ Below is the rest of the transitions needed to implement the L1 cache from the M
 
     transition(SM_AD, Inv, IM_AD) {
         sendInvAcktoReq;
+        forwardEviction;
         popForwardQueue;
     }
 
@@ -137,6 +136,7 @@ Below is the rest of the transitions needed to implement the L1 cache from the M
 
     transition(M, Replacement, MI_A) {
         sendPutM;
+        forwardEviction;
     }
 
     transition(M, FwdGetS, S) {
