@@ -14,8 +14,9 @@ Part III: Modeling cache coherence with Ruby
     MSI/cache-actions
     MSI/cache-transitions
     MSI/directory
-    MSI/debugging
+    MSI/building
     MSI/configuration
     MSI/running
+    MSI/debugging
 
     simple-MI_example
