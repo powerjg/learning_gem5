@@ -28,7 +28,7 @@ However, this time, instead of creating a ``SConscript`` file, we are going to c
 
 We need to create a ``SConsopts`` file with the following:
 
-.. code-block:
+.. code-block:: c++
 
     Import('*')
 
