@@ -151,7 +151,7 @@ Your first gem5 build
 ~~~~~~~~~~~~~~~~~~~~~~~
 Let's start by building a basic x86 system.
 Currently, you must compile gem5 separately for every ISA that you want to simulate.
-Additionally, if using :ref:`ruby`, you have to have separate compilations for every cache coherence protocol.
+Additionally, if using :ref:`ruby-intro-chapter`, you have to have separate compilations for every cache coherence protocol.
 
 To build gem5, we will use SCons.
 SCons uses the SConstruct file (``gem5/SConstruct``) to set up a number of variables and then uses the SConscript file in every subdirectory to find and compile all of the gem5 source.

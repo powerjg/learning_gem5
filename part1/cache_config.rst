@@ -24,7 +24,7 @@ Additionally, this chapter will cover understanding the gem5 statistics output a
 Creating cache objects
 ~~~~~~~~~~~~~~~~~~~~~~
 
-We are going to use the classic caches, instead of :ref:`ruby`, since we are modeling a single CPU system and we don't care about modeling cache coherence.
+We are going to use the classic caches, instead of :ref:`ruby-intro-chapter`, since we are modeling a single CPU system and we don't care about modeling cache coherence.
 We will extend the Cache SimObject and configure it for our system.
 First, we must understand the parameters that are used to configure Cache objects.
 
