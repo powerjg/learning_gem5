@@ -20,3 +20,11 @@ Part III: Modeling cache coherence with Ruby
     MSI/debugging
 
     simple-MI_example
+
+.. todo::
+
+    Add a chapter on default protocols in gem5
+
+.. todo::
+
+    Make the MSI one chapter

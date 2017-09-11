@@ -36,6 +36,10 @@ But, to use MESI_Two_Level, you have to recompile gem5 so the SLICC compiler can
 
 .. todo::
 
+    Talk about when to use Ruby and when to use classic caches
+
+.. todo::
+
     Put in picture of Ruby
 
 .. todo::
