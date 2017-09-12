@@ -45,7 +45,7 @@ Thus, the Ruby random tester does a good job exercising the transient states and
     Add more details about the random tester.
 
 
-Unfortuantely, the random tester's configuration is slightly different than when using normal CPUs.
+Unfortunately, the random tester's configuration is slightly different than when using normal CPUs.
 Thus, we need to use a different ``MyCacheSystem`` than before.
 You can download this different cache system file :download:`here <../../_static/scripts/part3/configs/test_caches.py>` and you can download the modified run script :download:`here <../../_static/scripts/part3/configs/ruby_test.py>`.
 The test run script is mostly the same as the simple run script, but creates the ``RubyRandomTester`` instead of CPUs.
@@ -185,7 +185,7 @@ So, onto the next problem!
     panic: Deadlock detected: current_time: 56091 last_progress_time: 6090 difference:  50001 processor: 0
 
 Deadlocks are the worst kind of error.
-Whatever caused the deadlock is ancient history, and often very hard to track down.
+Whatever caused the deadlock is ancient history (i.e., likely happened many cycles earlier), and often very hard to track down.
 
 Looking at the tail of the protocol trace (note: sometimes you must put the protocol trace into a file because it grows *very* big) I see that there is an address that is trying to be replaced.
 Let's start there.
@@ -332,7 +332,7 @@ This seems to be that I am not counting the acks correctly.
 It could also be that the directory is much slower than the other caches at responding since it has to get the data from memory.
 
 If it's the latter (which I should be sure to verify), what we could do is include an ack requirement for the directory, too.
-Then, when the direcory sends the data (and the owner, too) decrement the needed acks and trigger the event based on the new ack count.
+Then, when the directory sends the data (and the owner, too) decrement the needed acks and trigger the event based on the new ack count.
 
 Actually, that first hypothesis was not quite right.
 I printed out the number of acks whenever we receive an InvAck and what's happening is that the other cache is responding with an InvAck before the directory has told it how many acks to expect.
@@ -370,7 +370,7 @@ To do this, we can add comments to the transition with `APPEND_TRANSITION_COMMEN
 
 For these data issues, the debug flag RubyNetwork is useful because it prints the value of the data blocks at every point it is in the network.
 For instance, for the address in question above, it looks like the data block is all 0's after loading from main-memory.
-I believe this shuold have valid data.
+I believe this should have valid data.
 In fact, if we go back in time some we see that there was some non-zero elements.
 
 ::

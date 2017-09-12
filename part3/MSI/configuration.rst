@@ -38,7 +38,7 @@ Cache system configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Now, let's create a file ``msi_caches.py``.
-In this file, we will create four classes ``MyCacheSystem`` which will inherit from ``RubySystem``, ``L1Cache`` and ``Directory`` which will inherit from the SimObjects created by SLICC from our two state machines, and ``MyNetwork`` which will inherit from ``SimpleNetwork``.
+In this file, we will create four classes: ``MyCacheSystem`` which will inherit from ``RubySystem``, ``L1Cache`` and ``Directory`` which will inherit from the SimObjects created by SLICC from our two state machines, and ``MyNetwork`` which will inherit from ``SimpleNetwork``.
 
 L1 Cache
 ========

@@ -14,7 +14,8 @@ However, in most cache coherence implementations you will find that you need to 
 For instance, when writing the transitions you will realize you forgot to add an action, or you notice that you actually need another transient state to implement the protocol.
 This is the normal way to write protocols, but for simplicity this chapter goes through the file top to bottom.
 
-Transition blocks consist of two parts, the begin state, event to transition on, and end state and all of the actions to execute.
+Transition blocks consist of two parts.  First, the first line of a transition block contains the begin state, event to transition on, and end state (the end state may not be required, as we will discuss below).
+Second, the transition block contains all of the actions to execute on this transition.
 For instance, a simple transition in the MSI protocol is transitioning out of Invalid on a Load.
 
 .. code-block:: c++
@@ -31,7 +32,7 @@ In this case, if the initial state is ``I`` and the event is ``Load`` then trans
 This transition is straight out of Table 8.3 in Sorin et al.
 
 Then, inside the ``transition`` code block, all of the actions that will execute are listed in order.
-For this transition first we allocate cache cache block.
+For this transition first we allocate the cache block.
 Remember that in the ``allocateCacheBlock`` action the newly allocated entry is set to the entry that will be used in the rest of the actions.
 After allocating the cache block, we also allocate a TBE.
 This could be used if we need to wait for acks from other caches.
@@ -45,9 +46,9 @@ Next, we send a GetS request to the directory, and finally we pop the head entry
 
 In this transition, we use slightly different syntax.
 According to Table 8.3 from Sorin et al., we should stall if the cache is in IS_D on loads, stores, replacements, and invalidates.
-We can specify a single transition statement for this by including multple events in curly brackets as above.
+We can specify a single transition statement for this by including multiple events in curly brackets as above.
 Additionally, the final state isn't required.
-If the final state isn't specified, then the transition is executed and the state is not updated (i.e., the block stays in its beginning state.)
+If the final state isn't specified, then the transition is executed and the state is not updated (i.e., the block stays in its beginning state).
 You can read the above transition as "If the cache block is in state IS_D and there is a load, store, replacement, or invalidate stall the protocol and do not transition out of the state."
 You can also use curly brackets for beginning states, as shown in some of the transitions below.
 

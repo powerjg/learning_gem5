@@ -7,12 +7,13 @@ Action code blocks
 ------------------------------------------
 
 The next section of the state machine file is the action blocks.
-The action blocks are executed during a transition from one state to another.
+The action blocks are executed during a transition from one state to another, and are called by the transition code blocks (which we will discuss in the :ref:`next section <MSI-transitions-section>`).
 Actions are *single action* blocks.
-For instance, "send a message to the directory" or "pop the head of the buffer".
-Each action should be small and only perform and single action.
+Some examples are "send a message to the directory" and "pop the head of the buffer".
+Each action should be small and only perform a single action.
 
 The first action we will implement is an action to send a GetS request to the directory.
+We need to send a GetS request to the directory whenever we want to read some data that is not in the Modified or Shared states in our cache.
 As previously mentioned, there are three variables that are automatically populated inside the action block (like the ``in_msg`` in ``peek`` blocks).
 ``address`` is the address that was passed into the ``trigger`` function, ``cache_entry`` is the cache entry passed into the ``trigger`` function, and ``tbe`` is the TBE passed into the ``trigger`` function.
 
@@ -27,11 +28,10 @@ As previously mentioned, there are three variables that are automatically popula
                                     MachineType:Directory));
             // See mem/protocol/RubySlicc_Exports.sm for possible sizes.
             out_msg.MessageSize := MessageSizeType:Control;
-            // Set that the reqeustor is this machine so we get the response.
+            // Set that the requestor is this machine so we get the response.
             out_msg.Requestor := machineID;
         }
     }
-
 
 When specifying the action block, there are two parameters: a description and a "shorthand".
 These two parameters are used in the HTML table generation.
@@ -46,7 +46,7 @@ The ``enqueue`` function is similar to the ``peek`` function since it requires a
 In the ``enqueue`` block, you can modify the ``out_msg`` with the current data.
 
 The ``enqueue`` block takes three parameters, the message buffer to send the message, the type of the message, and a latency.
-This latency (1 cycle in the example above and througout this cache controller) is the *cache latency*.
+This latency (1 cycle in the example above and throughout this cache controller) is the *cache latency*.
 This is where you specify the latency of accessing the cache, in this case for a miss.
 Below we will see that specifying the latency for a hit is similar.
 
@@ -61,7 +61,7 @@ We call ``Destination.add`` because ``Destination`` is a ``NetDest`` object, or 
 Finally, we need to specify the message size (from ``mem/protocol/RubySlicc_Exports.sm``) and set ourselves as the requestor.
 By setting this ``machineID`` as the requestor, it will allow the directory to respond to this cache or forward it to another cache to respond to this request.
 
-Similarly, we can create actions for sending other get and put requests.
+Similarly, we can create actions for sending other get and put requests.  Note that get requests represent requests for data and put requests represent requests where we downgrading or evicting our copy of the data.
 
 .. code-block:: c++
 
@@ -174,7 +174,7 @@ This is useful since the number of remaining acks is part of the cache block sta
     }
 
 
-We also need an action to store the acks when we recieve a message from the directory with an ack count.
+We also need an action to store the acks when we receive a message from the directory with an ack count.
 For this action, we peek into the directory's response message to get the number of acks and store them in the (required to be valid) TBE.
 
 .. code-block:: c++
@@ -242,13 +242,13 @@ If you leave out the ``setMRU`` call, the replacement policy will not operate co
 
 On loads and stores, we call the ``read/writeCallback`` function on the ``sequencer``.
 This notifies the sequencer of the new data or allows it to write the data into the data block.
-These functions take four parameters (the last parameter is optional): the address and data block and then ``true`` if the original request was a miss and finally, an optional ``MachineType``.
-The final optional parameter is sued for tracking statistics on where the data for the request was found.
+These functions take four parameters (the last parameter is optional): address, data block, a boolean for if the original request was a miss, and finally, an optional ``MachineType``.
+The final optional parameter is used for tracking statistics on where the data for the request was found.
 It allows you to track whether the data comes from cache-to-cache transfers or from memory.
 
 Finally, we also have an action to forward evictions to the CPU.
 This is required for gem5's out-of-order models to squash speculative loads if the cache block is evicted before the load is committed.
-We use the paramter specified at the top of the state machine file to check if this is needed or not.
+We use the parameter specified at the top of the state machine file to check if this is needed or not.
 
 Next, we have a set of cache management actions that allocate and free cache entries and TBEs.
 To create a new cache entry, we must have space in the ``CacheMemory`` object.
@@ -257,7 +257,7 @@ This allocate function doesn't actually allocate the host memory for the cache e
 
 Additionally, in these actions we call ``set_cache_entry``, ``unset_cache_entry``, and similar functions for the TBE.
 These set and unset the implicit variables that were passed in via the ``trigger`` function.
-For instance, when allocating a new cache block, we call ``set_cache_entry`` and in all actions proceeding ``allocateCacheBlock`` the ``cache_entry`` variable will be vallid.
+For instance, when allocating a new cache block, we call ``set_cache_entry`` and in all actions proceeding ``allocateCacheBlock`` the ``cache_entry`` variable will be valid.
 
 There is also an action that copies the data from the cache data block to the TBE.
 This allows us to keep the data around even after removing the cache block until we are sure that this cache no longer are responsible for the data.
@@ -294,7 +294,7 @@ This allows us to keep the data around even after removing the cache block until
     action(deallocateTBE, "dT", desc="Deallocate TBE") {
         assert(is_valid(tbe));
         TBEs.deallocate(address);
-        // this makes the tbe varible invalid
+        // this makes the tbe variable invalid
         unset_tbe();
     }
 
