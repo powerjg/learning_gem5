@@ -61,7 +61,7 @@ Declaring required structures and functions
     This section declares the states, events, and many other required structures for the state machine.
 
 In port code blocks
-    Contain code that looks that incoming messages from message buffers and determines what events to trigger.
+    Contain code that looks at incoming messages from the  (``in_port``) message buffers and determines what events to trigger.
 
 Actions
     These are simple one-effect code blocks (e.g., send a message) that are executed when going through a transition.

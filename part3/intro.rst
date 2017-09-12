@@ -32,7 +32,7 @@ These files include the SimObject declaration file as well as implementation fil
 
 Currently, gem5 supports compiling only a single coherence protocol at a time.
 For instance, you can compile MI_example into gem5 (the default, poor performance, protocol), or you can use MESI_Two_Level.
-But, to use MESI_Two_Level, you have to recompile gem5 so the SLICC compiler can generate the correct files for the protocol.
+But, to use MESI_Two_Level, you have to recompile gem5 so the SLICC compiler can generate the correct files for the protocol.  We discuss this further in the :ref:`compilation section <MSI-building-section>`
 
 .. todo::
 

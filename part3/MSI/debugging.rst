@@ -11,6 +11,7 @@ The best way is by working with others who have written SLICC protocols in the p
 However, since you, the reader, cannot look over my shoulder while I am debugging a protocol, I am trying to present the next-best thing.
 
 Here, I first present some high-level suggestions to tackling protocol errors.
+Next, I discuss some details about deadlocks, and how to understand protocol traces that can be used to fix them.
 Then, I present my experience debugging the MSI protocol in this chapter in a stream-of-consciousness style.
 I will show the error that was generated, then the solution to the error, sometimes with some commentary of the different tactics I tried to solve the error.
 
@@ -45,7 +46,7 @@ Thus, the Ruby random tester does a good job exercising the transient states and
     Add more details about the random tester.
 
 
-Unfortuantely, the random tester's configuration is slightly different than when using normal CPUs.
+Unfortunately, the random tester's configuration is slightly different than when using normal CPUs.
 Thus, we need to use a different ``MyCacheSystem`` than before.
 You can download this different cache system file :download:`here <../../_static/scripts/part3/configs/test_caches.py>` and you can download the modified run script :download:`here <../../_static/scripts/part3/configs/ruby_test.py>`.
 The test run script is mostly the same as the simple run script, but creates the ``RubyRandomTester`` instead of CPUs.
@@ -60,6 +61,59 @@ If you can run the random tester for 10-15 minutes, you can be slightly confiden
 Once you have your protocol working with the random tester, you can move on to using real applications.
 It is likely that real applications will expose even more bugs in the protocol.
 If at all possible, it is much easier to debug your protocol with the random tester than with real applications!
+
+Understanding Protocol Traces
+=============================
+
+Unfortunately, despite extensive effort to catch bugs in them, coherence protocols (even heavily tested ones) will have sometimes have bugs.
+Sometimes these bugs are relatively simple fixes, while other times the bugs will be very insidious and difficult to track down.
+In the worst case, the bugs will manifest themselves as deadlocks: bugs that literally prevent the application from making progress.
+Another, similar problem is livelocks: where the program runs forever because there is a cycle somewhere in the system.
+Whenever livelocks or deadlocks occur, the next thing to do is generate a protocol trace.
+Traces print a running list of every transition that is happening in the memory system -- memory requests starting and completing, L1 and directory transitions, etc.
+You can then use these traces to identify why the deadlock is occurring.
+However, as we will discuss in more detail below, debugging deadlocks in protocol traces is often extremely challenging.
+
+Here, we discuss what appears in the protocol trace to help explain what is happening.
+To start with, lets look at a small snippet of a protocol trace (we will discuss the details of this trace further below):
+
+::
+
+    ...
+    4541   0    L1Cache         Replacement   MI_A>MI_A   [0x4ac0, line 0x4ac0]
+    4542   0    L1Cache              PutAck   MI_A>I      [0x4ac0, line 0x4ac0]
+    4549   0  Directory              MemAck   MI_M>I      [0x4ac0, line 0x4ac0]
+    4641   0        Seq               Begin       >       [0x4aec, line 0x4ac0] LD
+    4652   0    L1Cache                Load      I>IS_D   [0x4ac0, line 0x4ac0]
+    4657   0  Directory                GetS      I>S_M    [0x4ac0, line 0x4ac0]
+    4669   0  Directory             MemData    S_M>S      [0x4ac0, line 0x4ac0]
+    4674   0        Seq                Done       >       [0x4aec, line 0x4ac0] 33 cycles
+    4674   0    L1Cache       DataDirNoAcks   IS_D>S      [0x4ac0, line 0x4ac0]
+    5321   0        Seq               Begin       >       [0x4aec, line 0x4ac0] ST
+    5322   0    L1Cache               Store      S>SM_AD  [0x4ac0, line 0x4ac0]
+    5327   0  Directory                GetM      S>M_M    [0x4ac0, line 0x4ac0]
+
+Every line in this trace has a set pattern in terms of what information appears on that line.  Specifically, the fields are:
+
+#. Current Tick: the tick the print is occurs in
+#. Machine Version: The number of the machine where this request is coming from.  For example, if there are  4 L1 caches, then the numbers would be 0-3.  Assuming you have 1 L1 Cache per core, you can think of this as representing the core the request is coming from.
+#. Component: which part of the system is doing the print.  Generally, ``Seq`` is shorthand for Sequencer, ``L1Cache`` represents the L1 Cache, "Directory" represents the directory, and so on.  For L1 caches and the directory, this represents the name of the machine type (i.e., what is after "MachineType:" in the ``machine()`` definition).
+#. Action: what the component is doing.  For example, "Begin" means the Sequencer has received a new request, "Done" means that the Sequencer is completing a previous request, and "DataDirNoAcks" means that our DataDirNoAcks event is being triggered.
+#. Transition (e.g., MI_A>MI_A): what state transition this action is doing (format: "currentState>nextState").  If no transition is happening, this is denoted with ">".
+#. Address (e.g., [0x4ac0, line 0x4ac0]): the physical address of the request (format: [wordAddress, lineAddress]).  This address will always be cache-block aligned except for requests from the ``Sequencer`` and ``mandatoryQueue``.
+#. (Optional) Comments: optionally, there is one additional field to pass comments.  For example, the "LD" , "ST", and "33 cycles" lines use this extra field to pass additional information to the trace -- such as identifying the request as a load or store.  For SLICC transitions, ``APPEND_TRANSITION_COMMENT`` often use this, as we discussed :ref:`previously <MSI-actions-section>`.
+
+Generally, spaces are used to separate each of these fields.  However, sometimes if a field is very long, there may be no spaces or the line may be shifted compared to other lines.
+
+Thus, the above snippet is showing what was happening in the memory system between ticks 4541 and 5327.
+In this snippet, all of the requests are coming from L1Cache-0 (core 0) and going to Directory-0 (the first bank of the directory).
+During this time, we see several memory requests and state transitions for the cache line 0x4ac0, both at the L1 caches and the directory.
+For example, in tick 5322, the core executes a store to 0x4ac0.
+However, it currently does not have that line in Modified in its cache (it is in Shared after the core loaded it from ticks 4641-4674), so it needs to request ownership for that line from the directory (which receives this request in tick 5327).
+While waiting for ownership, it transitions from S (Shared) to SM_AD (a transient state -- was in S, going to M, waiting for Ack and Data).
+
+To add a print to the protocol trace, you will need to add a print with these fields with the ProtocolTrace flag.
+For example, if you look at ``src/mem/ruby/system/Sequencer.cc``, you can see where the ``Seq               Begin`` and ``Seq                Done`` trace prints come from (search for ProtocolTrace).
 
 Errors I ran into debugging MSI
 ================================
@@ -185,7 +239,7 @@ So, onto the next problem!
     panic: Deadlock detected: current_time: 56091 last_progress_time: 6090 difference:  50001 processor: 0
 
 Deadlocks are the worst kind of error.
-Whatever caused the deadlock is ancient history, and often very hard to track down.
+Whatever caused the deadlock is ancient history (i.e., likely happened many cycles earlier), and often very hard to track down.
 
 Looking at the tail of the protocol trace (note: sometimes you must put the protocol trace into a file because it grows *very* big) I see that there is an address that is trying to be replaced.
 Let's start there.
@@ -332,7 +386,7 @@ This seems to be that I am not counting the acks correctly.
 It could also be that the directory is much slower than the other caches at responding since it has to get the data from memory.
 
 If it's the latter (which I should be sure to verify), what we could do is include an ack requirement for the directory, too.
-Then, when the direcory sends the data (and the owner, too) decrement the needed acks and trigger the event based on the new ack count.
+Then, when the directory sends the data (and the owner, too) decrement the needed acks and trigger the event based on the new ack count.
 
 Actually, that first hypothesis was not quite right.
 I printed out the number of acks whenever we receive an InvAck and what's happening is that the other cache is responding with an InvAck before the directory has told it how many acks to expect.
@@ -370,7 +424,7 @@ To do this, we can add comments to the transition with `APPEND_TRANSITION_COMMEN
 
 For these data issues, the debug flag RubyNetwork is useful because it prints the value of the data blocks at every point it is in the network.
 For instance, for the address in question above, it looks like the data block is all 0's after loading from main-memory.
-I believe this shuold have valid data.
+I believe this should have valid data.
 In fact, if we go back in time some we see that there was some non-zero elements.
 
 ::

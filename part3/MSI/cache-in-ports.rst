@@ -33,7 +33,7 @@ If there are no messages or no events are triggered, then the next ``in_port`` c
 
 There are three different kinds of *stalls* that can be generated when executing ``in_port`` code blocks.
 First, there is a parameterized limit for the number of transitions per cycle at each controller.
-If this limit is reached (i.e., there are more messages on the message buffers than the transition per cycle limit), then the ``in_port``s stop processing and wait to continue until the next cycle.
+If this limit is reached (i.e., there are more messages on the message buffers than the transition per cycle limit), then all ``in_port`` will stop processing and wait to continue until the next cycle.
 Second, there could be a *resource stall*.
 This happens if some needed resource is unavailable.
 For instance, if using the ``BankedArray`` bandwidth model, the needed bank of the cache may be currently occupied.
@@ -45,7 +45,7 @@ For instance, if the first ``in_port`` block generates a protocol stall, none of
 This is why it is important to use the correct number and ordering of virtual networks.
 
 Below, is the full code for the ``in_port`` block for the highest priority messages to our L1 cache controller, the response from directory or other caches.
-We will break the code block down to explain each section.
+Next we will break the code block down to explain each section.
 
 .. code-block:: c++
 
@@ -92,9 +92,9 @@ We will break the code block down to explain each section.
     }
 
 
-First, like the out_port above "response_in" is the name we'll use later when we refer to this port, and "ResponseMsg" is the type of message we expect on this port.
-The first step in all ``in_port`` code blocks is to check the message buffer to see if there are any messages to be processsed.
-If not, then this ``in_port`` code block is skipped and the next is executed.
+First, like the out_port above "response_in" is the name we'll use later when we refer to this port, and "ResponseMsg" is the type of message we expect on this port (since this port processes responses to our requests).
+The first step in all ``in_port`` code blocks is to check the message buffer to see if there are any messages to be processed.
+If not, then this ``in_port`` code block is skipped and the next one is executed.
 
 .. code-block:: c++
 
@@ -107,8 +107,8 @@ If not, then this ``in_port`` code block is skipped and the next is executed.
 Assuming there is a valid message in the message buffer, next, we grab that message by using the special code block ``peek``.
 Peek is a special function.
 Any code inside a peek statement has a special variable declared and populated: ``in_msg``.
-This contains the message (of type ResponseMsg in this case as specified by the second parameter of ``peek``) at the head.
-``response_in`` is the port we want to peeking into.
+This contains the message (of type ResponseMsg in this case as specified by the second parameter of the ``peek`` call) at the head of the port.
+Here, ``response_in`` is the port we want to peek into.
 
 Then, we need to grab the cache entry and the TBE for the incoming address.
 (We will look at the other parameters in response message below.)
@@ -118,10 +118,10 @@ It will return either the valid matching entry for the address, or an invalid en
 For the TBE, since this is a response to a request this cache controller initiated, there *must* be a valid TBE in the TBE table.
 Hence, we see our first debug statement, an *assert*.
 This is one of the ways to ease debugging of cache coherence protocols.
-It is encouraged to use asserts liberally to make debugging easiers.
+It is encouraged to use asserts liberally to make debugging easier.
 
-Grab the entry and tbe if they exist.
-The TBE better exist since this is a response and we need to be able to check the remaining acks.
+.. (MDS 9/11/17): this apears to be a placeholder from before the above text was added
+.. Grab the entry and tbe if they exist.  The TBE better exist since this is a response and we need to be able to check the remaining acks.
 
 .. code-block:: c++
 
@@ -198,7 +198,7 @@ We will come back to machine version numbers when configuring the system.
 .. index:: NetDest
 
 Next, all messages need a *destination*, and a *size*.
-The destination is specified as a ``NetDest``, which is a bitmap of all ``MachineID``s in the system.
+The destination is specified as a ``NetDest``, which is a bitmap of all the ``MachineID`` in the system.
 This allows messages to be broadcast to a flexible set of receivers.
 The message also has a size.
 You can find the possible message sizes in ``src/mem/protocol/RubySlicc_Exports.sm``.
@@ -212,7 +212,7 @@ Note: This functionality currently is very brittle and if there are messages in-
 
 You can download the complete file ``MSI-msg.sm`` :download:`here <../../_static/scripts/part3/MSI_protocol/MSI-msg.sm>`.
 
-Now that we have defined the data in the response message, we can look at how we choose the action to trigger in the ``in_port`` for response to the cache.
+Now that we have defined the data in the response message, we can look at how we choose which action to trigger in the ``in_port`` for response to the cache.
 
 .. code-block:: c++
 
@@ -370,7 +370,7 @@ This is the lowest priority queue, so it must be lowest in the state machine fil
 The mandatory queue has a special message type: ``RubyRequest``.
 This type is specified in ``src/mem/protocol/RubySlicc_Types.sm``
 It contains two different addresses, the ``LineAddress`` which is cache-block aligned and the ``PhysicalAddress`` which holds the original request's address and may not be cache-block aligned.
-It also has other members that may be useful in some protcols.
+It also has other members that may be useful in some protocols.
 However, for this simple protocol we only need the ``LineAddress``.
 
 .. code-block:: c++
@@ -396,7 +396,7 @@ However, for this simple protocol we only need the ``LineAddress``.
                         trigger(Event:Store, in_msg.LineAddress, cache_entry,
                                 tbe);
                     } else {
-                        error("Unexected type from processor");
+                        error("Unexpected type from processor");
                     }
                 }
             }

@@ -1,6 +1,6 @@
 :authors: Jason Lowe-Power
 
-.. _MSI-bulding-section:
+.. _MSI-building-section:
 
 ------------------------------------------
 Compiling a SLICC protocol
@@ -41,7 +41,7 @@ You can download the fill file :download:`here <../../_static/scripts/part3/MSI_
 Compiling a protocol with SCons
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Most SCons defaults (found in ``build_opts/``) specify the protcol as ``MI_example``, an example, but poor performing protocol.
+Most SCons defaults (found in ``build_opts/``) specify the protocol as ``MI_example``, an example, but poor performing protocol.
 Therefore, we cannot simply use a default build name (e.g., ``X86`` or ``ARM``).
 We have to specify the SCons options on the command line.
 The command line below will build our new protocol with the X86 ISA.
