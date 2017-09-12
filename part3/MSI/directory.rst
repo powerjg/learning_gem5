@@ -35,7 +35,7 @@ Let's dive straight in and start modifying a new file ``MSI-dir.sm``.
     . . .
     }
 
-First, there are two parameter to this directory controller, ``DirectoryMemroy`` and a ``toMemLatency``.
+First, there are two parameter to this directory controller, ``DirectoryMemory`` and a ``toMemLatency``.
 The ``DirectoryMemory`` is a little weird.
 It is allocated at initialization time such that it can cover *all* of physical memory, like a complete directory *not a directory cache*.
 I.e., there are pointers in the ``DirectoryMemory`` object for every 64-byte block in physical memory.
@@ -43,7 +43,7 @@ However, the actual entries (as defined below) are lazily created via ``getDirEn
 We'll see more details about ``DirectoryMemory`` below.
 
 Next, is the ``toMemLatency`` parameter.
-This will be used in the ``enqueue`` function when enqueing requests to model the directory latency.
+This will be used in the ``enqueue`` function when enqueuing requests to model the directory latency.
 We didn't use a parameter for this in the L1 cache, but it is simple to make the controller latency parameterized.
 This parameter defaults to 1 cycle.
 It is not required to set a default here.
@@ -54,7 +54,7 @@ Importantly, *these need to have the same virtual network numbers* as the messag
 These virtual network numbers are how the Ruby network directs messages between controllers.
 
 There is also one more special message buffer: ``responseFromMemory``.
-This is similar to the ``mandatoryQueue``, except instead of being a slave port for CPUs it is like a master port.
+This is similar to the ``mandatoryQueue``, except instead of being like a slave port for CPUs it is like a master port.
 The ``responseFromMemory`` buffer will deliver response sent across the the memory port, as we will see below in the action section.
 
 After the parameters and message buffers, we need to declare all of the states, events, and other local structures.
@@ -64,7 +64,7 @@ After the parameters and message buffers, we need to declare all of the states, 
     state_declaration(State, desc="Directory states",
                       default="Directory_State_I") {
         // Stable states.
-        // NOTE: Thise are "cache-centric" states like in Sorin et al.
+        // NOTE: These are "cache-centric" states like in Sorin et al.
         // However, The access permissions are memory-centric.
         I, AccessPermission:Read_Write,  desc="Invalid in the caches.";
         S, AccessPermission:Read_Only,   desc="At least one cache has the blk";
@@ -438,7 +438,7 @@ Then, we have the queue management and stall actions.
     }
 
 
-Finally, we have the transistion section of the state machine file.
+Finally, we have the transition section of the state machine file.
 These mostly come from Table 8.2 in Sorin et al., but there are some extra transitions to deal with the unknown memory latency.
 
 .. code-block:: c++
