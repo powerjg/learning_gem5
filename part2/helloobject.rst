@@ -26,19 +26,18 @@ In the next few chapters, we will take this simple SimObject and expand on it to
 
 .. _parameters: parameters-chapter
 
-.. sidebar:: Using Mercurial queues
+.. sidebar:: Using git branches
 
-	It is common to use a new Mercurial queues patch for each new feature you add to gem5.
-	This is similar to how you use branches in git.
+	It is common to use a new git branch for each new feature you add to gem5.
 
-	The first step when adding a new feature or modifying something in gem5, is to create a new patch to store your changes.
-	Details on Mercurial patch queues can be found in the `Mercurial book`_.
+	The first step when adding a new feature or modifying something in gem5, is to create a new branch to store your changes.
+	Details on git branches can be found in the `Git book`_.
 
-	.. _Mercurial book: http://hgbook.red-bean.com/read/managing-change-with-mercurial-queues.html
+	.. _Git book: https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell
 
 	.. code-block:: sh
 
-		hg qnew hello-simobject -m "misc: Add a simple hello world SimObject"
+		git checkout -b hello-simobject
 
 
 Step 1: Create a Python class for your new SimObject

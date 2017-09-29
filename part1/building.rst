@@ -23,26 +23,19 @@ See `gem5 requirements`_ for more details.
 
 .. _gem5 requirements: http://gem5.org/Compiling_M5#Required_Software
 
-#. hg (Mercurial_):
-    The gem5 project uses Mercurial_ for version control.
-    Mercurial_ is a distributed version control system (like git).
-    It uses simple commands that should be familiar to svn users as well.
-    More information about Mercurial_ can be found by following the link.
-    Mercurial should be installed by default on most platforms.
-    However, to install Mercurial in Ubuntu use
+#. git (Git_):
+    The gem5 project uses Git_ for version control.
+    Git_ is a distributed version control system.
+    More information about Git_ can be found by following the link.
+    Git should be installed by default on most platforms.
+    However, to install Git in Ubuntu use
 
     .. code-block:: sh
 
-        sudo apt-get install mercurial
+        sudo apt-get install git
 
-#. gcc 4.6+
+#. gcc 4.8+
     You may need to use environment variables to point to a non-default version of gcc.
-    For CSL machines, you can add the following to your `.bashrc.local`, assuming you're using bash as your shell.
-
-    .. code-block:: sh
-
-        export PATH=/s/gcc-4.7.3/bin:$PATH
-        export LD_LIBRARY_PATH=/s/gcc-4.7.3/lib64:$LD_LIBRARY_PATH
 
     On Ubuntu, you can install a development environment with
 
@@ -61,17 +54,8 @@ See `gem5 requirements`_ for more details.
 
         sudo apt-get install scons
 
-#. Python 2.5+
+#. Python 2.7+
     gem5 relies on the Python development libraries.
-    On CSL machines, you may experience errors with the default Python version (2.5).
-    To use version 2.7 you can add the following to your `.bashrc.local`:
-
-    .. code-block:: sh
-
-        export PATH=/s/python-2.7.3/bin:$PATH
-        export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/s/python-2.7.3/lib
-        export LIBRARY_PATH=/s/python-2.7.3/lib:$LIBRARY_PATH
-
     To install these on Ubuntu use
 
     .. code-block:: sh
@@ -87,12 +71,6 @@ See `gem5 requirements`_ for more details.
     .. code-block:: sh
 
         sudo apt-get install swig
-
-    On CSL machines, you can use swig found in ``/s``:
-
-    .. code-block:: sh
-
-        export PATH=/s/swig-2.0.6/bin/:$PATH
 
     You may have to install SWIG manually.
     In that case, you can download the source from http://www.swig.org/download.html.
@@ -114,7 +92,7 @@ See `gem5 requirements`_ for more details.
 
         sudo apt-get install libprotobuf-dev python-protobuf protobuf-compiler libgoogle-perftools-dev
 
-.. _Mercurial: http://mercurial.selenic.com/
+.. _Git: https://git-scm.com/
 
 .. _SCons: http://www.scons.org/
 
@@ -126,11 +104,11 @@ Getting the code
 ~~~~~~~~~~~~~~~~
 
 Change directories to where you want to download the gem5 source.
-Then, to clone the repository, use the ``hg clone`` command.
+Then, to clone the repository, use the ``git clone`` command.
 
 .. code-block:: sh
 
-  hg clone http://repo.gem5.org/gem5
+  git clone https://gem5.googlesource.com/public/gem5
 
 You can now change directories to ``gem5`` which contains all of the gem5 code.
 
