@@ -18,6 +18,8 @@ We will implement this as a three-hop directory protocol (i.e., caches can send 
 Details for the protocol can be found in Section 8.2 of the *Primer on Memory Consistency and Cache Coherence* (pages 141-149).
 It will be helpful to print out Section 8.2 to reference as you are implementing the protocol.
 
+You can download an exceprt of Sorin et al. that contains Section 8.2 :download:`here <../../_static/external/Sorin_et-al_Excerpt_8.2.pdf>`.
+
 First steps to writing a protocol
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
