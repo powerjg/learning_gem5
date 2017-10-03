@@ -260,17 +260,18 @@ The output should be:
   gem5 Simulator System.  http://gem5.org
   gem5 is copyrighted software; use the --copyright option for details.
 
-  gem5 compiled Jan 14 2015 16:11:34
-  gem5 started Jan 15 2015 11:27:01
-  gem5 executing on mustardseed.cs.wisc.edu
+  gem5 compiled Oct  2 2017 21:18:35
+  gem5 started Oct  3 2017 10:45:10
+  gem5 executing on mustardseed.cs.wisc.edu, pid 23892
   command line: build/X86/gem5.opt configs/tutorial/simple.py
+
   Global frequency set at 1000000000000 ticks per second
   warn: DRAM device capacity (8192 Mbytes) does not match the address range assigned (512 Mbytes)
   0: system.remote_gdb.listener: listening for remote gdb #0 on port 7000
   Beginning simulation!
   info: Entering event queue @ 0.  Starting simulation...
   Hello world!
-  Exiting @ tick 345518000 because target called exit()
+  Exiting @ tick 507841000 because exiting with last active thread context
 
 
 Parameters in the configuration file can be changed and the results should be different.
