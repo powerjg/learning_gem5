@@ -75,7 +75,7 @@ system.cpu.interrupts[0].int_master = system.membus.slave
 system.cpu.interrupts[0].int_slave = system.membus.master
 
 # Create a DDR3 memory controller and connect it to the membus
-system.mem_ctrl = DDR3_1600_x64()
+system.mem_ctrl = DDR3_1600_8x8()
 system.mem_ctrl.range = system.mem_ranges[0]
 system.mem_ctrl.port = system.membus.master
 
@@ -83,7 +83,7 @@ system.mem_ctrl.port = system.membus.master
 system.system_port = system.membus.slave
 
 # Create a process for a simple "Hello World" application
-process = LiveProcess()
+process = Process()
 # Set the command
 # cmd is a list which begins with the executable (like argv)
 process.cmd = ['tests/test-progs/hello/bin/x86/linux/hello']
