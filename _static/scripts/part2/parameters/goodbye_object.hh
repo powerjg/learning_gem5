@@ -66,6 +66,7 @@ class GoodbyeObject : public SimObject
 
   public:
     GoodbyeObject(GoodbyeObjectParams *p);
+    ~GoodbyeObject();
 
     /**
      * Called by an outside object. Starts off the events to fill the buffer

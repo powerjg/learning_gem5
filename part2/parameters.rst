@@ -77,7 +77,7 @@ To the HelloObject class declaration, add a member variable for the name.
         EventWrapper<HelloObject, &HelloObject::processEvent> event;
 
         std::string myName;
-        
+
         Tick latency;
 
         int timesLeft;
@@ -226,6 +226,7 @@ Now, we need to implement the ``GoodbyeObject``.
 
       public:
         GoodbyeObject(GoodbyeObjectParams *p);
+        ~GoodbyeObject();
 
         /**
          * Called by an outside object. Starts off the events to fill the buffer
@@ -251,6 +252,11 @@ Now, we need to implement the ``GoodbyeObject``.
     {
         buffer = new char[bufferSize];
         DPRINTF(Hello, "Created the goodbye object\n");
+    }
+
+    GoodbyeObject::~GoodbyeObject()
+    {
+        delete[] buffer;
     }
 
     void

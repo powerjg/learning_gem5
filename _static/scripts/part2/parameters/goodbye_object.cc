@@ -41,6 +41,11 @@ GoodbyeObject::GoodbyeObject(GoodbyeObjectParams *params) :
     DPRINTF(Hello, "Created the goodbye object\n");
 }
 
+GoodbyeObject::~GoodbyeObject()
+{
+    delete[] buffer;
+}
+
 void
 GoodbyeObject::processEvent()
 {
