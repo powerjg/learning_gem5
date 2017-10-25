@@ -126,7 +126,8 @@ However, for now, we'll simply use ``std::cout`` because it is simple.
 
 	#include <iostream>
 
-	HelloObject::HelloObject(HelloObjectParams *params) : SimObject(params)
+	HelloObject::HelloObject(HelloObjectParams *params) :
+	    SimObject(params)
 	{
 	    std::cout << "Hello World! From a SimObject!" << std::endl;
 	}
