@@ -360,13 +360,13 @@ Second, we will add a reference to a ``GoodbyeObject`` to the ``HelloObject`` cl
         EventWrapper<HelloObject, &HelloObject::processEvent> event;
 
         /// Pointer to the corresponding GoodbyeObject. Set via Python
-        GoodbyeObject& goodbye;
+        const GoodbyeObject* goodbye;
 
         /// The name of this object in the Python config file
-        std::string myName;
+        const std::string myName;
 
         /// Latency between calling the event (in ticks)
-        Tick latency;
+        const Tick latency;
 
         /// Number of times left to fire the event before goodbye
         int timesLeft;
@@ -378,18 +378,27 @@ Second, we will add a reference to a ``GoodbyeObject`` to the ``HelloObject`` cl
     };
 
 Then, we need to update the constructor and the process event function of the ``HelloObject``.
+We also add a check in the constructor to make sure the ``goodbye`` pointer is valid.
+It is possible to pass a null pointer as a SimObject via the parameters by using the ``NULL`` special Python SimObject.
+We should *panic* when this happens since it is not a case this object has been coded to accept.
 
 .. code-block:: c++
+    
+    #include "learning_gem5/part2/hello_object.hh"
+
+    #include "base/misc.hh"
+    #include "debug/Hello.hh"
 
     HelloObject::HelloObject(HelloObjectParams *params) :
         SimObject(params),
         event(*this),
-        goodbye(*params->goodbye_object),
+        goodbye(params->goodbye_object),
         myName(params->name),
         latency(params->time_to_wait),
         timesLeft(params->number_of_fires)
     {
         DPRINTF(Hello, "Created the hello object with the name %s\n", myName);
+        panic_if(!goodbye, "HelloObject must have a non-null GoodbyeObject");
     }
 
 Once we have processed the number of event specified by the parameter, we should call the ``sayGoodbye`` function in the ``GoodbyeObject``.
