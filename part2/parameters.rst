@@ -65,6 +65,10 @@ Here, we use the parameter's values for the default values of latency and timesL
 Additionally, we store the ``name`` from the parameter object to use it later in the member variable ``myName``.
 Each ``params`` instantiation has a name which comes from the Python config file when it is instantiated.
 
+However, assigning the name here is just an example of using the params object.
+For all SimObjects, there is a ``name()`` function that always returns the name.
+Thus, there is never a need to store the name like above.
+
 To the HelloObject class declaration, add a member variable for the name.
 
 .. code-block:: c++
