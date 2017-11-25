@@ -322,7 +322,7 @@ Then, we begin filling the buffer.
 To model the limited bandwidth, each time we write the message to the buffer, we pause for the latency it takes to write the message.
 We use a simple event to model this pause.
 
-Since we used a ``MemoryBandwidth`` parameter in the SimObject declaration, the ``bandwidth`` variable is automatically converted into bytes per tick, so calculating the latency is simply the bandwidth times the bytes we want to write the buffer.
+Since we used a ``MemoryBandwidth`` parameter in the SimObject declaration, the ``bandwidth`` variable is automatically converted into ticks per byte, so calculating the latency is simply the bandwidth times the bytes we want to write the buffer.
 
 Finally, when the buffer is full, we call the function ``exitSimLoop``, which will exit the simulation.
 This function takes three parameters, the first is the message to return to the Python config script (``exit_event.getCause()``), the second is the exit code, and the third is when to exit.

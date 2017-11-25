@@ -510,7 +510,7 @@ Then, if the ``SimpleMemobj`` is blocked on a request, we set that we need to se
 
 To handle the request for the ``SimpleMemobj``, we first check if the ``SimpleMemobj`` is already blocked waiting for a response to another request.
 If it is blocked, then we return ``false`` to signal the calling master port that we cannot accept the request right now.
-Otherwise, we mark he port as blocked and send the packet out of the memory port.
+Otherwise, we mark the port as blocked and send the packet out of the memory port.
 For this, we can define a helper function in the ``MemSidePort`` object to hide the flow control from the ``SimpleMemobj`` implementation.
 We will assume the ``memPort`` handles all of the flow control and always return ``true`` from ``handleRequest`` since we were successful in consuming the request.
 
@@ -717,13 +717,13 @@ However, instead of connecting the CPU directly to the memory bus, we are going 
     system.cpu.interrupts[0].int_master = system.membus.slave
     system.cpu.interrupts[0].int_slave = system.membus.master
 
-    system.mem_ctrl = DDR3_1600_x64()
+    system.mem_ctrl = DDR3_1600_8x8()
     system.mem_ctrl.range = system.mem_ranges[0]
     system.mem_ctrl.port = system.membus.master
 
     system.system_port = system.membus.slave
 
-    process = LiveProcess()
+    process = Process()
     process.cmd = ['tests/test-progs/hello/bin/x86/linux/hello']
     system.cpu.workload = process
     system.cpu.createThreads()

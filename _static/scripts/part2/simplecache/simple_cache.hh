@@ -198,7 +198,7 @@ class SimpleCache : public MemObject
     bool handleRequest(PacketPtr pkt, int port_id);
 
     /**
-     * Handle the respone from the memory side. Called from the memory port
+     * Handle the response from the memory side. Called from the memory port
      * on a timing response.
      *
      * @param responding packet
