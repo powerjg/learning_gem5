@@ -191,7 +191,7 @@ class SimpleMemobj : public MemObject
     bool handleRequest(PacketPtr pkt);
 
     /**
-     * Handle the respone from the memory side
+     * Handle the response from the memory side
      *
      * @param responding packet
      * @return true if we can handle the response this cycle, false if the
