@@ -210,6 +210,7 @@ If you want to use this configuration for real simulation, you need to change th
         """ Create a CPU for the system """
         self.cpu = AtomicSimpleCPU()
         self.mem_mode = 'atomic'
+        self.cpu.createThreads()
 
 After creating the disk image and the CPU, we next create the cache hierarchy.
 For this configuration, we are going to use the simple two-level cache hierarchy from :ref:`cache-config-chapter`.
@@ -329,12 +330,12 @@ For the details, see the Intel x86 architecture manual and the gem5 source code.
         # Add a tiny cache to the IO bus.
         # This cache is required for the classic memory model to maintain coherence
         system.iocache = Cache(assoc=8,
-                            hit_latency = 50,
+                            tag_latency = 50,
+                            data_latency = 50,
                             response_latency = 50,
                             mshrs = 20,
                             size = '1kB',
                             tgts_per_mshr = 12,
-                            forward_snoops = False,
                             addr_ranges = system.mem_ranges)
         system.iocache.cpu_side = system.iobus.master
         system.iocache.mem_side = system.membus.slave
