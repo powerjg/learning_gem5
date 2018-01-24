@@ -104,6 +104,7 @@ class MySystem(LinuxX86System):
 
         self.cpu = AtomicSimpleCPU()
         self.mem_mode = 'atomic'
+        self.cpu.createThreads()
 
     def setDiskImage(self, img_path):
         """ Set the disk image

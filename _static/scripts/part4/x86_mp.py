@@ -75,12 +75,12 @@ def init_fs(system, membus, cpus=1):
     # Add a tiny cache to the IO bus.
     # This cache is required for the classic memory model to mantain coherence
     system.iocache = Cache(assoc=8,
-                        hit_latency = 50,
+                        tag_latency = 50,
+                        data_latency = 50,
                         response_latency = 50,
                         mshrs = 20,
                         size = '1kB',
                         tgts_per_mshr = 12,
-			forward_snoops=False,
                         addr_ranges = system.mem_ranges)
     system.iocache.cpu_side = system.iobus.master
     system.iocache.mem_side = system.membus.slave
