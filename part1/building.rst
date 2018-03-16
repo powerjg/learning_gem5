@@ -23,6 +23,13 @@ See `gem5 requirements`_ for more details.
 
 .. _gem5 requirements: http://gem5.org/Compiling_M5#Required_Software
 
+On Ubuntu, you can install all of the required dependencies with the following command.
+The requirements are detailed below.
+
+.. code-block:: sh
+
+    sudo apt install build-essential git m4 scons zlib1g zlib1g-dev libprotobuf-dev protobuf-compiler libprotoc-dev libgoogle-perftools-dev python-dev python
+
 #. git (Git_):
     The gem5 project uses Git_ for version control.
     Git_ is a distributed version control system.
@@ -105,7 +112,8 @@ You can now change directories to ``gem5`` which contains all of the gem5 code.
         The problem may already be fixed.
 
 Your first gem5 build
-~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~
+
 Let's start by building a basic x86 system.
 Currently, you must compile gem5 separately for every ISA that you want to simulate.
 Additionally, if using :ref:`ruby-intro-chapter`, you have to have separate compilations for every cache coherence protocol.
@@ -152,7 +160,7 @@ You can also specify these options on the command line to override any default.
         `prof` includes profiling information for the GNU profiler (gprof), and `perf` includes profiling information for the Google performance tools (gperftools).
 
 
-The main argument passed to SCons is what you want to build, `build/X86/gem5.opt`.
+The main argument passed to SCons is what you want to build, ``build/X86/gem5.opt``.
 In this case, we are building gem5.opt (an optimized binary with debug symbols).
 We want to build gem5 in the directory build/X86.
 Since this directory currently doesn't exist, SCons will look in ``build_opts`` to find the default parameters for X86.
