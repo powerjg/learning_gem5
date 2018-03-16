@@ -62,27 +62,6 @@ See `gem5 requirements`_ for more details.
 
         sudo apt-get install python-dev
 
-#. SWIG_ 2.0.4+
-    SWIG_ is a set of scripts and libraries that wraps `C++` objects and exports them to scripting languages, like Python.
-    gem5 uses SWIG to export `C++` SimObjects to the Python configuration files.
-
-    To install SWIG on Ubuntu use
-
-    .. code-block:: sh
-
-        sudo apt-get install swig
-
-    You may have to install SWIG manually.
-    In that case, you can download the source from http://www.swig.org/download.html.
-    Version 2.0.4 is known to work with gem5.
-    Then, unpack, build, and install:
-
-    .. code-block:: sh
-
-        tar -xvzf swig-2.0.4.tar.gz
-        ./configure --prefix=<PATH INSTALL SWIG. e.g., ~/local>
-        make && make install
-
 #. protobuf_ 2.1+
     "Protocol buffers are a language-neutral, platform-neutral extensible mechanism for serializing structured data."
     In gem5, the protobuf_ library is used for trace generation and playback.
@@ -240,21 +219,10 @@ Wrong gcc version
 
 ::
 
-    Error: gcc version 4.6 or newer required.
+    Error: gcc version 4.8 or newer required.
            Installed version: 4.4.7
 
 Update your environment variables to point to the right gcc version, or install a more up to date version of gcc.
-See :ref:`building-requirements-section`.
-
-Wrong SWIG version
-===================
-
-::
-
-    Error: SWIG version 2.0.4 or newer required.
-           Installed version: 1.3.40
-
-Update your environment variables to point to the right SWIG version, or install a more up to date version of SWIG.
 See :ref:`building-requirements-section`.
 
 Python in a non-default location
