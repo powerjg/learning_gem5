@@ -141,9 +141,7 @@ In this example system, we have no caches.
     After making the connection, the master can send requests to the slave port.
     There is a lot of magic going on behind the scenes to set up the connection, the details of which are unimportant for most users.
 
-.. todo::
-
-    Add forward pointer to where I talk about the memory system details to the sidebar.
+    We will discuss ports and MemObject in more detail in :ref:`memoryobject-chapter`.
 
 Next, we need to connect up a few other ports to make sure that our system will function correctly.
 We need to create an I/O controller on the CPU and connect it to the memory bus.
@@ -228,23 +226,25 @@ You can also pass the parameters as named arguments, like the ``Root`` object be
   m5.instantiate()
 
 Finally, we can kick off the actual simulation!
+As a side now, gem5 is now using Python 3-style ``print`` functions, so ``print`` is no longer a statement and must be called as a function.
 
 .. code-block:: python
 
-  print "Beginning simulation!"
+  print("Beginning simulation!")
   exit_event = m5.simulate()
 
 And once simulation finishes, we can inspect the state of the system.
 
 .. code-block:: python
 
-  print 'Exiting @ tick %i because %s' % (m5.curTick(), exit_event.getCause())
+  print('Exiting @ tick {} because {}'
+        .format(m5.curTick(), exit_event.getCause()))
 
 
 Running gem5
 ~~~~~~~~~~~~~~
 
-Now that we've created a simple simulation script (the full version of which can be found :download:`here <../_static/scripts/part1/simple.py>`)
+Now that we've created a simple simulation script (the full version of which can be found at gem5/configs/learning_gem5/part1/simple.py)
 we're ready to run gem5.
 gem5 can take many parameters, but requires just one positional argument, the simulation script.
 So, we can simply run gem5 from the root gem5 directory as:
@@ -257,21 +257,21 @@ The output should be:
 
 ::
 
-  gem5 Simulator System.  http://gem5.org
-  gem5 is copyrighted software; use the --copyright option for details.
+    gem5 Simulator System.  http://gem5.org
+    gem5 is copyrighted software; use the --copyright option for details.
 
-  gem5 compiled Oct  2 2017 21:18:35
-  gem5 started Oct  3 2017 10:45:10
-  gem5 executing on mustardseed.cs.wisc.edu, pid 23892
-  command line: build/X86/gem5.opt configs/tutorial/simple.py
+    gem5 compiled Mar 16 2018 10:24:24
+    gem5 started Mar 16 2018 15:53:27
+    gem5 executing on amarillo, pid 41697
+    command line: build/X86/gem5.opt configs/tutorial/simple.py
 
-  Global frequency set at 1000000000000 ticks per second
-  warn: DRAM device capacity (8192 Mbytes) does not match the address range assigned (512 Mbytes)
-  0: system.remote_gdb.listener: listening for remote gdb #0 on port 7000
-  Beginning simulation!
-  info: Entering event queue @ 0.  Starting simulation...
-  Hello world!
-  Exiting @ tick 507841000 because exiting with last active thread context
+    Global frequency set at 1000000000000 ticks per second
+    warn: DRAM device capacity (8192 Mbytes) does not match the address range assigned (512 Mbytes)
+    0: system.remote_gdb: listening for remote gdb on port 7000
+    Beginning simulation!
+    info: Entering event queue @ 0.  Starting simulation...
+    Hello world!
+    Exiting @ tick 507841000 because exiting with last active thread context
 
 
 Parameters in the configuration file can be changed and the results should be different.
