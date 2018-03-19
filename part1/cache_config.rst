@@ -55,79 +55,9 @@ This Python file defines the parameters which you can set of the SimObject.
 Under the hood, when the SimObject is instantiated these parameters are passed to the C++ implementation of the object.
 The ``Cache`` SimObject inherits from the ``BaseCache`` object shown below.
 
-.. code-block:: python
+.. literalinclude:: /gem5/src/mem/cache/Cache.py
+    :lines: 42-
 
-    from m5.params import *
-    from m5.proxy import *
-    from MemObject import MemObject
-    from Prefetcher import BasePrefetcher
-    from Tags import *
-
-    class BaseCache(MemObject):
-        type = 'BaseCache'
-        abstract = True
-        cxx_header = "mem/cache/base.hh"
-
-        size = Param.MemorySize("Capacity")
-        assoc = Param.Unsigned("Associativity")
-
-        tag_latency = Param.Cycles("Tag lookup latency")
-        data_latency = Param.Cycles("Data access latency")
-        response_latency = Param.Cycles("Latency for the return path on a miss");
-
-        max_miss_count = Param.Counter(0,
-            "Number of misses to handle before calling exit")
-
-        mshrs = Param.Unsigned("Number of MSHRs (max outstanding requests)")
-        demand_mshr_reserve = Param.Unsigned(1, "MSHRs reserved for demand access")
-        tgts_per_mshr = Param.Unsigned("Max number of accesses per MSHR")
-        write_buffers = Param.Unsigned(8, "Number of write buffers")
-
-        is_read_only = Param.Bool(False, "Is this cache read only (e.g. inst)")
-
-        prefetcher = Param.BasePrefetcher(NULL,"Prefetcher attached to cache")
-        prefetch_on_access = Param.Bool(False,
-             "Notify the hardware prefetcher on every access (not just misses)")
-
-        tags = Param.BaseTags(LRU(), "Tag store (replacement policy)")
-        sequential_access = Param.Bool(False,
-            "Whether to access tags and data sequentially")
-
-        cpu_side = SlavePort("Upstream port closer to the CPU and/or device")
-        mem_side = MasterPort("Downstream port closer to memory")
-
-        addr_ranges = VectorParam.AddrRange([AllMemory],
-             "Address range for the CPU-side port (to allow striping)")
-
-        system = Param.System(Parent.any, "System we belong to")
-
-    # Enum for cache clusivity, currently mostly inclusive or mostly
-    # exclusive.
-    class Clusivity(Enum): vals = ['mostly_incl', 'mostly_excl']
-
-    class Cache(BaseCache):
-        type = 'Cache'
-        cxx_header = 'mem/cache/cache.hh'
-
-        # Control whether this cache should be mostly inclusive or mostly
-        # exclusive with respect to upstream caches. The behaviour on a
-        # fill is determined accordingly. For a mostly inclusive cache,
-        # blocks are allocated on all fill operations. Thus, L1 caches
-        # should be set as mostly inclusive even if they have no upstream
-        # caches. In the case of a mostly exclusive cache, fills are not
-        # allocating unless they came directly from a non-caching source,
-        # e.g. a table walker. Additionally, on a hit from an upstream
-        # cache a line is dropped for a mostly exclusive cache.
-        clusivity = Param.Clusivity('mostly_incl',
-                                    "Clusivity with upstream cache")
-
-        # Determine if this cache sends out writebacks for clean lines, or
-        # simply clean evicts. In cases where a downstream cache is mostly
-        # exclusive with respect to this cache (acting as a victim cache),
-        # the clean writebacks are essential for performance. In general
-        # this should be set to True for anything but the last-level
-        # cache.
-        writeback_clean = Param.Bool(False, "Writeback clean lines")
 
 Within the ``BaseCache`` class, there are a number of *parameters*.
 For instance, ``assoc`` is an integer parameter.
@@ -233,7 +163,8 @@ Finally, let's add functions to the ``L2Cache`` to connect to the memory-side an
     def connectMemSideBus(self, bus):
         self.mem_side = bus.slave
 
-The complete file can be downloaded :download:`here <../_static/scripts/part1/caches.py>`.
+The full file can be found in the gem5 source at ``gem5/configs/learning_gem5/part1/caches.py``.
+
 
 
 
@@ -299,7 +230,7 @@ Next, we can create out L2 cache and connect it to the L2 bus and the memory bus
 Everything else in the file stays the same!
 Now we have a complete configuration with a two-level cache hierarchy.
 If you run the current file, ``hello`` should now finish in 58513000 ticks.
-The full script can be found :download:`here <../_static/scripts/part1/two_level.py>`.
+The full script can be found in the gem5 source at ``gem5/configs/learning_gem5/part1/two_level.py``.
 
 Adding parameters to your script
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -403,4 +334,5 @@ With these changes, you can now pass the cache sizes into your script from the c
     Hello world!
     Exiting @ tick 56742000 because target called exit()
 
-The updated configuration script can be downloaded :download:`here <../_static/scripts/part1/two_level_opts.py>` and the updated cache file can be downloaded :download:`here <../_static/scripts/part1/caches_opts.py>`.
+
+The full scripts can be found in the gem5 source at ``gem5/configs/learning_gem5/part1/caches.py`` and ``gem5/configs/learning_gem5/part1/two_level.py``.

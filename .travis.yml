@@ -3,7 +3,7 @@ python:
   - "2.7"
 
 # command to install dependencies
-install: "pip install -q -r requirements.txt"
+install: "pip install -q -r requirements.txt; git clone http://gem5.googlesource.com/public/gem5"
 
 # command to run tests
 script: sphinx-build -b html -d _build/doctrees . _build/html
