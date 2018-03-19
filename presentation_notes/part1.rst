@@ -231,3 +231,14 @@ Understanding gem5's output
    Switch!
 
 * Slide talking about stats.txt
+
+---------------------------------------------
+
+If extra time...
+
+Using the example config scripts
+--------------------------------
+
+Talk about using ``se.py``.
+
+Talk about common options: cpu-type, sys-clock, cpu-clock, mem-type, caches, l2cache, ruby, -m, -I, -c, -o, --output, etc.
