@@ -12,6 +12,7 @@ Building gem5
 
     hg clone http://repo.gem5.org/gem5
     git clone https://gem5.googlesource.com/public/gem5
+    git checkout -b asplos
 
 * Build gem5...
 
@@ -40,8 +41,8 @@ Configuration scripts
 * This script is the simplest system you can create.
     * We'll discuss some of what we're doing now
     * We'll go into more details on most of this later
-* Make new folder: configs/hpca_tutorial
-* Create new file: configs/hpca_tutorial/simple.py
+* Make new folder: configs/tutorial
+* Create new file: configs/tutorial/simple.py
 
 * Import all compiled objects
 
@@ -107,9 +108,10 @@ Configuration scripts
 
 .. code-block:: python
 
-    system.mem_ctrl = DDR3_1600_x64()
+    system.mem_ctrl = DDR3_1600_8x8()
     system.mem_ctrl.range = system.mem_ranges[0]
     system.mem_ctrl.port = system.membus.master
+
 
 --------------------------------------
 
@@ -124,10 +126,11 @@ Configuration scripts
 
 .. code-block:: python
 
-    process = LiveProcess()
+    process = Process()
     process.cmd = ['tests/test-progs/hello/bin/x86/linux/hello']
     system.cpu.workload = process
     system.cpu.createThreads()
+
 
 * Create the "root".
 * All scripts *must* have a root
@@ -144,16 +147,18 @@ Configuration scripts
 
 .. code-block:: python
 
-    print "Beginning simulation!"
+    print("Beginning simulation!")
     exit_event = m5.simulate()
 
-    print 'Exiting @ tick %i because %s' % (m5.curTick(), exit_event.getCause())
+    print('Exiting @ tick {} because {}'
+          .format(m5.curTick(), exit_event.getCause()))
+
 
 * Run gem5!
 
 .. code-block:: python
 
-    build/X86/gem5.opt configs/hpca_tutorial/simple.py
+    build/X86/gem5.opt configs/tutorial/simple.py
 
 .. figure:: ../_static/figures/switch.png
    :width: 20 %
@@ -179,7 +184,7 @@ Adding caches
 
 * Look at src/mem/cache/Cache.py
 * Look at configs/learning_gem5/part1/cache.py
-* Loot at configs/learning_gem5/part1/two_level.py
+* Look at configs/learning_gem5/part1/two_level.py
 
 * Run two_level.py
 
@@ -207,7 +212,7 @@ Adding caches
 --------------------------------------
 
 Understanding gem5's output
---------------------------
+---------------------------
 
 * Slide on output generated
 
@@ -217,6 +222,7 @@ Understanding gem5's output
    Switch!
 
 * Look at config.ini
+* Look at dotfile
 * Look at stats.txt
 
 .. figure:: ../_static/figures/switch.png
