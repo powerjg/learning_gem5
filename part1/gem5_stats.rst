@@ -49,38 +49,50 @@ Below is pulled from the config.ini generated when the ``simple.py`` configurati
     boot_osflags=a
     cache_line_size=64
     clk_domain=system.clk_domain
+    default_p_state=UNDEFINED
     eventq_index=0
+    exit_on_work_items=false
     init_param=0
     kernel=
     kernel_addr_check=true
-    load_addr_mask=1099511627775
+    kernel_extras=
+    kvm_vm=Null
+    load_addr_mask=18446744073709551615
     load_offset=0
     mem_mode=timing
-    mem_ranges=0:536870911
-    memories=system.mem_ctrl
-
-    [system.clk_domain]
-    type=SrcClockDomain
-    children=voltage_domain
-    clock=1000
-    domain_id=-1
-    eventq_index=0
-    init_perf_level=0
-    voltage_domain=system.clk_domain.voltage_domain
 
     ...
 
     [system.membus]
     type=CoherentXBar
+    children=snoop_filter
     clk_domain=system.clk_domain
+    default_p_state=UNDEFINED
     eventq_index=0
-    header_cycles=1
-    snoop_filter=Null
+    forward_latency=4
+    frontend_latency=3
+    p_state_clk_gate_bins=20
+    p_state_clk_gate_max=1000000000000
+    p_state_clk_gate_min=1000
+    point_of_coherency=true
+    point_of_unification=true
+    power_model=
+    response_latency=2
+    snoop_filter=system.membus.snoop_filter
+    snoop_response_latency=4
     system=system
     use_default_range=false
-    width=8
-    master=system.cpu.interrupts[0].pio system.cpu.interrupts[0].int_slave system.mem_ctrl.port
-    slave=system.cpu.icache_port system.cpu.dcache_port system.cpu.interrupts[0].int_master system.system_port
+    width=16
+    master=system.cpu.interrupts.pio system.cpu.interrupts.int_slave system.mem_ctrl.port
+    slave=system.cpu.icache_port system.cpu.dcache_port system.cpu.interrupts.int_master system.system_port
+
+    [system.membus.snoop_filter]
+    type=SnoopFilter
+    eventq_index=0
+    lookup_latency=1
+    max_capacity=8388608
+    system=system
+
 
 Here we see that at the beginning of the description of each SimObject is first it's name as created in the configuration file surrounded by square brackets (e.g., ``[system.membus]``).
 
@@ -118,6 +130,21 @@ First, the statistics file contains general statistics about the execution:
     sim_insts                                        5712                       # Number of instructions simulated
     sim_ops                                         10314                       # Number of ops (including micro ops) simulated
 
+
+
+---------- Begin Simulation Statistics ----------
+sim_seconds                                  0.000508                       # Number of seconds simulated
+sim_ticks                                   507841000                       # Number of ticks simulated
+final_tick                                  507841000                       # Number of ticks from beginning of simulation (restored from checkpoints and never reset)
+sim_freq                                 1000000000000                       # Frequency of simulated ticks
+host_inst_rate                                 157744                       # Simulator instruction rate (inst/s)
+host_op_rate                                   284736                       # Simulator op (including micro ops) rate (op/s)
+host_tick_rate                            14017997125                       # Simulator tick rate (ticks/s)
+host_mem_usage                                 642808                       # Number of bytes of host memory used
+host_seconds                                     0.04                       # Real time elapsed on the host
+sim_insts                                        5712                       # Number of instructions simulated
+sim_ops                                         10313                       # Number of ops (including micro ops) simulated
+
 The statistic dump begins with ``---------- Begin Simulation Statistics ----------``.
 There may be multiple of these in a single file if there are multiple statistic dumps during the gem5 execution.
 This is common for long running applications, or when restoring from checkpoints.
@@ -133,6 +160,9 @@ This has information like the bytes read by each component and the average bandw
 
 ::
 
+    system.clk_domain.voltage_domain.voltage            1                       # Voltage in Volts
+    system.clk_domain.clock                          1000                       # Clock period in ticks
+    system.mem_ctrl.pwrStateResidencyTicks::UNDEFINED    507841000                       # Cumulative time (in ticks) in various power states
     system.mem_ctrl.bytes_read::cpu.inst            58264                       # Number of bytes read from this memory
     system.mem_ctrl.bytes_read::cpu.data             7167                       # Number of bytes read from this memory
     system.mem_ctrl.bytes_read::total               65431                       # Number of bytes read from this memory
@@ -145,45 +175,62 @@ This has information like the bytes read by each component and the average bandw
     system.mem_ctrl.num_reads::total                 8367                       # Number of read requests responded to by this memory
     system.mem_ctrl.num_writes::cpu.data              941                       # Number of write requests responded to by this memory
     system.mem_ctrl.num_writes::total                 941                       # Number of write requests responded to by this memory
-    system.mem_ctrl.bw_read::cpu.inst           168627973                       # Total read bandwidth from this memory (bytes/s)
-    system.mem_ctrl.bw_read::cpu.data            20742769                       # Total read bandwidth from this memory (bytes/s)
-    system.mem_ctrl.bw_read::total              189370742                       # Total read bandwidth from this memory (bytes/s)
-    system.mem_ctrl.bw_inst_read::cpu.inst      168627973                       # Instruction read bandwidth from this memory (bytes/s)
-    system.mem_ctrl.bw_inst_read::total         168627973                       # Instruction read bandwidth from this memory (bytes/s)
-    system.mem_ctrl.bw_write::cpu.data           20722509                       # Write bandwidth from this memory (bytes/s)
-    system.mem_ctrl.bw_write::total              20722509                       # Write bandwidth from this memory (bytes/s)
-    system.mem_ctrl.bw_total::cpu.inst          168627973                       # Total bandwidth to/from this memory (bytes/s)
-    system.mem_ctrl.bw_total::cpu.data           41465278                       # Total bandwidth to/from this memory (bytes/s)
-    system.mem_ctrl.bw_total::total             210093251                       # Total bandwidth to/from this memory (bytes/s)
+    system.mem_ctrl.bw_read::cpu.inst           114728823                       # Total read bandwidth from this memory (bytes/s)
+    system.mem_ctrl.bw_read::cpu.data            14112685                       # Total read bandwidth from this memory (bytes/s)
+    system.mem_ctrl.bw_read::total              128841507                       # Total read bandwidth from this memory (bytes/s)
+    system.mem_ctrl.bw_inst_read::cpu.inst      114728823                       # Instruction read bandwidth from this memory (bytes/s)
+    system.mem_ctrl.bw_inst_read::total         114728823                       # Instruction read bandwidth from this memory (bytes/s)
+    system.mem_ctrl.bw_write::cpu.data           14098901                       # Write bandwidth from this memory (bytes/s)
+    system.mem_ctrl.bw_write::total              14098901                       # Write bandwidth from this memory (bytes/s)
+    system.mem_ctrl.bw_total::cpu.inst          114728823                       # Total bandwidth to/from this memory (bytes/s)
+    system.mem_ctrl.bw_total::cpu.data           28211586                       # Total bandwidth to/from this memory (bytes/s)
+    system.mem_ctrl.bw_total::total             142940409                       # Total bandwidth to/from this memory (bytes/s)
+
 
 Later in the file is the CPU statistics, which contains information on the number of syscalls, the number of branches, total committed instructions, etc.
 
 ::
 
+    system.cpu.dtb.walker.pwrStateResidencyTicks::UNDEFINED    507841000                       # Cumulative time (in ticks) in various power states
+    system.cpu.dtb.rdAccesses                        1084                       # TLB accesses on read requests
+    system.cpu.dtb.wrAccesses                         941                       # TLB accesses on write requests
+    system.cpu.dtb.rdMisses                             9                       # TLB misses on read requests
+    system.cpu.dtb.wrMisses                             7                       # TLB misses on write requests
     system.cpu.apic_clk_domain.clock                16000                       # Clock period in ticks
-    system.cpu.workload.num_syscalls                   11                       # Number of system calls
-    system.cpu.numCycles                           345518                       # number of cpu cycles simulated
+    system.cpu.interrupts.pwrStateResidencyTicks::UNDEFINED    507841000                       # Cumulative time (in ticks) in various power states
+    system.cpu.itb.walker.pwrStateResidencyTicks::UNDEFINED    507841000                       # Cumulative time (in ticks) in various power states
+    system.cpu.itb.rdAccesses                           0                       # TLB accesses on read requests
+    system.cpu.itb.wrAccesses                        7284                       # TLB accesses on write requests
+    system.cpu.itb.rdMisses                             0                       # TLB misses on read requests
+    system.cpu.itb.wrMisses                            31                       # TLB misses on write requests
+    system.cpu.workload.numSyscalls                    11                       # Number of system calls
+    system.cpu.pwrStateResidencyTicks::ON       507841000                       # Cumulative time (in ticks) in various power states
+    system.cpu.numCycles                           507841                       # number of cpu cycles simulated
     system.cpu.numWorkItemsStarted                      0                       # number of work items this cpu started
     system.cpu.numWorkItemsCompleted                    0                       # number of work items this cpu completed
     system.cpu.committedInsts                        5712                       # Number of instructions committed
-    system.cpu.committedOps                         10314                       # Number of ops (including micro ops) committed
-    system.cpu.num_int_alu_accesses                 10205                       # Number of integer alu accesses
+    system.cpu.committedOps                         10313                       # Number of ops (including micro ops) committed
+    system.cpu.num_int_alu_accesses                 10204                       # Number of integer alu accesses
     system.cpu.num_fp_alu_accesses                      0                       # Number of float alu accesses
+    system.cpu.num_vec_alu_accesses                     0                       # Number of vector alu accesses
     system.cpu.num_func_calls                         221                       # number of times a function call or return occured
     system.cpu.num_conditional_control_insts          986                       # number of instructions that are conditional controls
-    system.cpu.num_int_insts                        10205                       # number of integer instructions
+    system.cpu.num_int_insts                        10204                       # number of integer instructions
     system.cpu.num_fp_insts                             0                       # number of float instructions
-    system.cpu.num_int_register_reads               19296                       # number of times the integer registers were read
-    system.cpu.num_int_register_writes               7977                       # number of times the integer registers were written
+    system.cpu.num_vec_insts                            0                       # number of vector instructions
+    system.cpu.num_int_register_reads               19293                       # number of times the integer registers were read
+    system.cpu.num_int_register_writes               7976                       # number of times the integer registers were written
     system.cpu.num_fp_register_reads                    0                       # number of times the floating registers were read
     system.cpu.num_fp_register_writes                   0                       # number of times the floating registers were written
+    system.cpu.num_vec_register_reads                   0                       # number of times the vector registers were read
+    system.cpu.num_vec_register_writes                  0                       # number of times the vector registers were written
     system.cpu.num_cc_register_reads                 7020                       # number of times the CC registers were read
     system.cpu.num_cc_register_writes                3825                       # number of times the CC registers were written
     system.cpu.num_mem_refs                          2025                       # number of memory refs
     system.cpu.num_load_insts                        1084                       # Number of load instructions
     system.cpu.num_store_insts                        941                       # Number of store instructions
-    system.cpu.num_idle_cycles                   0.001000                       # Number of idle cycles
-    system.cpu.num_busy_cycles               345517.999000                       # Number of busy cycles
-    system.cpu.not_idle_fraction                 1.000000                       # Percentage of non-idle cycles
-    system.cpu.idle_fraction                     0.000000                       # Percentage of idle cycles
+    system.cpu.num_idle_cycles                          0                       # Number of idle cycles
+    system.cpu.num_busy_cycles                     507841                       # Number of busy cycles
+    system.cpu.not_idle_fraction                        1                       # Percentage of non-idle cycles
+    system.cpu.idle_fraction                            0                       # Percentage of idle cycles
     system.cpu.Branches                              1306                       # Number of branches fetched
