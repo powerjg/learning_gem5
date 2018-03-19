@@ -113,7 +113,7 @@ Next, we need to implement *two* functions in the ``.cc`` file, not just one.
 The first function, is the constructor for the ``HelloObject``.
 Here we simply pass the parameter object to the SimObject parent and print "Hello world!"
 
-*Normally, you would **never** use ``std::cout`` in gem5.*
+Normally, you would **never** use ``std::cout`` in gem5.
 Instead, you should use debug flags.
 In the `next chapter`_, we will modify this to use debug flags instead.
 However, for now, we'll simply use ``std::cout`` because it is simple.
@@ -238,9 +238,10 @@ Finally, you need to call ``instantiate`` on the ``m5`` module and actually run 
 
 	m5.instantiate()
 
-	print "Beginning simulation!"
+	print("Beginning simulation!")
 	exit_event = m5.simulate()
-	print 'Exiting @ tick %i because %s' % (m5.curTick(), exit_event.getCause())
+	print('Exiting @ tick {} because {}'
+          .format(m5.curTick(), exit_event.getCause()))
 
 You can find the complete file :download:`here <../_static/scripts/part2/helloobject/run_hello.py>`.
 
@@ -254,7 +255,7 @@ The output should look something like the following
 	gem5 compiled May  4 2016 11:37:41
 	gem5 started May  4 2016 11:44:28
 	gem5 executing on mustardseed.cs.wisc.edu, pid 22480
-	command line: build/X86/gem5.opt configs/learning_gem5/part2/run_hello.py
+	command line: build/X86/gem5.opt configs/learning_gem5/run_hello.py
 
 	Global frequency set at 1000000000000 ticks per second
 	Hello World! From a SimObject!

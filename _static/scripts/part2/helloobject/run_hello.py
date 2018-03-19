@@ -49,6 +49,7 @@ root.hello = HelloObject()
 # instantiate all of the objects we've created above
 m5.instantiate()
 
-print "Beginning simulation!"
+print("Beginning simulation!")
 exit_event = m5.simulate()
-print 'Exiting @ tick %i because %s' % (m5.curTick(), exit_event.getCause())
+print('Exiting @ tick {} because {}'
+      .format(m5.curTick(), exit_event.getCause()))
