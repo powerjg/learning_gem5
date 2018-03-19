@@ -26,8 +26,8 @@ However, gem5 provides a wrapper function for creating simple events.
 In the header file for our ``HelloObject``, we simply need to declare a new function that we want to execute every time the event fires (``processEvent()``).
 This function must take no parameters and return nothing.
 
-Next, we add an ``EventWrapper`` instance.
-``EventWrapper`` is a template which takes two parameters, a SimObject class and a member function bound to an instance of that class.
+Next, we add an ``Event`` instance.
+In this case, we will use an ``EventFunctionWrapper`` which allows us to execute any function.
 
 We also add a ``startup()`` function that will be explained below.
 
@@ -38,7 +38,7 @@ We also add a ``startup()`` function that will be explained below.
       private:
         void processEvent();
 
-        EventWrapper<HelloObject, &HelloObject::processEvent> event;
+        EventFunctionWrapper event;
 
       public:
         HelloObject(HelloObjectParams *p);
@@ -47,12 +47,19 @@ We also add a ``startup()`` function that will be explained below.
     };
 
 Next, we must construct this event in the constructor of ``HelloObject``.
-The ``EventWrapper`` takes a single parameter, which a reference to an instance of the SimObject defined in the ``EventWrapper`` declaration.
+The ``EventFuntionWrapper`` takes two parameters, a function to execute and a name.
+The name is usually the name of the SimObject that owns the event.
+When printing the name, there will be an automatic ".wrapped_function_event" appended to the end of the name.
+
+The first parameter is simply a function that takes no parameters and has no return value (``std::function<void(void)>``).
+Usually, this is a simple lambda function that calls a member function.
+However, it can be any function you want.
+Below, we captute ``this`` in the lambda (``[this]``) so we can call member functions of the instance of the class.
 
 .. code-block:: c++
 
     HelloObject::HelloObject(HelloObjectParams *params) :
-        SimObject(params), event(*this)
+        SimObject(params), event([this]{processEvent();}, name())
     {
         DPRINTF(Hello, "Created the hello object\n");
     }
@@ -133,7 +140,7 @@ To the HelloObject class declaration, add a member variable for the latency and 
       private:
         void processEvent();
 
-        EventWrapper<HelloObject, &HelloObject::processEvent> event;
+        EventFunctionWrapper event;
 
         Tick latency;
 
@@ -150,7 +157,8 @@ Then, in the constructor add default values for the ``latency`` and ``timesLeft`
 .. code-block:: c++
 
     HelloObject::HelloObject(HelloObjectParams *params) :
-        SimObject(params), event(*this), latency(100), timesLeft(10)
+        SimObject(params), event([this]{processEvent();}, name()),
+        latency(100), timesLeft(10)
     {
         DPRINTF(Hello, "Created the hello object\n");
     }

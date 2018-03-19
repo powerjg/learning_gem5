@@ -32,7 +32,8 @@
 #include "learning_gem5/hello_object.hh"
 
 HelloObject::HelloObject(HelloObjectParams *params) :
-    SimObject(params), event(*this), latency(100), timesLeft(10)
+    SimObject(params), event([this]{processEvent();}, name()),
+    latency(100), timesLeft(10)
 {
     DPRINTF(Hello, "Created the hello object\n");
 }

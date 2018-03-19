@@ -39,7 +39,7 @@ class HelloObject : public SimObject
   private:
     void processEvent();
 
-    EventWrapper<HelloObject, &HelloObject::processEvent> event;
+    EventFunctionWrapper event;
 
     /// Latency between times we fire the event.
     Tick latency;
