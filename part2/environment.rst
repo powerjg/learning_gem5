@@ -4,22 +4,24 @@
 
 .. _development-environment-chapter:
 
-------------------------------------------
+---------------------------------------
 Setting up your development environment
-------------------------------------------
+---------------------------------------
 
 This is going to talk about getting started developing gem5.
 
 gem5-style guidelines
-~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~
 
 When modifying any open source project, it is important to follow the project's style guidelines.
 Details on gem5 style can be found on the gem5 `wiki page`_.
 
 .. _wiki page: http://gem5.org/Coding_Style
 
-To help you conform to the style guidelines, gem5 includes a script which runs whenever you finalize anything in mercurial (i.e. commit a changeset or refresh a patch).
+To help you conform to the style guidelines, gem5 includes a script which runs whenever you commit a changeset in git.
 This script should be automatically added to your .git/config file by SCons the first time you build gem5.
+Please do not ignore these warnings/errors.
+However, in the rare case where you are trying to commit a file that doesn't conform to the gem5 style guidelines (e.g., something from outside the gem5 source tree) you can use the git option ``--no-verify`` to skip running the style checker.
 
 The key takeaways from the style guide are:
 
@@ -29,7 +31,7 @@ The key takeaways from the style guide are:
 - Document your code
 
 git branches
-~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~
 
 Most people developing with gem5 use the branch feature of git to track their changes.
 This makes it quite simple to commit your changes back to gem5.
