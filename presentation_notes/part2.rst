@@ -8,7 +8,9 @@ Setting up development environment
 
 * Use the style guide
 * Install the style guide
-* Use mercurial queues (or git or whatever)
+ * You'll get errors when you try to commit.
+ * Can be overridden, if needed.
+* Use git branches
 
 --------------------------------------
 
@@ -22,43 +24,44 @@ Simple SimObject
 
    Switch!
 
-* Create new folder src/hpca_tutorial
+* New branch: part2 (builds off of part1)
+* Create new folder src/tutorial
 
 Step 1: Create a Python class
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * Every SimObject needs a SimObject declaration file
-* Create a file src/hpca_tutorial/HelloObject.py
+* Create a file src/tutorial/Hello.py
 
 .. code-block:: python
 
     from m5.params import *
     from m5.SimObject import SimObject
 
-    class HelloObject(SimObject):
-        type = 'HelloObject'
-        cxx_header = "hpca_tutorial/hello_object.hh"
+    class Hello(SimObject):
+        type = 'Hello'
+        cxx_header = "tutorial/hello.hh"
 
 * Talk about what these things mean
 
 Step 2: Implement your SimObject
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-* Declare C++ file. Edit src/hpca_tutorial/hello_object.hh
+* Declare C++ file. Edit src/tutorial/hello.hh
 
 .. code-block:: c++
 
-    #ifndef __HPCA_TUTORIAL_HELLO_OBJECT_HH__
-    #define __HPCA_TUTORIAL_HELLO_OBJECT_HH__
+    #ifndef __TUTORIAL_HELLO_HH__
+    #define __TUTORIAL_HELLO_HH__
 
-    #include "params/HelloObject.hh"
+    #include "params/Hello.hh"
     #include "sim/sim_object.hh"
 
-    class HelloObject : public SimObject
+    class Hello : public SimObject
     {
       public:
-        HelloObject(HelloObjectParams *p);
+        Hello(HelloParams *p);
     };
 
-    #endif // __HPCA_TUTORIAL_HELLO_OBJECT_HH__
+    #endif // __TUTORIAL_HELLO_HH__
 
 * Explain the header file.
 
@@ -66,11 +69,11 @@ Step 2: Implement your SimObject
 
 .. code-block:: c++
 
-    #include "learning_gem5/hello_object.hh"
+    #include "tutorial/hello.hh"
 
     #include <iostream>
 
-    HelloObject::HelloObject(HelloObjectParams *params) : SimObject(params)
+    Hello::Hello(HelloParams *params) : SimObject(params)
     {
         std::cout << "Hello World! From a SimObject!" << std::endl;
     }
@@ -81,24 +84,24 @@ Step 2: Implement your SimObject
 
 .. code-block:: python
 
-    HelloObject*
-    HelloObjectParams::create()
+    Hello*
+    HelloParams::create()
     {
-        return new HelloObject(this);
+        return new Hello(this);
     }
 
 * This is what calls the constructor. This is called when m5.instantiate() happens in the run script.
 
 Step 3: Register the SimObject and C++ files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-* Edit src/hpca_tutorial/SConscript
+* Edit src/tutorial/SConscript
 
 .. code-block:: python
 
     Import('*')
 
-    SimObject('HelloObject.py')
-    Source('hello_object.cc')
+    SimObject('Hello.py')
+    Source('hello.cc')
 
 * Explain the SConscript file
 
@@ -112,7 +115,7 @@ Step 4: Recompile
 
 Step 5: Write a run/config script
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-* Edit configs/hpca_tutorial/hello_run.py
+* Edit configs/tutorial/hello_run.py
 
 * Again, import all gem5 objects
 
@@ -131,7 +134,7 @@ Step 5: Write a run/config script
 
 .. code-block:: python
 
-    root.hello = HelloObject()
+    root.hello = Hello()
 
 * instantiate gem5 objects in C++ and run the simulation
 
@@ -147,7 +150,7 @@ Step 5: Write a run/config script
 
 .. code-block:: python
 
-    build/X86/gem5.opt configs/hpca_tutorial/hello_run.py
+    build/X86/gem5.opt configs/tutorial/hello_run.py
 
 .. figure:: ../_static/figures/switch.png
    :width: 20 %
@@ -192,32 +195,39 @@ Debugging gem5
 
 --------------------------------
 
-* Declare a debug flag in src/hpca_tutorial/SConscript
+* Declare a debug flag in src/tutorial/SConscript
 
 .. code-block:: python
 
-    DebugFlag('Hello')
+    DebugFlag('HelloDebug')
 
-* Add a debug statement in src/hpca_tutorial/hello_object.cc
+* Add a debug statement in src/tutorial/hello.cc
 
 .. code-block:: c++
 
-    # include "debug/Hello.hh"
+    #include "debug/HelloDebug.hh"
 
     ...
 
-    DPRINTF(Hello, "Created the hello object\n");
+    DPRINTF(HelloDebug, "Created the hello object\n");
 
 * Build gem5 and run it with "hello" debug flag
 
 .. code-block:: sh
 
-    build/X86/gem5.opt --debug-flags=Hello configs/hpca_tutorial/hello_run.py
+    build/X86/gem5.opt --debug-flags=HelloDebug configs/tutorial/hello_run.py
 
 .. figure:: ../_static/figures/switch.png
    :width: 20 %
 
    Switch!
+
+* Other debug flags
+
+.. code-block:: sh
+
+    build/X86/gem5.opt --debug-flags=DRAM configs/learning_gem5/part1/simple.py | head -n 50
+    build/X86/gem5.opt --debug-flags=Exec configs/learning_gem5/part1/simple.py | head -n 50
 
 * Go over debugging slide
 
@@ -231,49 +241,49 @@ Event-driven programming
 
    Switch!
 
-* Add an event wrapper to the HelloObject from last chapter.
+* Add an event wrapper to the Hello from last chapter.
 * Add a processEvent function
 
-hello_object.hh
+hello.hh
 ~~~~~~~~~~~~~~~
 .. code-block:: c++
 
       private:
         void processEvent();
 
-        EventWrapper<HelloObject, &HelloObject::processEvent> event;
+        EventWrapper<Hello, &Hello::processEvent> event;
 
 * Initialize the event
 * Implement the processEvent function
 
-hello_object.cc
+hello.cc
 ~~~~~~~~~~~~~~~
 .. code-block:: c++
 
-    HelloObject::HelloObject(HelloObjectParams *params) :
-        SimObject(params), event(*this)
+    Hello::Hello(HelloParams *params) :
+        SimObject(params), event([this]{processEvent();}, name())
 
     void
-    HelloObject::processEvent()
+    Hello::processEvent()
     {
-        DPRINTF(Hello, "Hello world! Processing the event!\n");
+        DPRINTF(HelloDebug, "Hello world! Processing the event!\n");
     }
 
 * Add a startup function to the header
 * Schedule an event
 
-hello_object.hh
+hello.hh
 ~~~~~~~~~~~~~~~
 .. code-block:: c++
 
     void startup();
 
-hello_object.cc
+hello.cc
 ~~~~~~~~~~~~~~~
 .. code-block:: c++
 
     void
-    HelloObject::startup()
+    Hello::startup()
     {
         schedule(event, 100);
     }
@@ -284,7 +294,7 @@ hello_object.cc
 
 * Add two parameters to class: latency, timesLeft
 
-hello_object.hh
+hello.hh
 ~~~~~~~~~~~~~~~
 .. code-block:: c++
 
@@ -294,27 +304,27 @@ hello_object.hh
 
 * Initialize these parameters
 
-hello_object.cc
+hello.cc
 ~~~~~~~~~~~~~~~
 .. code-block:: c++
 
-    HelloObject::HelloObject(HelloObjectParams *params) :
+    Hello::Hello(HelloParams *params) :
         SimObject(params), event(*this), latency(100), timesLeft(10)
 
 * update startup and process event
 
-hello_object.cc
+hello.cc
 ~~~~~~~~~~~~~~~
 .. code-block:: c++
 
     void
-    HelloObject::startup()
+    Hello::startup()
     {
         schedule(event, latency);
     }
 
     void
-    HelloObject::processEvent()
+    Hello::processEvent()
     {
         timesLeft--;
         DPRINTF(Hello, "Hello world! Processing the event! %d left\n", timesLeft);
@@ -344,13 +354,13 @@ Adding parameters
 
 * Talk about simple parameters
 
-HelloObject.py
+Hello.py
 ~~~~~~~~~~~~~~
 .. code-block:: python
 
-    class HelloObject(SimObject):
-        type = 'HelloObject'
-        cxx_header = "learning_gem5/hello_object.hh"
+    class Hello(SimObject):
+        type = 'Hello'
+        cxx_header = "tutorial/hello.hh"
 
         time_to_wait = Param.Latency("Time before firing the event")
         number_of_fires = Param.Int(1, "Number of times to fire the event before "
@@ -358,11 +368,11 @@ HelloObject.py
 
 * Update the constructor
 
-hello_object.cc
+hello.cc
 ~~~~~~~~~~~~~~~
 .. code-block:: c++
 
-    HelloObject::HelloObject(HelloObjectParams *params) :
+    Hello::Hello(HelloParams *params) :
         SimObject(params),
         event(*this),
         myName(params->name),
@@ -379,13 +389,13 @@ run_hello.py
 ~~~~~~~~~~~~
 .. code-block:: python
 
-    root.hello = HelloObject(time_to_wait = '2us')
+    root.hello = Hello(time_to_wait = '2us')
 
 * or
 
 .. code-block:: python
 
-    root.hello = HelloObject()
+    root.hello = Hello()
     root.hello.time_to_wait = '2us'
 
 * Run again
@@ -452,14 +462,14 @@ MemObjects
 
 * Add parameters for the ports to connect the CPU and the membus.
 
-HelloObject.py
+Hello.py
 ~~~~~~~~~~~~~~~
 .. code-block:: python
 
     ...
     from MemObject import MemObject
 
-    class HelloObject(MemObject):
+    class Hello(MemObject):
         ...
 
         inst_port = SlavePort("CPU side port, receives requests")
@@ -469,28 +479,28 @@ HelloObject.py
 * Define the header file
 * Point out "public MemObject"
 
-hello_object.hh
+hello.hh
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
     #include "mem/mem_object.hh"
 
-    HelloObject : public MemObject
+    Hello : public MemObject
 
 * Define the CPU-side slave port
 * Talk about each of the functions below
 
-hello_object.hh
+hello.hh
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
     class CPUSidePort : public SlavePort
     {
       private:
-        HelloObject *owner;
+        Hello *owner;
 
       public:
-        CPUSidePort(const std::string& name, HelloObject *owner) :
+        CPUSidePort(const std::string& name, Hello *owner) :
             SlavePort(name, owner), owner(owner)
         { }
 
@@ -506,17 +516,17 @@ hello_object.hh
 * define the memory side master port
 * Talk about each of the functions below
 
-hello_object.hh
+hello.hh
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
     class MemSidePort : public MasterPort
     {
       private:
-        HelloObject *owner;
+        Hello *owner;
 
       public:
-        MemSidePort(const std::string& name, HelloObject *owner) :
+        MemSidePort(const std::string& name, Hello *owner) :
             MasterPort(name, owner), owner(owner)
         { }
 
@@ -528,11 +538,11 @@ hello_object.hh
 
 * Define the MemObject interface
 
-hello_object.hh
+hello.hh
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
-    class HelloObject : public MemObject
+    class Hello : public MemObject
     {
       private:
 
@@ -545,7 +555,7 @@ hello_object.hh
         MemSidePort memPort;
 
       public:
-        HelloObject(HelloObjectParams *params);
+        Hello(HelloParams *params);
 
         BaseMasterPort& getMasterPort(const std::string& if_name,
                                       PortID idx = InvalidPortID) override;
@@ -557,11 +567,11 @@ hello_object.hh
 
 * Initialize things in construcutor
 
-hello_object.cc
+hello.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
-    HelloObject::HelloObject(HelloObjectParams *params) :
+    Hello::Hello(HelloParams *params) :
         MemObject(params),
         instPort(params->name + ".inst_port", this),
         dataPort(params->name + ".data_port", this),
@@ -571,12 +581,12 @@ hello_object.cc
 
 * Implement getMasterPort
 
-hello_object.cc
+hello.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
     BaseMasterPort&
-    HelloObject::getMasterPort(const std::string& if_name, PortID idx)
+    Hello::getMasterPort(const std::string& if_name, PortID idx)
     {
         if (if_name == "mem_side") {
             return memPort;
@@ -587,12 +597,12 @@ hello_object.cc
 
 * Implement getSlavePort
 
-hello_object.cc
+hello.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
     BaseSlavePort&
-    HelloObject::getSlavePort(const std::string& if_name, PortID idx)
+    Hello::getSlavePort(const std::string& if_name, PortID idx)
     {
         if (if_name == "inst_port") {
             return instPort;
@@ -612,49 +622,49 @@ hello_object.cc
 
 * Pass through some of the functions for CPU side port
 
-hello_object.cc
+hello.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
     AddrRangeList
-    HelloObject::CPUSidePort::getAddrRanges() const
+    Hello::CPUSidePort::getAddrRanges() const
     {
         return owner->getAddrRanges();
     }
 
     AddrRangeList
-    HelloObject::getAddrRanges() const
+    Hello::getAddrRanges() const
     {
-        DPRINTF(HelloObject, "Sending new ranges\n");
+        DPRINTF(Hello, "Sending new ranges\n");
         return memPort.getAddrRanges();
     }
 
     void
-    HelloObject::CPUSidePort::recvFunctional(PacketPtr pkt)
+    Hello::CPUSidePort::recvFunctional(PacketPtr pkt)
     {
         return owner->handleFunctional(pkt);
     }
 
     void
-    HelloObject::handleFunctional(PacketPtr pkt)
+    Hello::handleFunctional(PacketPtr pkt)
     {
         memPort.sendFunctional(pkt);
     }
 
 * Pass through some of the functions for Mem side port
 
-hello_object.cc
+hello.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
     void
-    HelloObject::MemSidePort::recvRangeChange()
+    Hello::MemSidePort::recvRangeChange()
     {
         owner->sendRangeChange();
     }
 
     void
-    HelloObject::sendRangeChange()
+    Hello::sendRangeChange()
     {
         instPort.sendRangeChange();
         dataPort.sendRangeChange();
@@ -665,12 +675,12 @@ hello_object.cc
 * NOW the fun part. Implementing the send/receives
 * Let's start with receive
 
-hello_object.cc
+hello.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
     bool
-    HelloObject::CPUSidePort::recvTimingReq(PacketPtr pkt)
+    Hello::CPUSidePort::recvTimingReq(PacketPtr pkt)
     {
         if (!owner->handleRequest(pkt)) {
             needRetry = true;
@@ -682,7 +692,7 @@ hello_object.cc
 
 * Add variable to remember when we need to send the CPU a retry
 
-hello_object.hh
+hello.hh
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
@@ -692,17 +702,17 @@ hello_object.hh
 
 * Now, we need to do handle request
 
-hello_object.cc
+hello.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
     bool
-    HelloObject::handleRequest(PacketPtr pkt)
+    Hello::handleRequest(PacketPtr pkt)
     {
         if (blocked) {
             return false;
         }
-        DPRINTF(HelloObject, "Got request for addr %#x\n", pkt->getAddr());
+        DPRINTF(Hello, "Got request for addr %#x\n", pkt->getAddr());
         blocked = true;
         memPort.sendPacket(pkt);
         return true;
@@ -710,12 +720,12 @@ hello_object.cc
 
 * Let's add a conveniency function in the memside port
 
-hello_object.cc
+hello.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
     void
-    HelloObject::MemSidePort::sendPacket(PacketPtr pkt)
+    Hello::MemSidePort::sendPacket(PacketPtr pkt)
     {
         panic_if(blockedPacket != nullptr, "Should never try to send if blocked!");
         if (!sendTimingReq(pkt)) {
@@ -723,7 +733,7 @@ hello_object.cc
         }
     }
 
-hello_object.hh
+hello.hh
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
@@ -734,12 +744,12 @@ hello_object.hh
 
 * Implement code to handle retries
 
-hello_object.cc
+hello.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
     void
-    HelloObject::MemSidePort::recvReqRetry()
+    Hello::MemSidePort::recvReqRetry()
     {
         assert(blockedPacket != nullptr);
 
@@ -753,25 +763,25 @@ hello_object.cc
 
 * Implement the code for receiving responses
 
-hello_object.cc
+hello.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
     bool
-    HelloObject::MemSidePort::recvTimingResp(PacketPtr pkt)
+    Hello::MemSidePort::recvTimingResp(PacketPtr pkt)
     {
         return owner->handleResponse(pkt);
     }
 
-hello_object.cc
+hello.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
     bool
-    HelloObject::handleResponse(PacketPtr pkt)
+    Hello::handleResponse(PacketPtr pkt)
     {
         assert(blocked);
-        DPRINTF(HelloObject, "Got response for addr %#x\n", pkt->getAddr());
+        DPRINTF(Hello, "Got response for addr %#x\n", pkt->getAddr());
 
         blocked = false;
 
@@ -787,7 +797,7 @@ hello_object.cc
 
 * Now, we need the convenience function to send packets
 
-hello_object.hh
+hello.hh
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
@@ -797,12 +807,12 @@ hello_object.hh
       public:
         void sendPacket(PacketPtr pkt);
 
-hello_object.cc
+hello.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
     void
-    HelloObject::CPUSidePort::sendPacket(PacketPtr pkt)
+    Hello::CPUSidePort::sendPacket(PacketPtr pkt)
     {
         panic_if(blockedPacket != nullptr, "Should never try to send if blocked!");
 
@@ -813,12 +823,12 @@ hello_object.cc
 
 * Implement recvRespRetry
 
-hello_object.cc
+hello.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
     void
-    HelloObject::CPUSidePort::recvRespRetry()
+    Hello::CPUSidePort::recvRespRetry()
     {
         assert(blockedPacket != nullptr);
 
@@ -830,33 +840,33 @@ hello_object.cc
 
 * Implement trySendRetry
 
-hello_object.hh
+hello.hh
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
     class CPUSidePort : public SlavePort {
         void trySendRetry();
 
-hello_object.cc
+hello.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
     void
-    HelloObject::CPUSidePort::trySendRetry()
+    Hello::CPUSidePort::trySendRetry()
     {
         if (needRetry && blockedPacket == nullptr) {
             needRetry = false;
-            DPRINTF(HelloObject, "Sending retry req for %d\n", id);
+            DPRINTF(Hello, "Sending retry req for %d\n", id);
             sendRetryReq();
         }
     }
 
 
-hello_object.cc
+hello.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
-    HelloObject::handleResponse(PacketPtr pkt)
+    Hello::handleResponse(PacketPtr pkt)
     {
         instPort.trySendRetry();
         dataPort.trySendRetry();
@@ -871,7 +881,7 @@ simple.py
 
     system.cpu = TimingSimpleCPU()
 
-    system.memobj = HelloObject()
+    system.memobj = Hello()
 
     system.cpu.icache_port = system.memobj.inst_port
     system.cpu.dcache_port = system.memobj.data_port
@@ -889,7 +899,7 @@ Making a cache
 
 * Add parameters to memobj
 
-HelloObject.py
+Hello.py
 ~~~~~~~~~~~~~~~
 .. code-block:: python
 
@@ -903,7 +913,7 @@ HelloObject.py
 
 * Add latency/size/system to constructor
 
-hello_object.cc
+hello.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
@@ -913,17 +923,17 @@ hello_object.cc
 
 * Implement new "handleRequest"
 
-hello_object.cc
+hello.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
     bool
-    HelloObject::handleRequest(PacketPtr pkt, int port_id)
+    Hello::handleRequest(PacketPtr pkt, int port_id)
     {
         if (blocked) {
             return false;
         }
-        DPRINTF(HelloObject, "Got request for addr %#x\n", pkt->getAddr());
+        DPRINTF(Hello, "Got request for addr %#x\n", pkt->getAddr());
 
         blocked = true;
         waitingPortId = port_id;
@@ -937,17 +947,17 @@ hello_object.cc
 
 * Implement the access event
 
-hello_object.hh
+hello.hh
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
     class AccessEvent : public Event
     {
       private:
-        HelloObject *cache;
+        Hello *cache;
         PacketPtr pkt;
       public:
-        AccessEvent(HelloObject *cache, PacketPtr pkt) :
+        AccessEvent(Hello *cache, PacketPtr pkt) :
             Event(Default_Pri, AutoDelete), cache(cache), pkt(pkt)
         { }
         void process() override {
@@ -957,18 +967,18 @@ hello_object.hh
 
 * Implement the accessTiming function
 
-hello_object.hh
+hello.hh
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
     void accessTiming(PacketPtr pkt);
 
-hello_object.cc
+hello.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
     void
-    HelloObject::accessTiming(PacketPtr pkt)
+    Hello::accessTiming(PacketPtr pkt)
     {
         bool hit = accessFunctional(pkt);
         if (hit) {
@@ -982,12 +992,12 @@ hello_object.cc
 * Note; It's a good idea to separate out functional from timing functions
 * Miss handling is complicated by the block size
 
-hello_object.cc
+hello.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
     void
-    HelloObject::accessTiming(PacketPtr pkt)
+    Hello::accessTiming(PacketPtr pkt)
     {
         bool hit = accessFunctional(pkt);
         if (hit) {
@@ -998,10 +1008,10 @@ hello_object.cc
             Addr block_addr = pkt->getBlockAddr(blockSize);
             unsigned size = pkt->getSize();
             if (addr == block_addr && size == blockSize) {
-                DPRINTF(HelloObject, "forwarding packet\n");
+                DPRINTF(Hello, "forwarding packet\n");
                 memPort.sendPacket(pkt);
             } else {
-                DPRINTF(HelloObject, "Upgrading packet to block size\n");
+                DPRINTF(Hello, "Upgrading packet to block size\n");
                 panic_if(addr - block_addr + size > blockSize,
                          "Cannot handle accesses that span multiple cache lines");
 
@@ -1023,7 +1033,7 @@ hello_object.cc
         }
     }
 
-hello_object.hh
+hello.hh
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
@@ -1031,15 +1041,15 @@ hello_object.hh
 
 * Update handle response to be able to accept responses from the upgraded packets
 
-hello_object.cc
+hello.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
     bool
-    HelloObject::handleResponse(PacketPtr pkt)
+    Hello::handleResponse(PacketPtr pkt)
     {
         assert(blocked);
-        DPRINTF(HelloObject, "Got response for addr %#x\n", pkt->getAddr());
+        DPRINTF(Hello, "Got response for addr %#x\n", pkt->getAddr());
         insert(pkt);
 
         if (outstandingPacket != nullptr) {
@@ -1059,7 +1069,7 @@ hello_object.cc
 
 * Implementing the functional cache logic, now.
 
-hello_object.hh
+hello.hh
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
@@ -1069,12 +1079,12 @@ hello_object.hh
 
 * Implement the access logic
 
-hello_object.cc
+hello.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
     bool
-    HelloObject::accessFunctional(PacketPtr pkt)
+    Hello::accessFunctional(PacketPtr pkt)
     {
         Addr block_addr = pkt->getBlockAddr(blockSize);
         auto it = cacheStore.find(block_addr);
@@ -1093,12 +1103,12 @@ hello_object.cc
 
 * Implement the insert logic
 
-hello_object.cc
+hello.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
     void
-    HelloObject::insert(PacketPtr pkt)
+    Hello::insert(PacketPtr pkt)
     {
         if (cacheStore.size() >= capacity) {
             // Select random thing to evict. This is a little convoluted since we
@@ -1114,7 +1124,7 @@ hello_object.cc
             PacketPtr new_pkt = new Packet(req, MemCmd::WritebackDirty, blockSize);
             new_pkt->dataDynamic(block->second); // This will be deleted later
 
-            DPRINTF(HelloObject, "Writing packet back %s\n", pkt->print());
+            DPRINTF(Hello, "Writing packet back %s\n", pkt->print());
             memPort.sendTimingReq(new_pkt);
 
             cacheStore.erase(block->first);
@@ -1133,6 +1143,6 @@ simple.py
 ~~~~~~~~~
 .. code-block:: python
 
-    system.memobj = HelloObject(size='1kB')
+    system.memobj = Hello(size='1kB')
 
 * Run it!
