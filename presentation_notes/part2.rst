@@ -309,7 +309,9 @@ hello.cc
 .. code-block:: c++
 
     Hello::Hello(HelloParams *params) :
-        SimObject(params), event(*this), latency(100), timesLeft(10)
+        SimObject(params),
+    event([this]{processEvent();}, name()),
+    latency(100), timesLeft(10)
 
 * update startup and process event
 
@@ -327,10 +329,11 @@ hello.cc
     Hello::processEvent()
     {
         timesLeft--;
-        DPRINTF(Hello, "Hello world! Processing the event! %d left\n", timesLeft);
+        DPRINTF(HelloDebug, "Hello world! Processing the event! %d left\n",
+                timesLeft);
 
         if (timesLeft <= 0) {
-            DPRINTF(Hello, "Done firing!\n");
+            DPRINTF(HelloDebug, "Done firing!\n");
         } else {
             schedule(event, curTick() + latency);
         }
@@ -374,13 +377,10 @@ hello.cc
 
     Hello::Hello(HelloParams *params) :
         SimObject(params),
-        event(*this),
-        myName(params->name),
+        event([this]{processEvent();}, name()),
         latency(params->time_to_wait),
         timesLeft(params->number_of_fires)
-    {
-        DPRINTF(Hello, "Created the hello object with the name %s\n", myName);
-    }
+
 
 * Run gem5 without updating the config file and get an error
 * Fix the above error
@@ -635,7 +635,7 @@ hello.cc
     AddrRangeList
     Hello::getAddrRanges() const
     {
-        DPRINTF(Hello, "Sending new ranges\n");
+        DPRINTF(HelloDebug, "Sending new ranges\n");
         return memPort.getAddrRanges();
     }
 
@@ -670,6 +670,18 @@ hello.cc
         dataPort.sendRangeChange();
     }
 
+hello.hh
+~~~~~~~~
+.. code-block:: c++
+
+    AddrRangeList getAddrRanges() const;
+    void handleFunctional(PacketPtr pkt);
+    void sendRangeChange();
+
+    bool handleRequest(PacketPtr pkt);
+    bool handleResponse(PacketPtr pkt);
+
+
 ---------------------------------------------
 
 * NOW the fun part. Implementing the send/receives
@@ -699,6 +711,9 @@ hello.hh
     class CPUSidePort : public SlavePort
     {
         bool needRetry;
+        ...
+        CPUSidePort(const std::string& name, Hello *owner) :
+            SlavePort(name, owner), owner(owner), needRetry(false)
 
 * Now, we need to do handle request
 
@@ -712,13 +727,26 @@ hello.cc
         if (blocked) {
             return false;
         }
-        DPRINTF(Hello, "Got request for addr %#x\n", pkt->getAddr());
+        DPRINTF(HelloDebug, "Got request for addr %#x\n", pkt->getAddr());
         blocked = true;
         memPort.sendPacket(pkt);
         return true;
     }
 
-* Let's add a conveniency function in the memside port
+hello.hh
+~~~~~~~~~
+.. code-block:: c++
+
+    bool blocked;
+
+hello.cc
+~~~~~~~~
+.. code-block:: c++
+    <constructor>,
+    blocked(false)
+
+
+* Let's add a convenience function in the memside port
 
 hello.cc
 ~~~~~~~~~~~~~~~~
@@ -781,7 +809,7 @@ hello.cc
     Hello::handleResponse(PacketPtr pkt)
     {
         assert(blocked);
-        DPRINTF(Hello, "Got response for addr %#x\n", pkt->getAddr());
+        DPRINTF(HelloDebug, "Got response for addr %#x\n", pkt->getAddr());
 
         blocked = false;
 
@@ -845,6 +873,7 @@ hello.hh
 .. code-block:: c++
 
     class CPUSidePort : public SlavePort {
+      public:
         void trySendRetry();
 
 hello.cc
@@ -856,7 +885,7 @@ hello.cc
     {
         if (needRetry && blockedPacket == nullptr) {
             needRetry = false;
-            DPRINTF(Hello, "Sending retry req for %d\n", id);
+            DPRINTF(HelloDebug, "Sending retry req for %d\n", id);
             sendRetryReq();
         }
     }
@@ -873,7 +902,7 @@ hello.cc
 
 -----------------------------------
 
-* Update simple config file
+* Update simple config file SIMPLE CONFIG FILE
 
 simple.py
 ~~~~~~~~~
@@ -901,6 +930,9 @@ Making a cache
 
 Hello.py
 ~~~~~~~~~~~~~~~
+
+* Remove the old parameters.
+
 .. code-block:: python
 
     latency = Param.Cycles(1, "Cycles taken on a hit or to resolve a miss")
@@ -933,7 +965,7 @@ hello.cc
         if (blocked) {
             return false;
         }
-        DPRINTF(Hello, "Got request for addr %#x\n", pkt->getAddr());
+        DPRINTF(HelloDebug, "Got request for addr %#x\n", pkt->getAddr());
 
         blocked = true;
         waitingPortId = port_id;
@@ -1008,10 +1040,10 @@ hello.cc
             Addr block_addr = pkt->getBlockAddr(blockSize);
             unsigned size = pkt->getSize();
             if (addr == block_addr && size == blockSize) {
-                DPRINTF(Hello, "forwarding packet\n");
+                DPRINTF(HelloDebug, "forwarding packet\n");
                 memPort.sendPacket(pkt);
             } else {
-                DPRINTF(Hello, "Upgrading packet to block size\n");
+                DPRINTF(HelloDebug, "Upgrading packet to block size\n");
                 panic_if(addr - block_addr + size > blockSize,
                          "Cannot handle accesses that span multiple cache lines");
 
@@ -1049,7 +1081,7 @@ hello.cc
     Hello::handleResponse(PacketPtr pkt)
     {
         assert(blocked);
-        DPRINTF(Hello, "Got response for addr %#x\n", pkt->getAddr());
+        DPRINTF(HelloDebug, "Got response for addr %#x\n", pkt->getAddr());
         insert(pkt);
 
         if (outstandingPacket != nullptr) {
@@ -1124,7 +1156,7 @@ hello.cc
             PacketPtr new_pkt = new Packet(req, MemCmd::WritebackDirty, blockSize);
             new_pkt->dataDynamic(block->second); // This will be deleted later
 
-            DPRINTF(Hello, "Writing packet back %s\n", pkt->print());
+            DPRINTF(HelloDebug, "Writing packet back %s\n", pkt->print());
             memPort.sendTimingReq(new_pkt);
 
             cacheStore.erase(block->first);
