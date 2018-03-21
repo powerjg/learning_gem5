@@ -8,8 +8,8 @@ Setting up development environment
 
 * Use the style guide
 * Install the style guide
- * You'll get errors when you try to commit.
- * Can be overridden, if needed.
+  * You'll get errors when you try to commit.
+  * Can be overridden, if needed.
 * Use git branches
 
 --------------------------------------
@@ -742,6 +742,7 @@ hello.hh
 hello.cc
 ~~~~~~~~
 .. code-block:: c++
+
     <constructor>,
     blocked(false)
 
@@ -832,6 +833,8 @@ hello.hh
     class CPUSidePort : public SlavePort
     {
         PacketPtr blockedPacket;
+        // ADD TO THE CONSTRUCTOR!!!!
+        , blockedPacket(nullptr)
       public:
         void sendPacket(PacketPtr pkt);
 
@@ -935,6 +938,8 @@ Hello.py
 
 .. code-block:: python
 
+    from m5.proxy import *
+
     latency = Param.Cycles(1, "Cycles taken on a hit or to resolve a miss")
 
     size = Param.MemorySize('16kB', "The size of the cache")
@@ -945,13 +950,35 @@ Hello.py
 
 * Add latency/size/system to constructor
 
+* Remove implementation of processEvent and startup.
+
 hello.cc
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
 
+    #include "sim/system.hh"
+
     latency(params->latency),
     blockSize(params->system->cacheLineSize()),
     capacity(params->size / blockSize),
+
+* Add latency, blockSize, and capacity to header.
+* Remove timesLeft, event, and processEvent, startup
+
+hello.hh
+~~~~~~~~~
+
+.. code-block:: c++
+
+      private:
+
+        Cycles latency; **** NOW CYCLE
+
+        int blockSize;
+
+        // Number of blocks in the cache
+        uint32_t capacity;
+
 
 * Implement new "handleRequest"
 
@@ -968,34 +995,16 @@ hello.cc
         DPRINTF(HelloDebug, "Got request for addr %#x\n", pkt->getAddr());
 
         blocked = true;
-        waitingPortId = port_id;
 
-        schedule(new AccessEvent(this, pkt), clockEdge(latency));
+        schedule(new EventFunctionWrapper([this, pkt]{ accessTiming(pkt); },
+                                          name() + ".access",
+                                          true), // auto delete
+                 clockEdge(latency));
 
         return true;
     }
 
 * Talk about the clockEdge function and clocked-objects
-
-* Implement the access event
-
-hello.hh
-~~~~~~~~~~~~~~~~
-.. code-block:: c++
-
-    class AccessEvent : public Event
-    {
-      private:
-        Hello *cache;
-        PacketPtr pkt;
-      public:
-        AccessEvent(Hello *cache, PacketPtr pkt) :
-            Event(Default_Pri, AutoDelete), cache(cache), pkt(pkt)
-        { }
-        void process() override {
-            cache->accessTiming(pkt);
-        }
-    };
 
 * Implement the accessTiming function
 
@@ -1015,7 +1024,14 @@ hello.cc
         bool hit = accessFunctional(pkt);
         if (hit) {
             pkt->makeResponse();
-            sendResponse(pkt);
+            blocked = false;
+            if (pkt->req->isInstFetch()) {
+                instPort.sendPacket(pkt);
+            } else {
+                dataPort.sendPacket(pkt);
+            }
+            instPort.trySendRetry();
+            dataPort.trySendRetry();
         } else {
             <miss handling>
         }
@@ -1033,35 +1049,30 @@ hello.cc
     {
         bool hit = accessFunctional(pkt);
         if (hit) {
-            pkt->makeResponse();
-            sendResponse(pkt);
+            <....>
         } else {
             Addr addr = pkt->getAddr();
             Addr block_addr = pkt->getBlockAddr(blockSize);
             unsigned size = pkt->getSize();
-            if (addr == block_addr && size == blockSize) {
-                DPRINTF(HelloDebug, "forwarding packet\n");
-                memPort.sendPacket(pkt);
+
+            DPRINTF(HelloDebug, "Upgrading packet to block size\n");
+            panic_if(addr - block_addr + size > blockSize,
+                     "Cannot handle accesses that span multiple cache lines");
+
+            assert(pkt->needsResponse());
+            MemCmd cmd;
+            if (pkt->isWrite() || pkt->isRead()) {
+                cmd = MemCmd::ReadReq;
             } else {
-                DPRINTF(HelloDebug, "Upgrading packet to block size\n");
-                panic_if(addr - block_addr + size > blockSize,
-                         "Cannot handle accesses that span multiple cache lines");
-
-                assert(pkt->needsResponse());
-                MemCmd cmd;
-                if (pkt->isWrite() || pkt->isRead()) {
-                    cmd = MemCmd::ReadReq;
-                } else {
-                    panic("Unknown packet type in upgrade size");
-                }
-
-                PacketPtr new_pkt = new Packet(pkt->req, cmd, blockSize);
-                new_pkt->allocate();
-
-                outstandingPacket = pkt;
-
-                memPort.sendPacket(new_pkt);
+                panic("Unknown packet type in upgrade size");
             }
+            // packet automatically aligned to block size!
+            PacketPtr new_pkt = new Packet(pkt->req, cmd, blockSize);
+            new_pkt->allocate();
+
+            outstandingPacket = pkt; // Save original packet
+
+            memPort.sendPacket(new_pkt);
         }
     }
 
@@ -1084,13 +1095,13 @@ hello.cc
         DPRINTF(HelloDebug, "Got response for addr %#x\n", pkt->getAddr());
         insert(pkt);
 
-        if (outstandingPacket != nullptr) {
-            accessFunctional(outstandingPacket);
-            outstandingPacket->makeResponse();
-            delete pkt;
-            pkt = outstandingPacket;
-            outstandingPacket = nullptr;
-        } // else, pkt contains the data it needs
+        assert(outstandingPacket != nullptr);
+
+        accessFunctional(outstandingPacket);
+        outstandingPacket->makeResponse();
+        delete pkt;
+        pkt = outstandingPacket;
+        outstandingPacket = nullptr;
 
         sendResponse(pkt);
 
@@ -1104,6 +1115,8 @@ hello.cc
 hello.hh
 ~~~~~~~~~~~~~~~~
 .. code-block:: c++
+
+    #include <unordered_map>
 
     void insert(PacketPtr pkt);
     bool accessFunctional(PacketPtr pkt);
@@ -1143,15 +1156,9 @@ hello.cc
     Hello::insert(PacketPtr pkt)
     {
         if (cacheStore.size() >= capacity) {
-            // Select random thing to evict. This is a little convoluted since we
-            // are using a std::unordered_map. See http://bit.ly/2hrnLP2
-            int bucket, bucket_size;
-            do {
-                bucket = random_mt.random(0, (int)cacheStore.bucket_count() - 1);
-            } while ( (bucket_size = cacheStore.bucket_size(bucket)) == 0 );
-            auto block = std::next(cacheStore.begin(bucket),
-                                   random_mt.random(0, bucket_size - 1));
+            auto block = cacheStore.begin(); // Replace the "first" element
 
+            // WE don't track clean/dirty, so write back everything
             RequestPtr req = new Request(block->first, blockSize, 0, 0);
             PacketPtr new_pkt = new Packet(req, MemCmd::WritebackDirty, blockSize);
             new_pkt->dataDynamic(block->second); // This will be deleted later
@@ -1161,10 +1168,22 @@ hello.cc
 
             cacheStore.erase(block->first);
         }
+        // Make the miss request.
         uint8_t *data = new uint8_t[blockSize];
         cacheStore[pkt->getAddr()] = data;
 
         pkt->writeDataToBlock(data, blockSize);
+    }
+
+* finally, need to make sure functional accesses work!
+
+.. code-block:: c++
+
+    void
+    Hello::handleFunctional(PacketPtr pkt)
+    {
+        accessFunctional(pkt); // can ignore hit/miss
+        memPort.sendFunctional(pkt);
     }
 
 ---------------------------------------------
@@ -1178,3 +1197,14 @@ simple.py
     system.memobj = Hello(size='1kB')
 
 * Run it!
+
+* Show at 1KB vs 16KB the time is different.
+
+* python3 -c "print(OLD/NEW)"
+
+* Slides on things to remember from implementing the cache
+
+.. figure:: ../_static/figures/switch.png
+   :width: 20 %
+
+   Switch!
