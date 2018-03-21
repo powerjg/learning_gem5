@@ -28,6 +28,7 @@ Notes for presentations
 
     presentation_notes/part1.rst
     presentation_notes/part2.rst
+    presentation_notes/part3.rst
 
 Indices and tables
 ==================
