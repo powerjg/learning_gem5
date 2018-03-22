@@ -21,7 +21,9 @@ Overview
    Switch!
 
 * Look at MSI-cache.sm
+
   * Show the top part with the parameters
+
 
 * Build the protocol
 * Note: May want to use a different build directory (e.g., X86_MSI)
@@ -85,10 +87,12 @@ States and events and other function
 * talk about events and show the MSI-cache events
 
 * Show the other functions, etc.
+
   * Entry
   * TBE/table
   * Declarations
   * other functions
+
 
 .. figure:: ../_static/figures/switch.png
    :width: 20 %
@@ -180,10 +184,12 @@ Config scripts
    Switch!
 
 * The first file we'll look at is kind of like caches.py from our simple scripts.
+
   * We extend the L1Cache_Controller like we did Cache before. (And direcotry)
   * Construct the whole Ruby
   * Create sequencers
   * Connect everything up
+
 * Also extend the network to have our point-to-point network
 
 .. code-block:: sh
@@ -219,5 +225,6 @@ Things I'd like to add
 ----------------------
 
 * Debugging
+
   * It would be cool to go through an example broken protocol.
   * If I ever do a multi-day tutorial, this would be good to have as an activity.
