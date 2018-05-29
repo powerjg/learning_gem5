@@ -31,6 +31,12 @@ run.py
 
 As you can see the regression system is self-contained. A nice feature of gem5 regression system is that you don't need to specify test-cases in a file: you just need to put some required files in the correct folder hierarchy. The con of this system is that ypu have to put these files in the correct locations **using the correct naming convention**.
 You can run the regression tests using the script ``util/regression``. It tries to verify as more features as possible and you can modify its behaviour by passing options. As usual, pass it the ``--help`` flag to know more about it (or review its code).
+Every needed executable must be put in the ``test-prog`` folder using the following pattern:
+
+::
+
+    tests/test-prog/<executable name>/bin/<architecture>/<operating system>/<executable name>
+
 Every reference of a test-cases identifies a runnable test. Reference of test-cases are organized and stored with the following structure:
 
 ::
@@ -40,20 +46,25 @@ Every reference of a test-cases identifies a runnable test. Reference of test-ca
 Adding a simple test-case
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-For example, a test for the classic hello world program in SE mode using a simple-timing configuration  is:
+For example, we want to create a regression test for the hello world program. At first we have to put the executable in the correct place. In this case we can simply make a symbolic link to the shipped hello world example in the correct folder:
+
+::
+  ln -s  tests/test-progs/hello/bin/x86/linux/hello
+
+We want to use SE mode using with a simple-timing configuration  is:
 
 ::
 
     tests/quick/se/00.hello/x86/linux/simple-timing
 
-We put this test is the ``quick`` category since it doesn't require a lot of time to terminate. We run it in ``se`` mode on the ``x86`` architecture. Using `se`, `linux` is not really important, but it is required. ``simple-timing`` specify which configuration file load in the **previously specified** ``configuration`` folder.
+We give the name ``00.hello`` to this test and we categorize it as ``quick`` since it does not require a lot of time to terminate. We run it in ``se`` mode on the ``x86`` architecture. Using ``se``, ``linux`` is not really important, but it is required. ``simple-timing`` specify which configuration file load in the **previously specified** ``configuration`` folder.
 In such a folder we must put the output of the execution of an hello world program that uses this configuration. It is possible to use gem5 and run the following commands:
 
 ::
 
-    build/X86/gem5.opt -re configs/example/se.py --cmd=tests/test-progs/hello/bin/x86/hello
+    build/X86/gem5.opt -re configs/example/se.py --cmd=tests/test-progs/hello/bin/x86/linux/hello
     mkdir -p tests/quick/00.hello/ref/x86/linux/simple-timing
-    cp m5out/{config.ini,stats.txt,simout,simerr} tests/quick/00.hello/ref/x86/linux/simple-timing
+    cp build/X86/tests/opt/quick/g5gpu/00.hello/x86/linux/* tests/quick/00.hello/ref/x86/linux/simple-timing
 
 The last thing we miss is a ``test.py`` that must be put into the folder ``tests/quick/00.hello/``. This file specifies additional parameters to the execution that are not stated in the configuration file. 
 You can use the following piece of code:
