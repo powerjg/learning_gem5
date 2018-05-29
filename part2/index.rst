@@ -13,3 +13,4 @@ Part II: Modifying and extending gem5
     parameters
     memoryobject
     simplecache
+    regressionsystem
