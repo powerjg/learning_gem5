@@ -238,7 +238,7 @@ Adding parameters to your script
 When performing experiments with gem5, you don't want to edit your configuration script every time you want to test the system with different parameters.
 To get around this, you can add command-line parameters to your gem5 configuration script.
 Again, because the configuration script is just Python, you can use the Python libraries that support argument parsing.
-Although :py:mod:`optparse` is officially deprecated, the configuration scripts that ship with gem5 use it instead of py:mod:`argparse` since gem5's minimum Python version is 2.5.
+Although :py:mod:`optparse` is officially deprecated, the configuration scripts that ship with gem5 use it instead of py:mod:`argparse` since gem5's minimum Python version is 2.7.
 To get started using :py:mod:`optparse`, you can consult the online Python documentation.
 
 To add options to our two-level cache configuration, after importing our caches, let's add some options.
