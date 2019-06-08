@@ -50,7 +50,7 @@ SimpleMemobj::getMasterPort(const std::string& if_name, PortID idx)
     if (if_name == "mem_side") {
         return memPort;
     } else {
-        //pass it along to super class
+        //pass it along to our super class
         return MemObject::getPort(if_name, idx);
     }
 }

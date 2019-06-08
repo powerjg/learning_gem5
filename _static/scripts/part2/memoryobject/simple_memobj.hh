@@ -31,11 +31,9 @@
 #ifndef __LEARNING_GEM5_SIMPLE_MEMOBJ_SIMPLE_MEMOBJ_HH__
 #define __LEARNING_GEM5_SIMPLE_MEMOBJ_SIMPLE_MEMOBJ_HH__
 
-#include <iostream>
 #include <vector>
 
 #include "mem/mem_object.hh"
-#include "mem/port.hh"
 #include "params/SimpleMemobj.hh"
 
 /**
