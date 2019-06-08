@@ -239,7 +239,7 @@ class SimpleMemobj : public MemObject
     SimpleMemobj(SimpleMemobjParams *params);
 
     /**
-     * Get a master port with a given name and index. This is used at
+     * Get a port with a given name and index. This is used at
      * binding time and returns a reference to a protocol-agnostic
      * base master port.
      *
@@ -248,21 +248,9 @@ class SimpleMemobj : public MemObject
      *
      * @return A reference to the given port
      */
-    Port& getMasterPort(const std::string& if_name,
-                                  PortID idx = InvalidPortID);
+    Port& getPort(const std::string& if_name,
+                                  PortID idx = InvalidPortID) override;
 
-    /**
-     * Get a slave port with a given name and index. This is used at
-     * binding time and returns a reference to a protocol-agnostic
-     * base master port.
-     *
-     * @param if_name Port name
-     * @param idx Index in the case of a VectorPort
-     *
-     * @return A reference to the given port
-     */
-    Port& getSlavePort(const std::string& if_name,
-                                PortID idx = InvalidPortID);
 };
 
 
