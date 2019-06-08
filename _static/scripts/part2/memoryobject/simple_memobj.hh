@@ -31,9 +31,11 @@
 #ifndef __LEARNING_GEM5_SIMPLE_MEMOBJ_SIMPLE_MEMOBJ_HH__
 #define __LEARNING_GEM5_SIMPLE_MEMOBJ_SIMPLE_MEMOBJ_HH__
 
+#include <iostream>
 #include <vector>
 
 #include "mem/mem_object.hh"
+#include "mem/port.hh"
 #include "params/SimpleMemobj.hh"
 
 /**
@@ -42,6 +44,7 @@
  * This memobj is fully blocking (not non-blocking). Only a single request can
  * be outstanding at a time.
  */
+
 class SimpleMemobj : public MemObject
 {
   private:
@@ -90,6 +93,7 @@ class SimpleMemobj : public MemObject
         AddrRangeList getAddrRanges() const override;
 
         /**
+
          * Send a retry to the peer port only if it is needed. This is called
          * from the SimpleCache whenever it is unblocked.
          */
@@ -246,8 +250,8 @@ class SimpleMemobj : public MemObject
      *
      * @return A reference to the given port
      */
-    BaseMasterPort& getMasterPort(const std::string& if_name,
-                                  PortID idx = InvalidPortID) override;
+    Port& getMasterPort(const std::string& if_name,
+                                  PortID idx = InvalidPortID);
 
     /**
      * Get a slave port with a given name and index. This is used at
@@ -259,8 +263,8 @@ class SimpleMemobj : public MemObject
      *
      * @return A reference to the given port
      */
-    BaseSlavePort& getSlavePort(const std::string& if_name,
-                                PortID idx = InvalidPortID) override;
+    Port& getSlavePort(const std::string& if_name,
+                                PortID idx = InvalidPortID);
 };
 
 

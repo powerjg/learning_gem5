@@ -41,7 +41,7 @@ SimpleMemobj::SimpleMemobj(SimpleMemobjParams *params) :
 {
 }
 
-BaseMasterPort&
+Port&
 SimpleMemobj::getMasterPort(const std::string& if_name, PortID idx)
 {
     panic_if(idx != InvalidPortID, "This object doesn't support vector ports");
@@ -50,12 +50,12 @@ SimpleMemobj::getMasterPort(const std::string& if_name, PortID idx)
     if (if_name == "mem_side") {
         return memPort;
     } else {
-        // pass it along to our super class
-        return MemObject::getMasterPort(if_name, idx);
+        //pass it along to our super class
+        return MemObject::getPort(if_name, idx);
     }
 }
 
-BaseSlavePort&
+Port&
 SimpleMemobj::getSlavePort(const std::string& if_name, PortID idx)
 {
     panic_if(idx != InvalidPortID, "This object doesn't support vector ports");
@@ -67,7 +67,7 @@ SimpleMemobj::getSlavePort(const std::string& if_name, PortID idx)
         return dataPort;
     } else {
         // pass it along to our super class
-        return MemObject::getSlavePort(if_name, idx);
+        return MemObject::getPort(if_name, idx);
     }
 }
 
