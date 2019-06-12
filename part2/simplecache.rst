@@ -51,7 +51,7 @@ Since we often use a ``System`` as the root SimObject, you will often see a ``sy
     Talk about other kind of proxy parameters somewhere.
 
 The third and final difference between the ``SimpleCache`` and the ``SimpleMemobj`` is that instead of having two named CPU ports (``inst_port`` and ``data_port``), the ``SimpleCache`` use another special parameter: the ``VectorPort``.
-``VectorPorts`` behave similarly to regular ports (e.g., they are resolved via ``getMasterPort`` and ``getSlavePort``), but they allow this object to connect to multiple peers.
+``VectorPorts`` behave similarly to regular ports (e.g., they are resolved via ``getPort``), but they allow this object to connect to multiple peers.
 Then, in the resolution functions the parameter we ignored before (``PortID idx``) is used to differentiate between the different ports.
 By using a vector port, this cache can be connected into the system more flexibly than the ``SimpleMemobj``.
 
@@ -87,19 +87,20 @@ For each of these connections we add a new ``CPUSidePort`` to a ``cpuPorts`` vec
 
 We also add one extra member variable to the ``CPUSidePort`` to save its id, and we add this as a parameter to its constructor.
 
-Next, we need to implement ``getMasterPort`` and ``getSlavePort``.
-The ``getMasterPort`` is exactly the same as the ``SimpleMemobj``.
-For ``getSlavePort``, we now need to return the port based on the id requested.
+Next, we need to implement ``getPort``.
+We now need to return the port based on the id requested. The rest part is similar to ``SimpleMemobj``.
 
 .. code-block:: c++
 
-    BaseSlavePort&
-    SimpleCache::getSlavePort(const std::string& if_name, PortID idx)
+    Port&
+    SimpleCache::getPort(const std::string& if_name, PortID idx)
     {
         if (if_name == "cpu_side" && idx < cpuPorts.size()) {
             return cpuPorts[idx];
+        } else if (if_name == "mem_side") {
+            return memPort;
         } else {
-            return MemObject::getSlavePort(if_name, idx);
+            return MemObject::getPort(if_name, idx);
         }
     }
 
@@ -371,7 +372,7 @@ This data is guaranteed to be the size of the cache block since we made sure to 
             auto block = std::next(cacheStore.begin(bucket),
                                    random_mt.random(0, bucket_size - 1));
 
-            RequestPtr req = new Request(block->first, blockSize, 0, 0);
+            RequestPtr req(new Request(block->first, blockSize, 0, 0));
             PacketPtr new_pkt = new Packet(req, MemCmd::WritebackDirty, blockSize);
             new_pkt->dataDynamic(block->second); // This will be deleted later
 
