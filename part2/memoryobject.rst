@@ -338,12 +338,8 @@ These two functions are used by gem5 during the initialization phase to connect 
       public:
         SimpleMemobj(SimpleMemobjParams *params);
 
-        BaseMasterPort& getMasterPort(const std::string& if_name,
-                                      PortID idx = InvalidPortID) override;
-
-        BaseSlavePort& getSlavePort(const std::string& if_name,
-                                    PortID idx = InvalidPortID) override;
-
+        Port& getPort(const std::string& if_name,
+                      PortID idx = InvalidPortID) override;
     };
 
 You can download the header file for the ``SimpleMemobj`` :download:`here <../_static/scripts/part2/memoryobject/simple_memobj.hh>`
@@ -367,44 +363,38 @@ The name can be any string, but by convention, it is the same name as in the Pyt
     }
 
 Next, we need to implement the interfaces to get the ports.
-This interface is made of two functions ``getMasterPort`` and ``getSlavePort``.
+This interface is made of the function ``getPort``.
 These functions take two parameters.
 The ``if_name`` is the Python variable name of the interface for *this* object.
-In the case of the master port it will be ``mem_side`` since this is what we declared as a ``MasterPort`` in the Python SimObject file.
 
+.. cpp:function:: Port& getPort(const std::string& if_name, PortID idx)
 
-.. cpp:function:: BaseMasterPort& getMasterPort(const std::string& if_name, PortID idx)
-
-    This function is called when trying to connect a slave port to this object.
+    This function is called when trying to connect a port to this object.
     The ``if_name`` is the Python variable name of the interface for *this* object.
     The ``idx`` is the port number when using vector ports and is ``InvalidPortID`` by default.
-    This function returns a reference to a master port object.
+    This function returns a reference to the connected port object.
 
 
-.. cpp:function:: BaseSlavePort& getSlavePort(const std::string& if_name, PortID idx)
-
-    This function is called when trying to connect a master port to this object.
-    The ``if_name`` is the Python variable name of the interface for *this* object.
-    The ``idx`` is the port number when using vector ports and is ``InvalidPortID`` by default.
-    This function returns a reference to a slave port object.
-
-
-To implement ``getMasterPort``, we compare the ``if_name`` and check to see if it is ``mem_side`` as specified in our Python SimObject file.
-If it is, then we return the ``memPort`` object.
+To implement ``getPort``, we compare the ``if_name`` and check to see if it is ``inst_port``, ``data_port`` or ``mem_side`` as specified in our Python SimObject file.
+If it is, then we return the ``instPort``, ``dataPort`` or ``memPort`` object respectively.
 If not, then we pass the request name to our parent.
-However, it will be an error if we try to connect a slave port to any other named port since the parent class has no ports defined.
 
 .. code-block:: c++
 
-    BaseMasterPort&
-    SimpleMemobj::getMasterPort(const std::string& if_name, PortID idx)
+    Port&
+    SimpleMemobj::getPort(const std::string& if_name, PortID idx)
     {
-        if (if_name == "mem_side") {
+        panic_if(idx != InvalidPortID, "This object doesn't support vector ports");
+        if (if_name == "inst_port") {
+            return instPort;
+        } else if (if_name == "data_port") {
+            return dataPort;
+        } else if (if_name == "mem_side") {
             return memPort;
         } else {
-            return MemObject::getMasterPort(if_name, idx);
+            return MemObject::getPort(if_name, idx);
         }
-    }
+    } 
 
 To implement ``getSlavePort``, we similarly check if the ``if_name`` matches either of the names we defined for our slave ports in the Python SimObject file.
 If the name is ``"inst_port"``, then we return the instPort, and if the name is ``data_port`` we return the data port.

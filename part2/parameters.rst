@@ -348,7 +348,7 @@ You can have a default, or not, just like a normal parameter.
 
 The updated ``HelloObject.py`` file can be downloaded :download:`here <../_static/scripts/part2/parameters/HelloObject.py>`
 
-Second, we will add a reference to a ``GoodbyeObject`` to the ``HelloObject`` class.
+Second, we will add a pointer to a ``GoodbyeObject`` to the ``HelloObject`` class.
 
 .. code-block:: c++
 
@@ -360,13 +360,13 @@ Second, we will add a reference to a ``GoodbyeObject`` to the ``HelloObject`` cl
         EventWrapper<HelloObject, &HelloObject::processEvent> event;
 
         /// Pointer to the corresponding GoodbyeObject. Set via Python
-        const GoodbyeObject* goodbye;
+        GoodbyeObject* goodbye;
 
         /// The name of this object in the Python config file
-        const std::string myName;
+        std::string myName;
 
         /// Latency between calling the event (in ticks)
-        const Tick latency;
+        Tick latency;
 
         /// Number of times left to fire the event before goodbye
         int timesLeft;
@@ -413,7 +413,7 @@ Once we have processed the number of event specified by the parameter, we should
 
         if (timesLeft <= 0) {
             DPRINTF(Hello, "Done firing!\n");
-            goodbye.sayGoodbye(myName);
+            goodbye->sayGoodbye(myName);
         } else {
             schedule(event, curTick() + latency);
         }
