@@ -45,7 +45,7 @@ class HelloObject : public SimObject
     EventWrapper<HelloObject, &HelloObject::processEvent> event;
 
     /// Pointer to the corresponding GoodbyeObject. Set via Python
-    GoodbyeObject& goodbye;
+    GoodbyeObject* goodbye;
 
     /// The name of this object in the Python config file
     std::string myName;
