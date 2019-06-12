@@ -34,7 +34,7 @@
 HelloObject::HelloObject(HelloObjectParams *params) :
     SimObject(params),
     event(*this),
-    goodbye(*params->goodbye_object),
+    goodbye(params->goodbye_object),
     myName(params->name),
     latency(params->time_to_wait),
     timesLeft(params->number_of_fires)
@@ -56,7 +56,7 @@ HelloObject::processEvent()
 
     if (timesLeft <= 0) {
         DPRINTF(Hello, "Done firing!\n");
-        goodbye.sayGoodbye(myName);
+        goodbye->sayGoodbye(myName);
     } else {
         schedule(event, curTick() + latency);
     }
