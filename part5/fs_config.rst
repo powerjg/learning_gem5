@@ -240,8 +240,8 @@ You can simply import that file to use those caches.
         self.cpu.dcache.connectBus(self.membus)
 
         # Connect the CPU TLBs directly to the mem.
-        self.cpu.itb.walker.port = self.mmubus.slave
-        self.cpu.dtb.walker.port = self.mmubus.slave
+        self.cpu.itb.walker.port = self.membus.slave
+        self.cpu.dtb.walker.port = self.membus.slave
 
 After creating the cache hierarchy, next we need to create the memory controllers.
 In this configuration file, it is very simple.
