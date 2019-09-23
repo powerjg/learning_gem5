@@ -278,8 +278,11 @@ Parameters in the configuration file can be changed and the results should be di
 For instance, if you double the system clock, the simulation should finish faster.
 Or, if you change the DDR controller to DDR4, the performance should be better.
 
-Additionally, you can change the CPU model to ``MinorCPU`` to model an in-order CPU, or ``DerivO3CPU`` to model an out-of-order CPU.
-However, note that ``DerivO3CPU`` currently does not work with simple.py, because ``DerivO3CPU`` requires a system with separate
-instruction and data caches (``DerivO3CPU`` does work with the configuration in the next section).
+Additionally, you can change the CPU model. See ``gem5/build_opts/`` for lists
+of supported CPU models for each build option. Use ``MinorCPU`` to model an
+in-order CPU, or ``DerivO3CPU`` to model an out-of-order CPU. However, note that
+``DerivO3CPU`` currently does not work with simple.py, because it requires a
+system with separate instruction and data caches (``DerivO3CPU`` does work with
+the configuration in the next section).
 
 Next, we will add caches to our configuration file to model a more complex system.
