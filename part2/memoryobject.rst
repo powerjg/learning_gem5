@@ -707,8 +707,9 @@ However, instead of connecting the CPU directly to the memory bus, we are going 
     system.cpu.interrupts[0].int_master = system.membus.slave
     system.cpu.interrupts[0].int_slave = system.membus.master
 
-    system.mem_ctrl = DDR3_1600_8x8()
-    system.mem_ctrl.range = system.mem_ranges[0]
+    system.mem_ctrl = MemCtrl()
+    system.mem_ctrl.dram = DDR3_1600_8x8()
+    system.mem_ctrl.dram.range = system.mem_ranges[0]
     system.mem_ctrl.port = system.membus.master
 
     system.system_port = system.membus.slave
