@@ -166,8 +166,9 @@ For this system, we'll use a simple DDR3 controller and it will be responsible f
 
 .. code-block:: python
 
-  system.mem_ctrl = DDR3_1600_8x8()
-  system.mem_ctrl.range = system.mem_ranges[0]
+  system.mem_ctrl = MemCtrl()
+  system.mem_ctrl.dram = DDR3_1600_8x8()
+  system.mem_ctrl.dram.range = system.mem_ranges[0]
   system.mem_ctrl.port = system.membus.master
 
 After those final connections, we've finished instantiating our simulated system!

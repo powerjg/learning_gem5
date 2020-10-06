@@ -253,10 +253,10 @@ For instance, you can have multiple memory controllers with interleaved addresse
 
     def createMemoryControllers(self):
         """ Create the memory controller for the system """
-        self.mem_cntrl = DDR3_1600_8x8(range = self.mem_ranges[0],
-                                       port = self.membus.master)
+        self.mem_ctrl = MemCtrl(dram = DDR3_1600_8x8(range = self.mem_ranges[0]),
+                                 port = self.membus.master)
 
-Finally, we we create the interrupt controllers for the CPU.
+Finally, we create the interrupt controllers for the CPU.
 Again, this is the same as when we were using syscall emulation mode and is straightforward.
 
 .. code-block:: python
