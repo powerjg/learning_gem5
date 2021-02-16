@@ -95,7 +95,7 @@ To see all of the possible configuration options, and to find which are required
 In this case, we are using BaseCache.
 
 We have extended ``BaseCache`` and set most of the parameters that do not have default values in the ``BaseCache`` SimObject.
-Next, let's two more sub-classes of L1Cache, an L1DCache and L1ICache
+Next, let's create two more sub-classes of L1Cache, an L1DCache and L1ICache
 
 .. code-block:: python
 
@@ -168,7 +168,7 @@ The full file can be found in the gem5 source at ``gem5/configs/learning_gem5/pa
 
 
 
-Adding caches the simple config file
+Adding caches to the simple config file
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Now, let's add the caches we just created to the configuration script we created in the :ref:`last chapter <simple-config-chapter>`.
@@ -218,7 +218,7 @@ The, we can use our helper function to connect the L1 caches to the L2 bus.
     system.cpu.icache.connectBus(system.l2bus)
     system.cpu.dcache.connectBus(system.l2bus)
 
-Next, we can create out L2 cache and connect it to the L2 bus and the memory bus.
+Next, we can create our L2 cache and connect it to the L2 bus and the memory bus.
 
 .. code-block:: python
 
