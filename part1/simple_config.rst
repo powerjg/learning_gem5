@@ -252,7 +252,7 @@ So, we can simply run gem5 from the root gem5 directory as:
 
 .. code-block:: sh
 
-  build/X86/gem5.opt configs/tutorial/simple.py
+  build/X86/gem5.opt configs/learning_gem5/part1/simple.py
 
 The output should be:
 
